@@ -1,0 +1,3 @@
+# Mealory
+
+Meal management app.
