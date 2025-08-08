@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { IconButton } from "../IconButton/IconButton";
 import { Paper } from "../Paper/Paper";
@@ -17,50 +17,63 @@ export const Modal = ({
 	title,
 	close,
 }: TModalProps) => {
+	const containerRef = useRef<HTMLDivElement | null>(null);
+
 	useEffect(() => {
+		const containerEl = containerRef.current!;
+
 		const onKeydown = (event: KeyboardEvent) => {
 			if (event.code === "Escape") {
 				close();
 			}
 		};
 		const onClick = (event: MouseEvent) => {
-			if (event.target === modalContainerEl) {
+			if (event.target === containerEl) {
 				close();
 			}
 		};
 
 		window.addEventListener("keydown", onKeydown);
-		modalContainerEl.addEventListener("click", onClick);
+		containerEl.addEventListener("click", onClick);
+		document.body.style = "overflow-y: hidden;";
 
 		return () => {
 			window.removeEventListener("keydown", onKeydown);
-			modalContainerEl.removeEventListener("click", onClick);
+			containerEl.removeEventListener("click", onClick);
+			document.body.style = "overflow-y: initial;";
 		};
 	}, [close]);
 
 	return createPortal(
-		<div>
-			<Paper>
-				<div className="p-8">
-					<div className="absolute top-4 right-4">
-						<IconButton
-							icon="🗙"
-							onClick={close}
-						/>
+		<div
+			className="absolute w-full h-full flex justify-center items-center"
+			ref={containerRef}
+		>
+			<div
+				className=""
+			>
+				<Paper>
+					<div className="p-4 sm:p-8 max-w-[calc(100vw-10vw)] max-h-[calc(100vh-10vh)] overflow-y-auto">
+						{
+							title
+								? (
+									<Title
+										title={title}
+										rank="h3"
+									/>
+								)
+								: null
+						}
+						{children}
 					</div>
-					{
-						title
-							? (
-								<Title
-									title={title}
-									rank="h3"
-								/>
-							)
-							: null
-					}
-					{children}
+				</Paper>
+				<div className="absolute top-4 right-4">
+					<IconButton
+						icon="🗙"
+						onClick={close}
+					/>
 				</div>
-			</Paper>
+			</div>
 		</div>,
 		modalContainerEl,
 	);

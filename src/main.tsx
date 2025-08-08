@@ -6,7 +6,7 @@ import "./reset.css";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
-	<BrowserRouter>
+	<BrowserRouter basename="/mealory">
 		<App />
 	</BrowserRouter>,
 );

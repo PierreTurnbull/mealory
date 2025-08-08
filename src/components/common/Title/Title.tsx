@@ -1,13 +1,15 @@
 type TTitleRank = "h1" | "h2" | "h3" | "h4"
 
 type TTitleProps = {
-	title: string
-	rank?: TTitleRank
+	title:      string
+	rank?:      TTitleRank
+	className?: string
 }
 
 export const Title = ({
 	title,
 	rank = "h2",
+	className,
 }: TTitleProps) => {
 	const Rank = rank;
 
@@ -45,6 +47,7 @@ export const Title = ({
 			className={`
 				${rankClassNames}
 				font-bold
+				${className}
 			`}
 		>
 			{title}

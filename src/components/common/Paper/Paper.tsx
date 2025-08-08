@@ -13,6 +13,7 @@ export const Paper = ({
 				shadow-lg
 				rounded-md
 				bg-gray-50
+				overflow-hidden
 			`}
 		>
 			{children}

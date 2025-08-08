@@ -1,4 +1,4 @@
-import type { TTableRow } from "../../../../types/table.types";
+import type { TTableRow } from "../table.types";
 import { TableCell } from "../TableCell/TableCell";
 
 type TTableRowProps = {
@@ -17,6 +17,8 @@ export const TableRow = ({
 					return (
 						<TableCell
 							key={item.key}
+							isDisabled={row.isDisabled}
+							isDimmed={row.isDimmed}
 						>
 							{item.label}
 						</TableCell>

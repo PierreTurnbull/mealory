@@ -5,10 +5,11 @@ body {
 	font-size: 14px;
 	font-family: Arial;
 	position: relative;
+	line-height: 1.5;
 }
 
 #modal-container {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	right: 0;
 	bottom: 0;
@@ -16,6 +17,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	display: none;
+	overflow: hidden;
 
 	&:has(> *) {
 		display: flex;
@@ -23,7 +25,9 @@ body {
 		& > * {
 			z-index: 2;
 		}
+	}
 
+	&:has(> *) {
 		&::before {
 			content: "";
 			@apply bg-violet-200;
@@ -36,5 +40,4 @@ body {
 			z-index: 1;
 		}
 	}
-
 }
