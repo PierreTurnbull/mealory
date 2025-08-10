@@ -48,6 +48,11 @@ export const Navbar = () => {
 				>
 					Préparation des courses
 				</Button>
+				<Button
+					onClick={() => navigate("/shopping-list")}
+				>
+					Liste de courses
+				</Button>
 			</div>
 			<div
 				style={{
@@ -66,7 +71,7 @@ export const Navbar = () => {
 					left-0
 					right-0
 					grid
-					grid-cols-5
+					grid-cols-6
 					gap-4
 					p-4
 					bg-gray-50
@@ -149,6 +154,22 @@ export const Navbar = () => {
 						${location.pathname === "/stocks" ? "bg-violet-200" : "bg-gray-50"}
 					`}
 					onClick={() => navigate("/stocks")}
+				>
+					📦
+				</div>
+				<div
+					className={`
+						rounded
+						shadow
+						aspect-square
+						text-[7vw]
+						flex
+						justify-center
+						items-center
+						select-none
+						${location.pathname === "/shopping-list" ? "bg-violet-200" : "bg-gray-50"}
+					`}
+					onClick={() => navigate("/shopping-list")}
 				>
 					🧺
 				</div>
