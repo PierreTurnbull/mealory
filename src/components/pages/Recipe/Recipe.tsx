@@ -139,7 +139,7 @@ export const Recipe = () => {
 										key={key}
 										className="space-x-2"
 									>
-										<span>{key}.</span>
+										<span>{key + 1}.</span>
 										<span>{instruction}</span>
 									</li>
 								);
