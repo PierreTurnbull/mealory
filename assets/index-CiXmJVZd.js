@@ -175,6 +175,7 @@ Please change the parent <Route path="${q}"> to <Route path="${q==="/"?"*":`${q}
 						flex
 						justify-center
 						items-center
+						select-none
 						${location.pathname==="/"?"bg-violet-200":"bg-gray-50"}
 					`,onClick:()=>i("/"),children:"🏠"}),m.jsx("div",{className:`
 						rounded
@@ -184,6 +185,7 @@ Please change the parent <Route path="${q}"> to <Route path="${q==="/"?"*":`${q}
 						flex
 						justify-center
 						items-center
+						select-none
 						${location.pathname==="/ingredients"?"bg-violet-200":"bg-gray-50"}
 					`,onClick:()=>i("/ingredients"),children:"🥄"}),m.jsx("div",{className:`
 						rounded
@@ -193,6 +195,7 @@ Please change the parent <Route path="${q}"> to <Route path="${q==="/"?"*":`${q}
 						flex
 						justify-center
 						items-center
+						select-none
 						${location.pathname==="/recipes"?"bg-violet-200":"bg-gray-50"}
 					`,onClick:()=>i("/recipes"),children:"📖"}),m.jsx("div",{className:`
 						rounded
@@ -202,6 +205,7 @@ Please change the parent <Route path="${q}"> to <Route path="${q==="/"?"*":`${q}
 						flex
 						justify-center
 						items-center
+						select-none
 						${location.pathname==="/planning"?"bg-violet-200":"bg-gray-50"}
 					`,onClick:()=>i("/planning"),children:"📅"}),m.jsx("div",{className:`
 						rounded
@@ -211,6 +215,7 @@ Please change the parent <Route path="${q}"> to <Route path="${q==="/"?"*":`${q}
 						flex
 						justify-center
 						items-center
+						select-none
 						${location.pathname==="/stocks"?"bg-violet-200":"bg-gray-50"}
 					`,onClick:()=>i("/stocks"),children:"🧺"})]})]})},Nl=({title:i,rank:s="h2",className:o})=>{const f=s;let d;switch(s){case"h1":d=`
 				text-4xl
