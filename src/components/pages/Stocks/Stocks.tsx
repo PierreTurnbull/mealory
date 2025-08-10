@@ -5,7 +5,6 @@ import { Button } from "../../common/Button/Button";
 import { Page } from "../../common/Page/Page";
 import { TextField } from "../../common/TextField/TextField";
 import type { TIngredient } from "../../features/ingredient/ingredient.types";
-import { useNotificationContext } from "../../features/notification/context/useNotificationContext";
 import type { TPlanning } from "../../features/planning/planning.types";
 import { getDefaultPlanning } from "../../features/planning/utils/getDefaultPlanning/getDefaultPlanning";
 import { getTotalIngredients } from "../../features/planning/utils/getTotalIngredients/getTotalIngredients";

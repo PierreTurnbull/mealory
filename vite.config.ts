@@ -9,32 +9,32 @@ export default defineConfig({
 		react(),
 		tailwindcss(),
 		VitePWA({
-			registerType: "autoUpdate",
+			registerType:  "autoUpdate",
 			includeAssets: ["assets/*"],
-			manifest: {
-				name: "Mealory",
-				short_name: "Mealory",
-				start_url: "/mealory",
-				display: "standalone",
+			manifest:      {
+				name:             "Mealory",
+				short_name:       "Mealory",
+				start_url:        "/mealory",
+				display:          "standalone",
 				background_color: "#ffffff",
-				theme_color: "#ffffff",
-				icons: [
+				theme_color:      "#ffffff",
+				icons:            [
 					{
-						src: "icon-192.png",
+						src:   "icon-192.png",
 						sizes: "192x192",
-						type: "image/png"
+						type:  "image/png",
 					},
 					{
-						src: "icon-512.png",
+						src:   "icon-512.png",
 						sizes: "512x512",
-						type: "image/png"
-					}
-				]
+						type:  "image/png",
+					},
+				],
 			},
-      workbox: {
-        // defining cached files formats
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,webmanifest}"],
-      }
+			workbox: {
+				// defining cached files formats
+				globPatterns: ["**/*.{js,css,html,ico,png,svg,webmanifest}"],
+			},
 		}),
 	],
 	base: "/mealory",
