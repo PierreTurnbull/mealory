@@ -57,50 +57,52 @@ export const ShoppingList = () => {
 		},
 	];
 
-	const rows: TTableRow[] = totalIngredientsMinusStocks.map(ingredient => {
-		const row: TTableRow = {
-			key:      ingredient.id,
-			isDimmed: ingredientsObtained.includes(ingredient.id),
-			items:    [
-				{
-					key:   "name",
-					value: ingredient.name,
-					label: ingredient.name,
-				},
-				{
-					key:   "amount",
-					value: ingredient.amount,
-					label: `${ingredient.amount} ${ingredientUnitDirectObjectShortLabels[ingredient.unit]}`,
-				},
-				{
-					key:   "actions",
-					value: ingredient.amount,
-					label: (
-						<Checkbox
-							isChecked={ingredientsObtained.includes(ingredient.id)}
-							onChange={() => {
-								setIngredientsObtained(prev => {
-									const nextIngredientsObtained = structuredClone(prev);
+	const rows: TTableRow[] = totalIngredientsMinusStocks
+		.filter(ingredient => ingredient.amount !== null && ingredient.amount > 0)
+		.map(ingredient => {
+			const row: TTableRow = {
+				key:      ingredient.id,
+				isDimmed: ingredientsObtained.includes(ingredient.id),
+				items:    [
+					{
+						key:   "name",
+						value: ingredient.name,
+						label: ingredient.name,
+					},
+					{
+						key:   "amount",
+						value: ingredient.amount,
+						label: `${ingredient.amount} ${ingredientUnitDirectObjectShortLabels[ingredient.unit]}`,
+					},
+					{
+						key:   "actions",
+						value: ingredient.amount,
+						label: (
+							<Checkbox
+								isChecked={ingredientsObtained.includes(ingredient.id)}
+								onChange={() => {
+									setIngredientsObtained(prev => {
+										const nextIngredientsObtained = structuredClone(prev);
 
-									const index = nextIngredientsObtained.indexOf(ingredient.id);
+										const index = nextIngredientsObtained.indexOf(ingredient.id);
 
-									if (index === -1) {
-										nextIngredientsObtained.push(ingredient.id);
-									} else {
-										nextIngredientsObtained.splice(index, 1);
-									}
+										if (index === -1) {
+											nextIngredientsObtained.push(ingredient.id);
+										} else {
+											nextIngredientsObtained.splice(index, 1);
+										}
 
-									return nextIngredientsObtained;
-								});
-							}}
-						/>
-					),
-				},
-			],
-		};
+										return nextIngredientsObtained;
+									});
+								}}
+							/>
+						),
+					},
+				],
+			};
 
-		return row;
-	});
+			return row;
+		});
 
 	return (
 		<div

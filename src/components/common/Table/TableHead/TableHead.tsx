@@ -69,7 +69,8 @@ export const TableHead = ({
 						<th
 							className={`
 								h-8
-								pl-4
+								pl-2
+								sm:pl-4
 								rounded
 								bg-violet-300
 								text-left
