@@ -18,8 +18,8 @@ export const Router = () => {
 				<Route path="/recipes/:recipeId" element={<Recipe />} />
 				<Route path="/planning" element={<Planning />} />
 				<Route path="/stocks" element={<Stocks />} />
+				<Route path="/shopping-list" element={<ShoppingList />} />
 			</Route>
-			<Route path="/shopping-list" element={<ShoppingList />} />
 		</Routes>
 	);
 };
