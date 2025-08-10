@@ -81,6 +81,7 @@ export const Navbar = () => {
 						flex
 						justify-center
 						items-center
+						select-none
 						${location.pathname === "/" ? "bg-violet-200" : "bg-gray-50"}
 					`}
 					onClick={() => navigate("/")}
@@ -96,6 +97,7 @@ export const Navbar = () => {
 						flex
 						justify-center
 						items-center
+						select-none
 						${location.pathname === "/ingredients" ? "bg-violet-200" : "bg-gray-50"}
 					`}
 					onClick={() => navigate("/ingredients")}
@@ -111,6 +113,7 @@ export const Navbar = () => {
 						flex
 						justify-center
 						items-center
+						select-none
 						${location.pathname === "/recipes" ? "bg-violet-200" : "bg-gray-50"}
 					`}
 					onClick={() => navigate("/recipes")}
@@ -126,6 +129,7 @@ export const Navbar = () => {
 						flex
 						justify-center
 						items-center
+						select-none
 						${location.pathname === "/planning" ? "bg-violet-200" : "bg-gray-50"}
 					`}
 					onClick={() => navigate("/planning")}
@@ -141,6 +145,7 @@ export const Navbar = () => {
 						flex
 						justify-center
 						items-center
+						select-none
 						${location.pathname === "/stocks" ? "bg-violet-200" : "bg-gray-50"}
 					`}
 					onClick={() => navigate("/stocks")}
