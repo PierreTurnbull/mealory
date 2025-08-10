@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Button } from "../../common/Button/Button";
 import { ConfirmationModal } from "../../common/ConfirmationModal/ConfirmationModal";
@@ -76,6 +76,10 @@ export const Planning = () => {
 		});
 	};
 
+	useEffect(() => {
+		localStorage.planning = JSON.stringify(planning);
+	}, [planning]);
+
 	return (
 		<Page
 			title="Planning"
@@ -102,14 +106,6 @@ export const Planning = () => {
 				<Section>
 					<div className="space-y-4 flex flex-col items-center">
 						<div className="flex gap-2">
-							<Button
-								onClick={() => {
-									localStorage.planning = JSON.stringify(planning);
-									notificationContext.addNotification("Le planning a été sauvegardé.", "success");
-								}}
-							>
-								Sauvegarder
-							</Button>
 							<Button
 								type="danger"
 								onClick={() => setConfirmRestModalIsOpen(true)}

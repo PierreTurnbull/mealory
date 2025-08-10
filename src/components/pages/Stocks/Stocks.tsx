@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { ingredientUnitDirectObjectLabels } from "../../../utils/labels/ingredientUnits";
 import { Button } from "../../common/Button/Button";
@@ -13,7 +13,6 @@ import { getTotalIngredientsMinusStocks } from "../../features/planning/utils/ge
 import type { TRecipe } from "../../features/recipe/recipe.types";
 
 export const Stocks = () => {
-	const notificationContext = useNotificationContext();
 	const navigate = useNavigate();
 
 	const ingredients: TIngredient[] = localStorage.ingredients
@@ -32,6 +31,16 @@ export const Stocks = () => {
 
 	const totalIngredientsMinusStocks = getTotalIngredientsMinusStocks(totalIngredients, ingredientsInStock);
 
+	useEffect(() => {
+		const planning: TPlanning = localStorage.planning
+			? JSON.parse(localStorage.planning) as TPlanning
+			: getDefaultPlanning();
+
+		planning.ingredientsInStock = ingredientsInStock;
+
+		localStorage.planning = JSON.stringify(planning);
+	}, [ingredientsInStock]);
+
 	return (
 		<Page
 			title="Préparation des courses"
@@ -41,21 +50,6 @@ export const Stocks = () => {
 				<div
 					className="flex gap-2"
 				>
-					<Button
-						onClick={() => {
-							const planning: TPlanning = localStorage.planning
-								? JSON.parse(localStorage.planning) as TPlanning
-								: getDefaultPlanning();
-
-							planning.ingredientsInStock = ingredientsInStock;
-
-							localStorage.planning = JSON.stringify(planning);
-
-							notificationContext.addNotification("Les stocks ont été sauvegardés.", "success");
-						}}
-					>
-						Sauvegarder
-					</Button>
 					<Button
 						type="secondary"
 						onClick={() => navigate("/shopping-list")}
