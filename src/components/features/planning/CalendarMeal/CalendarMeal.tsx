@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router";
-import { Dropdown, type TChoice } from "../../../../common/Dropdown/Dropdown";
-import { IconButton } from "../../../../common/IconButton/IconButton";
-import { Tooltip } from "../../../../common/Tooltip/Tooltip";
-import type { TRecipe } from "../../../recipe/recipe.types";
-import type { TPlanningDay } from "../../planning.types";
+import { Dropdown, type TChoice } from "../../../common/Dropdown/Dropdown";
+import { IconButton } from "../../../common/IconButton/IconButton";
+import { Tooltip } from "../../../common/Tooltip/Tooltip";
+import type { TRecipe } from "../../recipe/recipe.types";
+import type { TPlanningDay } from "../planning.types";
 
 type TCalendarMealProps = {
 	mealType:            keyof TPlanningDay
