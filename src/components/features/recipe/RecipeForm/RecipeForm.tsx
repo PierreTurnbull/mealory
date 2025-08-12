@@ -1,9 +1,8 @@
+import { Autocomplete, Input } from "@mui/material";
 import { Fragment, useState } from "react";
 import { ingredientUnitAnnotationLabels, ingredientUnitDirectObjectLabels } from "../../../../utils/labels/ingredientUnits";
 import { Button } from "../../../common/Button/Button";
-import { Dropdown, type TChoice } from "../../../common/Dropdown/Dropdown";
 import { IconButton } from "../../../common/IconButton/IconButton";
-import { TextField } from "../../../common/TextField/TextField";
 import { CreateIngredientModal } from "../../ingredient/CreateIngredientModal/CreateIngredientModal";
 import { DefaultIngredient } from "../../ingredient/DefaultIngredient";
 import type { TAliasIngredientUnit, TIngredient } from "../../ingredient/ingredient.types";
@@ -130,17 +129,17 @@ export const RecipeForm = ({
 	return (
 		<div className="flex flex-col space-y-4">
 			<p>Nom :</p>
-			<TextField
+			<Input
 				value={name}
 				onChange={event => setName(event.target.value)}
 			/>
 			<p>Description :</p>
-			<TextField
+			<Input
 				value={description}
 				onChange={event => setDescription(event.target.value)}
 			/>
 			<p>Image :</p>
-			<TextField
+			<Input
 				value={imageUrl || ""}
 				onChange={event => setImageUrl(event.target.value)}
 				placeholder="Insérer l'URL de l'image."
@@ -188,24 +187,25 @@ export const RecipeForm = ({
 								Boolean(recipeIngredients.find(recipeIngredient => recipeIngredient.id === ingredient.id))
 							);
 
-							const choice: TChoice<TIngredient["id"]> = {
-								value:      ingredient.id,
+							const choice = {
+								id:         ingredient.id,
 								label:      ingredient.name,
 								isDisabled: isDisabled,
 							};
 
 							return choice;
 						});
+						const selectedIngredientChoice = ingredientChoices.find(ingredientChoice => ingredientChoice.id === recipeIngredient.id)!;
 						const ingredient: TIngredient & TRecipeIngredient = {
 							...ingredients.find(ingredient => ingredient.id === recipeIngredient.id)!,
 							amount:    recipeIngredient.amount,
 							aliasUnit: recipeIngredient.aliasUnit,
 						};
 						const availableAliasUnits: TAliasIngredientUnit[] = ingredientUnitsModel[ingredient.unit].expressibleIn;
-						const aliasUnitChoices: TChoice<typeof ingredient.unit | typeof availableAliasUnits[number]>[] | null = availableAliasUnits.length > 0
+						const aliasUnitChoices = availableAliasUnits.length > 0
 							? [ingredient.unit, ...availableAliasUnits].map(availableAliasUnit => {
-								const choice: TChoice<typeof availableAliasUnit> = {
-									value:      availableAliasUnit,
+								const choice = {
+									id:         availableAliasUnit,
 									label:      ingredientUnitAnnotationLabels[availableAliasUnit],
 									isDisabled: false,
 								};
@@ -214,28 +214,46 @@ export const RecipeForm = ({
 							})
 							: null;
 
+						const selectedAliasUnitChoice = aliasUnitChoices
+							? (
+								aliasUnitChoices.find(aliasUnitChoice => aliasUnitChoice.id === ingredient.aliasUnit) ||
+								aliasUnitChoices.find(aliasUnitChoice => aliasUnitChoice.id === ingredient.unit)
+							)
+							: null;
+
 						return (
 							<Fragment
 								key={recipeIngredient.id}
 							>
-								<Dropdown
-									value={recipeIngredient.id}
-									choices={ingredientChoices}
-									onChange={(id: TIngredient["id"]) => {
+								<Autocomplete
+									value={selectedIngredientChoice}
+									onChange={(_, value) => {
+										if (!value) {
+											return;
+										}
+
 										const nextRecipeIngredients = structuredClone(recipeIngredients);
 
 										const nextRecipeIngredient = nextRecipeIngredients.find(nextRecipeIngredient => nextRecipeIngredient.id === recipeIngredient.id)!;
-										nextRecipeIngredient.id = id;
+										nextRecipeIngredient.id = value.id;
 										nextRecipeIngredient.amount = 0;
 
 										setRecipeIngredients(nextRecipeIngredients);
 									}}
-									isSearchable
+									getOptionDisabled={option => option.isDisabled}
+									options={ingredientChoices}
+									renderInput={(params) => {
+										return (
+											<Input
+												ref={params.InputProps.ref}
+												inputProps={{ ...params.inputProps }}
+											/>
+										);
+									}}
 								/>
-								<TextField
+								<Input
 									value={ingredient.amount === null ? "" : String(ingredient.amount)}
 									type="number"
-									min={0}
 									onChange={event => {
 										const amount = event.target.value === "" ? null : Number(event.target.value);
 
@@ -243,12 +261,26 @@ export const RecipeForm = ({
 									}}
 								/>
 								{
-									availableAliasUnits.length > 0 && aliasUnitChoices
+									availableAliasUnits.length > 0 && aliasUnitChoices && selectedAliasUnitChoice
 										? (
-											<Dropdown
-												value={ingredient.aliasUnit || ingredient.unit}
-												choices={aliasUnitChoices}
-												onChange={value => updateIngredient(ingredient.id, ingredient.amount, ingredient.unit, value)}
+											<Autocomplete
+												value={selectedAliasUnitChoice}
+												options={aliasUnitChoices}
+												onChange={(_, option) => {
+													if (!option) {
+														return;
+													}
+
+													updateIngredient(ingredient.id, ingredient.amount, ingredient.unit, option.id);
+												}}
+												renderInput={(params) => {
+													return (
+														<Input
+															ref={params.InputProps.ref}
+															inputProps={{ ...params.inputProps }}
+														/>
+													);
+												}}
 											/>
 										)
 										: (
@@ -283,7 +315,7 @@ export const RecipeForm = ({
 								className="gap-2 grid grid-cols-[auto_1fr_auto] items-center"
 							>
 								{key}.
-								<TextField
+								<Input
 									value={instruction}
 									onChange={event => {
 										const nextInstructions = structuredClone(instructions);

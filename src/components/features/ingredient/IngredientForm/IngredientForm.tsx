@@ -1,7 +1,6 @@
+import { Input, MenuItem, Select } from "@mui/material";
 import { ingredientUnitAnnotationLabels } from "../../../../utils/labels/ingredientUnits";
 import { Button } from "../../../common/Button/Button";
-import { Dropdown, type TChoice } from "../../../common/Dropdown/Dropdown";
-import { TextField } from "../../../common/TextField/TextField";
 import type { TIngredient, TReferenceIngredientUnit } from "../ingredient.types";
 
 type TIngredientFormProps = {
@@ -22,9 +21,9 @@ export const IngredientForm = ({
 	close,
 }: TIngredientFormProps) => {
 	const ingredientUnits: TReferenceIngredientUnit[] = ["amount", "mass", "volume"];
-	const unitChoices: TChoice<TReferenceIngredientUnit>[] = ingredientUnits
+	const unitChoices = ingredientUnits
 		.map(value => {
-			const choice: TChoice<TReferenceIngredientUnit> = {
+			const choice = {
 				value:      value,
 				label:      ingredientUnitAnnotationLabels[value],
 				isDisabled: false,
@@ -36,16 +35,28 @@ export const IngredientForm = ({
 	return (
 		<div className="flex flex-col space-y-4">
 			<p>Nom :</p>
-			<TextField
+			<Input
 				value={name}
 				onChange={event => setName(event.target.value)}
 			/>
 			<p>Unité de mesure :</p>
-			<Dropdown
+			<Select
 				value={unit}
-				choices={unitChoices}
-				onChange={value => setUnit(value)}
-			/>
+				onChange={event => setUnit(event.target.value)}
+			>
+				{
+					unitChoices.map(choice => {
+						return (
+							<MenuItem
+								value={choice.value}
+								disabled={choice.isDisabled}
+							>
+								{choice.label}
+							</MenuItem>
+						);
+					})
+				}
+			</Select>
 			<div
 				className="flex space-x-2 justify-center"
 			>

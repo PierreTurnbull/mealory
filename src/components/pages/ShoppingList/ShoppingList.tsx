@@ -1,6 +1,6 @@
+import { Checkbox } from "@mui/material";
 import { useEffect, useState } from "react";
 import { ingredientUnitDirectObjectShortLabels } from "../../../utils/labels/ingredientUnits";
-import { Checkbox } from "../../common/Checkbox/Checkbox";
 import { Table } from "../../common/Table/Table";
 import type { TSortParameters, TTableColumn, TTableRow } from "../../common/Table/table.types";
 import type { TIngredient } from "../../features/ingredient/ingredient.types";
@@ -79,7 +79,8 @@ export const ShoppingList = () => {
 						value: ingredient.amount,
 						label: (
 							<Checkbox
-								isChecked={ingredientsObtained.includes(ingredient.id)}
+								color="primary"
+								checked={ingredientsObtained.includes(ingredient.id)}
 								onChange={() => {
 									setIngredientsObtained(prev => {
 										const nextIngredientsObtained = structuredClone(prev);

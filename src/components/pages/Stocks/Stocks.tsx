@@ -1,9 +1,9 @@
+import { Input } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { ingredientUnitDirectObjectLabels } from "../../../utils/labels/ingredientUnits";
 import { Button } from "../../common/Button/Button";
 import { Page } from "../../common/Page/Page";
-import { TextField } from "../../common/TextField/TextField";
 import type { TIngredient } from "../../features/ingredient/ingredient.types";
 import type { TPlanning } from "../../features/planning/planning.types";
 import { getDefaultPlanning } from "../../features/planning/utils/getDefaultPlanning/getDefaultPlanning";
@@ -80,13 +80,17 @@ export const Stocks = () => {
 											{` de ${totalIngredient.name.toLocaleLowerCase()}`}
 										</span>
 									</p>
-									<p className="space-x-2">
+									<span className="space-x-2">
 										<span>Déjà en stock :</span>
-										<TextField
+										<Input
 											className="w-16"
 											type="number"
 											value={stockValue}
 											onChange={event => {
+												if (Number(event.target.value) < 0) {
+													return;
+												}
+
 												setIngredientsInStock(prev => {
 													const nextIngredientsInStock = structuredClone(prev);
 
@@ -107,12 +111,11 @@ export const Stocks = () => {
 													return nextIngredientsInStock;
 												});
 											}}
-											min={0}
 										/>
 										<span>
 											{ingredientUnitDirectObjectLabels[totalIngredientMinusStocks.unit]}.
 										</span>
-									</p>
+									</span>
 									<p
 										className="flex items-center"
 									>

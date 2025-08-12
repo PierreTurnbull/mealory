@@ -1,21 +1,23 @@
+import { Autocomplete, Input } from "@mui/material";
 import { useNavigate } from "react-router";
-import { Dropdown, type TChoice } from "../../../common/Dropdown/Dropdown";
 import { IconButton } from "../../../common/IconButton/IconButton";
 import { Tooltip } from "../../../common/Tooltip/Tooltip";
 import type { TRecipe } from "../../recipe/recipe.types";
 import type { TPlanningDay } from "../planning.types";
 
 type TCalendarMealProps = {
-	mealType:            keyof TPlanningDay
+	mealKey:             keyof TPlanningDay
 	planningDay:         TPlanningDay
-	selectRecipe:        (mealKey: keyof TPlanningDay, recipeId: number | null) => void
+	selectRecipe:        (mealKey: keyof TPlanningDay, recipeId: NonNullable<TPlanningDay[keyof TPlanningDay]["recipeId"]> | undefined) => void
+	deselectRecipe:      (mealKey: keyof TPlanningDay) => void
 	onCreateRecipeClick: () => void
 }
 
 export const CalendarMeal = ({
-	mealType,
+	mealKey,
 	planningDay,
 	selectRecipe,
+	deselectRecipe,
 	onCreateRecipeClick,
 }: TCalendarMealProps) => {
 	const navigate = useNavigate();
@@ -24,40 +26,52 @@ export const CalendarMeal = ({
 		? JSON.parse(localStorage.recipes) as TRecipe[]
 		: [];
 
-	const recipeChoices: TChoice<typeof recipes[number]["id"] | null>[] = recipes.map(recipe => {
-		const choice: TChoice<typeof recipe["id"]> = {
-			value:      recipe.id,
-			label:      recipe.name,
-			isDisabled: false,
+	const recipeChoices = recipes.map(recipe => {
+		const choice: {
+			id:    typeof recipe["id"] | undefined
+			label: string
+		} = {
+			id:    recipe.id,
+			label: recipe.name,
 		};
 
 		return choice;
 	});
 
-	recipeChoices.unshift({
-		value:      null,
-		label:      "Aucune recette",
-		isDisabled: false,
-	});
+	const emptyChoice = {
+		id:    undefined,
+		label: "",
+	};
+	recipeChoices.unshift(emptyChoice);
+
+	const selectedChoice = recipeChoices.find(recipeChoice => recipeChoice.id === planningDay[mealKey].recipeId) || emptyChoice;
 
 	return (
 		<div className="flex gap-2">
-			<Dropdown
-				value={planningDay[mealType].recipeId}
-				choices={recipeChoices}
-				onChange={value => {
-					selectRecipe(mealType, value);
-				}}
-				isSearchable
-				placeholder="Sélectionner une recette"
-			/>
+			<div className="grow">
+				<Autocomplete
+					value={selectedChoice}
+					onChange={(_, value) => {
+						selectRecipe(mealKey, value?.id);
+					}}
+					options={recipeChoices}
+					renderInput={(params) => {
+						return (
+							<Input
+								ref={params.InputProps.ref}
+								inputProps={{ ...params.inputProps }}
+							/>
+						);
+					}}
+				/>
+			</div>
 			<Tooltip
 				title="Aller à la recette"
 			>
 				<IconButton
 					icon="➜"
-					isDisabled={planningDay[mealType].recipeId === null}
-					onClick={() => navigate(`/recipes/${planningDay[mealType].recipeId}`)}
+					isDisabled={planningDay[mealKey].recipeId === null}
+					onClick={() => navigate(`/recipes/${planningDay[mealKey].recipeId}`)}
 				/>
 			</Tooltip>
 			<Tooltip
@@ -67,6 +81,15 @@ export const CalendarMeal = ({
 					icon="+"
 					type="secondary"
 					onClick={onCreateRecipeClick}
+				/>
+			</Tooltip>
+			<Tooltip
+				title="Désélectionner la recette"
+			>
+				<IconButton
+					icon="🗙"
+					isDisabled={planningDay[mealKey].recipeId === null}
+					onClick={() => deselectRecipe(mealKey)}
 				/>
 			</Tooltip>
 		</div>

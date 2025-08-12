@@ -31,12 +31,12 @@ export const Planning = () => {
 	const selectRecipe = (
 		dayIndex: number,
 		mealKey: keyof TPlanningDay,
-		recipeId: number | null,
+		recipeId: NonNullable<TPlanningDay[keyof TPlanningDay]["recipeId"]> | undefined,
 	) => {
 		setPlanning(prev => {
 			const nextPlanning = structuredClone(prev);
 
-			nextPlanning.planningDays[dayIndex][mealKey].recipeId = recipeId;
+			nextPlanning.planningDays[dayIndex][mealKey].recipeId = recipeId === undefined ? null : recipeId;
 
 			return nextPlanning;
 		});
@@ -157,20 +157,22 @@ export const Planning = () => {
 											<div>
 												{
 													<div
-														className="rounded space-y-2"
+														className="rounded space-y-2 min-w-52"
 													>
 														<p>Déjeuner :</p>
 														<CalendarMeal
-															mealType="lunch"
+															mealKey="lunch"
 															planningDay={planningDay}
 															selectRecipe={(mealKey, recipeId) => selectRecipe(key, mealKey, recipeId)}
+															deselectRecipe={mealKey => selectRecipe(key, mealKey, undefined)}
 															onCreateRecipeClick={() => setMealForWhichRecipeIsBeingCreated({ key: key, meal: "lunch" })}
 														/>
 														<p>Diner :</p>
 														<CalendarMeal
-															mealType="dinner"
+															mealKey="dinner"
 															planningDay={planningDay}
 															selectRecipe={(mealKey, recipeId) => selectRecipe(key, mealKey, recipeId)}
+															deselectRecipe={mealKey => selectRecipe(key, mealKey, undefined)}
 															onCreateRecipeClick={() => setMealForWhichRecipeIsBeingCreated({ key: key, meal: "dinner" })}
 														/>
 													</div>

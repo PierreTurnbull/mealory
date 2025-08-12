@@ -1,7 +1,7 @@
+import { Input } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Button } from "../../common/Button/Button";
 import { Page } from "../../common/Page/Page";
-import { TextField } from "../../common/TextField/TextField";
 import { CreateRecipeModal } from "../../features/recipe/CreateRecipeModal/CreateRecipeModal";
 import type { TRecipe } from "../../features/recipe/recipe.types";
 import { RecipeThumbnail } from "../../features/recipe/RecipeThumbnail/RecipeThumbnail";
@@ -33,7 +33,7 @@ export const Recipes = () => {
 				className="flex flex-col space-y-4 items-center"
 			>
 				<div className="grid grid-cols-2 gap-2">
-					<TextField
+					<Input
 						value={filter}
 						onChange={event => setFilter(event.target.value)}
 						placeholder="Rechercher"
