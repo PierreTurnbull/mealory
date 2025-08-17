@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Modal } from "../../../common/Modal/Modal";
 import { IngredientForm } from "../IngredientForm/IngredientForm";
-import type { TIngredient, TReferenceIngredientUnit } from "../ingredient.types";
+import { createIngredient } from "../ingredient.api";
+import type { TIngredient } from "../ingredient.types";
 
 type TCreateIngredientModalProps = {
 	close:     () => void
@@ -12,26 +13,15 @@ export const CreateIngredientModal = ({
 	close,
 	onSubmit,
 }: TCreateIngredientModalProps) => {
-	const [name, setName] = useState<TIngredient["name"]>("");
-	const [unit, setUnit] = useState<TReferenceIngredientUnit>("amount");
+	const [ingredient, setIngredient] = useState<Omit<TIngredient, "id">>({
+		name:                "",
+		referenceUnit:       "amount",
+		availableUnits:      [],
+		unitConversionRates: {},
+	});
 
-	const submit = (
-		name: TIngredient["name"],
-		unit: TIngredient["unit"],
-	) => {
-		const nextIngredients: TIngredient[] = localStorage.ingredients
-			? JSON.parse(localStorage.ingredients)
-			: [];
-		const nextIngredient: TIngredient = {
-			id:   (nextIngredients.at(-1)?.id || 0) + 1,
-			name: name,
-			unit: unit,
-		};
-
-		nextIngredients.push(nextIngredient);
-
-		localStorage.ingredients = JSON.stringify(nextIngredients);
-
+	const submit = () => {
+		createIngredient(ingredient);
 		onSubmit?.();
 	};
 
@@ -41,10 +31,8 @@ export const CreateIngredientModal = ({
 			title="Créer un ingrédient"
 		>
 			<IngredientForm
-				name={name}
-				unit={unit}
-				setName={setName}
-				setUnit={setUnit}
+				ingredient={ingredient}
+				setIngredient={setIngredient}
 				submit={submit}
 				close={close}
 			/>

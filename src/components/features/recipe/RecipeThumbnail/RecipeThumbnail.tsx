@@ -34,7 +34,7 @@ export const RecipeThumbnail = ({
 								/>
 							)
 							: (
-								<div className="p-8 h-full w-full flex">
+								<div className="p-8 aspect-square h-full w-full flex">
 									<DefaultIngredient />
 								</div>
 							)

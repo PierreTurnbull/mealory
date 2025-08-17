@@ -49,6 +49,21 @@ const components = createTheme({
 				},
 			},
 		},
+		MuiFormControlLabel: {
+			styleOverrides: {
+				root: {
+					margin: 0,
+				},
+			},
+		},
+		MuiTooltip: {
+			styleOverrides: {
+				tooltip: {
+					backgroundColor: hex(colors.violet[950]),
+					fontSize:        12,
+				},
+			},
+		},
 		MuiInput: {
 			styleOverrides: {
 				root: {

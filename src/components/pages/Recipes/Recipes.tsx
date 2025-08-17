@@ -44,7 +44,7 @@ export const Recipes = () => {
 						Créer une recette
 					</Button>
 				</div>
-				<div className="w-full grid grid-cols-[repeat(auto-fill,150px)] grid-flow-row gap-4 justify-center">
+				<div className="w-full grid grid-flow-row gap-4 justify-center grid-cols-2 sm:grid-cols-[repeat(auto-fill,150px)]">
 					{
 						filteredRecipes
 							.map(recipe => {
