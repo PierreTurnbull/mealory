@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Outlet, useNavigate } from "react-router";
-import { Button } from "../../common/Button/Button";
+import { Button } from "../../../common/Button/Button";
 
 export const Navbar = () => {
 	const navigate = useNavigate();

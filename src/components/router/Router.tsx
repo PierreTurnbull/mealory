@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router";
-import { Navbar } from "../layout/Navbar/Navbar";
+import { Navbar } from "../features/layout/Navbar/Navbar";
 import { Home } from "../pages/Home/Home";
 import { Ingredients } from "../pages/Ingredients/Ingredients";
 import { Planning } from "../pages/Planning/Planning";

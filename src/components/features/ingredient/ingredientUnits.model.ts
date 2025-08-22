@@ -1,10 +1,10 @@
-import type { TIngredientUnit, TReferenceIngredientUnit } from "./ingredient.types";
+import type { TIngredientUnit } from "./ingredient.types";
 
 type TIngredientUnitDetails = {
 	universalRates: Partial<Record<TIngredientUnit, number>>
 }
 
-export const ingredientUnitsModel: Record<TReferenceIngredientUnit, TIngredientUnitDetails> = {
+export const ingredientUnitsModel: Record<TIngredientUnit, TIngredientUnitDetails> = {
 	amount: {
 		universalRates: {},
 	},
@@ -16,5 +16,11 @@ export const ingredientUnitsModel: Record<TReferenceIngredientUnit, TIngredientU
 			teaspoon:   0.005,
 			tablespoon: 0.015,
 		},
+	},
+	teaspoon: {
+		universalRates: {},
+	},
+	tablespoon: {
+		universalRates: {},
 	},
 };

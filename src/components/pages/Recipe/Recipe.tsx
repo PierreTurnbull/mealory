@@ -6,7 +6,7 @@ import { ConfirmationModal } from "../../common/ConfirmationModal/ConfirmationMo
 import { Page } from "../../common/Page/Page";
 import { Section } from "../../common/Section/Section";
 import { Title } from "../../common/Title/Title";
-import { DefaultIngredient } from "../../features/ingredient/DefaultIngredient";
+import { DefaultIngredientImage } from "../../features/ingredient/DefaultIngredientImage/DefaultIngredientImage";
 import type { TIngredient } from "../../features/ingredient/ingredient.types";
 import type { TRecipe, TRecipeIngredient } from "../../features/recipe/recipe.types";
 import { UpdateRecipeModal } from "../../features/recipe/UpdateRecipeModal/UpdateRecipeModal";
@@ -123,7 +123,7 @@ export const Recipe = () => {
 							: (
 								<Section>
 									<div className="p-16 h-full w-full flex">
-										<DefaultIngredient />
+										<DefaultIngredientImage />
 									</div>
 								</Section>
 							)

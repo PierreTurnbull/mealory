@@ -10,6 +10,7 @@ import { useOnNameChange } from "./useOnNameChange";
 import { useOnReferenceUnitChange } from "./useOnReferenceUnitChange";
 import { useOnUnitConversionRatesChange } from "./useOnUnitConversionRatesChange";
 import { useSyncAvailableUnitsAndUnitConversionRates } from "./useSyncAvailableUnitsAndUnitConversionRates";
+import { useSyncIngredientFormDataAndIngredient } from "./useSyncIngredientFormDataAndIngredient";
 import { useSyncReferenceUnitAndAvailableUnits } from "./useSyncReferenceUnitAndAvailableUnits";
 
 type TIngredientFormProps<T> = {
@@ -25,13 +26,14 @@ export const IngredientForm = <T extends TIngredient | Omit<TIngredient, "id">>(
 	submit,
 	close,
 }: TIngredientFormProps<T>) => {
-	const [ingredientFormData, setIngredientFormData] = useIngredientFormData(ingredient, setIngredient);
+	const [ingredientFormData, setIngredientFormData] = useIngredientFormData(ingredient);
 
 	const onNameChange = useOnNameChange(setIngredientFormData);
 	const onReferenceUnitChange = useOnReferenceUnitChange(setIngredientFormData);
 	const onAvailableUnitsChange = useOnAvailableUnitsChange(setIngredientFormData);
 	const onUnitConversionRatesChange = useOnUnitConversionRatesChange(setIngredientFormData);
 
+	useSyncIngredientFormDataAndIngredient(ingredientFormData, setIngredient);
 	useSyncReferenceUnitAndAvailableUnits(ingredientFormData, setIngredientFormData);
 	useSyncAvailableUnitsAndUnitConversionRates(ingredientFormData, setIngredientFormData);
 

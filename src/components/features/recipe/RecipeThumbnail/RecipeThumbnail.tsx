@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { Title } from "../../../common/Title/Title";
-import { DefaultIngredient } from "../../ingredient/DefaultIngredient";
+import { DefaultIngredientImage } from "../../ingredient/DefaultIngredientImage/DefaultIngredientImage";
 import type { TRecipe } from "../recipe.types";
 
 type TRecipeThumbnailProps = {
@@ -35,7 +35,7 @@ export const RecipeThumbnail = ({
 							)
 							: (
 								<div className="p-8 aspect-square h-full w-full flex">
-									<DefaultIngredient />
+									<DefaultIngredientImage />
 								</div>
 							)
 					}
