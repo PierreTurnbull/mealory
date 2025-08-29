@@ -1,20 +1,26 @@
-import type { TAliasIngredientUnit, TReferenceIngredientUnit } from "./ingredient.types";
+import type { TIngredientUnit } from "./ingredient.types";
 
 type TIngredientUnitDetails = {
-	expressibleIn: TAliasIngredientUnit[]
+	universalRates: Partial<Record<TIngredientUnit, number>>
 }
 
-export const ingredientUnitsModel: Record<TReferenceIngredientUnit, TIngredientUnitDetails> = {
+export const ingredientUnitsModel: Record<TIngredientUnit, TIngredientUnitDetails> = {
 	amount: {
-		expressibleIn: [],
+		universalRates: {},
 	},
 	mass: {
-		expressibleIn: [],
+		universalRates: {},
 	},
 	volume: {
-		expressibleIn: [
-			"tablespoon",
-			"teaspoon",
-		],
+		universalRates: {
+			teaspoon:   0.005,
+			tablespoon: 0.015,
+		},
+	},
+	teaspoon: {
+		universalRates: {},
+	},
+	tablespoon: {
+		universalRates: {},
 	},
 };

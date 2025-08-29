@@ -20,26 +20,17 @@ export const Modal = ({
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
-		const containerEl = containerRef.current!;
-
 		const onKeydown = (event: KeyboardEvent) => {
 			if (event.code === "Escape") {
 				close();
 			}
 		};
-		const onClick = (event: MouseEvent) => {
-			if (event.target === containerEl) {
-				close();
-			}
-		};
 
 		window.addEventListener("keydown", onKeydown);
-		containerEl.addEventListener("click", onClick);
 		document.body.style = "overflow-y: hidden;";
 
 		return () => {
 			window.removeEventListener("keydown", onKeydown);
-			containerEl.removeEventListener("click", onClick);
 			document.body.style = "overflow-y: initial;";
 		};
 	}, [close]);
@@ -50,10 +41,10 @@ export const Modal = ({
 			ref={containerRef}
 		>
 			<div
-				className=""
+				className="m-4 sm:m-0 w-full sm:w-[50vw] sm:min-w-128"
 			>
 				<Paper>
-					<div className="p-4 sm:p-8 max-w-[calc(100vw-10vw)] max-h-[calc(100vh-10vh)] overflow-y-auto">
+					<div className="p-4 sm:p-8 sm:max-w-[calc(100vw-10vw)] max-h-[calc(100vh-10vh)] overflow-y-auto">
 						{
 							title
 								? (

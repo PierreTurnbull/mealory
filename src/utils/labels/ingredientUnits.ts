@@ -16,6 +16,14 @@ export const ingredientUnitDirectObjectLabels: Record<TIngredientUnit, string> =
 	teaspoon:   "cuillères à café",
 };
 
+export const ingredientUnitDirectObjectSingularLabels: Record<TIngredientUnit, string> = {
+	amount:     "unité",
+	mass:       "gramme",
+	volume:     "litre",
+	tablespoon: "cuillère à soupe",
+	teaspoon:   "cuillère à café",
+};
+
 export const ingredientUnitDirectObjectShortLabels: Record<TIngredientUnit, string> = {
 	amount:     "",
 	mass:       "g",

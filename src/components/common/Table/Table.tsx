@@ -7,6 +7,7 @@ type TTableProps = {
 	rows:            TTableRow[]
 	sortParameters?: TSortParameters | null
 	onSort?:         (sortParameters: TSortParameters | null) => void
+	fullWidth?:      boolean
 }
 
 export const Table = ({
@@ -14,38 +15,45 @@ export const Table = ({
 	rows,
 	sortParameters,
 	onSort,
+	fullWidth,
 }: TTableProps) => {
 	const sortedRows = sortParameters
 		? [...rows].sort((a, b) => {
-			const aValue = a.items.find(item => item.key === sortParameters.sortBy)!.value;
-			const bValue = b.items.find(item => item.key === sortParameters.sortBy)!.value;
+			let aValue = a.items.find(item => item.key === sortParameters.sortBy)!.value;
+			let bValue = b.items.find(item => item.key === sortParameters.sortBy)!.value;
+
+			if (sortParameters.sortDirection === "asc") {
+				const tmp = aValue;
+
+				aValue = bValue;
+				bValue = tmp;
+			}
 
 			const getItemIsString = (item: unknown): item is string => typeof item === "string";
 			const getItemIsNumber = (item: unknown): item is number => typeof item === "number";
+			const getItemIsBoolean = (item: unknown): item is boolean => typeof item === "boolean";
 
 			if (getItemIsString(aValue) && getItemIsString(bValue)) {
-				if (sortParameters.sortDirection === "asc") {
-					return aValue.localeCompare(bValue);
-				} else {
-					return bValue.localeCompare(aValue);
-				}
+				return aValue.localeCompare(bValue);
 			} else if (getItemIsNumber(aValue) && getItemIsNumber(bValue)) {
-				if (sortParameters.sortDirection === "asc") {
-					return aValue - bValue;
-				} else {
-					return bValue - aValue;
-				}
+				return aValue - bValue;
+			} else if (getItemIsBoolean(aValue) && getItemIsBoolean(bValue)) {
+				return aValue ? 1 : -1;
 			} else {
-				console.warn(`The sort function does not support type ${typeof aValue}.`);
+				throw new Error(`The sort function does not support type ${typeof aValue}.`);
 			}
-
-			return 0;
 		})
 		: rows;
 
 	return (
 		<table
-			className="border-separate border-spacing-1 rounded bg-violet-100"
+			className={`
+				border-separate
+				border-spacing-1
+				rounded
+				bg-violet-100
+				${fullWidth ? "w-full" : ""}
+			`}
 		>
 			<thead>
 				<TableHead
@@ -61,6 +69,7 @@ export const Table = ({
 							<TableRow
 								key={row.key}
 								row={row}
+								columns={columns}
 							/>
 						);
 					})

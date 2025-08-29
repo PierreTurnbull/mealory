@@ -1,12 +1,14 @@
-import type { TTableRow } from "../table.types";
+import type { TTableColumn, TTableRow } from "../table.types";
 import { TableCell } from "../TableCell/TableCell";
 
 type TTableRowProps = {
-	row: TTableRow
+	row:     TTableRow
+	columns: TTableColumn[]
 }
 
 export const TableRow = ({
 	row,
+	columns,
 }: TTableRowProps) => {
 	return (
 		<tr
@@ -14,11 +16,14 @@ export const TableRow = ({
 		>
 			{
 				row.items.map(item => {
+					const column = columns.find(column => column.key === item.key)!;
+
 					return (
 						<TableCell
 							key={item.key}
-							isDisabled={row.isDisabled}
-							isDimmed={row.isDimmed}
+							item={item}
+							row={row}
+							column={column}
 						>
 							{item.label}
 						</TableCell>

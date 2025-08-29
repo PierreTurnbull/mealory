@@ -41,8 +41,8 @@ export const IconButton = ({
 				` : ""}
 
 				${isDisabled ? `
-					bg-gray-200
-					text-gray-500
+					bg-slate-200
+					text-slate-500
 					cursor-auto
 				` : `
 					cursor-pointer

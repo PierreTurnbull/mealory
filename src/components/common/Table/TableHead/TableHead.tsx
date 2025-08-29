@@ -71,14 +71,19 @@ export const TableHead = ({
 								h-8
 								pl-2
 								sm:pl-4
+								${!column.isSortable ? "pr-2" : ""}
+								${!column.isSortable ? "sm:pr-4" : ""}
 								rounded
 								bg-violet-300
 								text-left
 								font-bold
-								${column.isSortable ? `
-									hover:bg-violet-400
-									cursor-pointer
-								` : ""}
+
+								${column.isSortable ? "hover:bg-violet-400" : ""}
+								${column.isSortable ? "cursor-pointer" : ""}
+
+								${column.paddingIsDisabled ? "pl-0! sm:pl-0! pr-0! sm:pr-0!" : ""}
+
+								${column.backgroundIsDisabled ? "bg-transparent!" : ""}
 							`}
 							style={{
 								width: column.width,
@@ -89,11 +94,21 @@ export const TableHead = ({
 							}
 						>
 							<div
-								className="flex justify-between items-center h-full"
+								className="flex justify-between items-center h-full gap-2"
 							>
-								<p>
-									{column.label}
-								</p>
+								{
+									column.label
+										? (
+											<p>
+												{column.label}
+											</p>
+										)
+										: null
+								}
+								{
+									// workaround to prevent some weird behaviour related with th and text baseline.
+									!column.label && !sortIcon ? <p></p> : null
+								}
 								<p
 									className={`
 										text-xl
@@ -104,6 +119,11 @@ export const TableHead = ({
 										items-center
 										font-bold
 										h-full
+
+										${!column.label ? "w-full" : ""}
+										${!column.label ? "aspect-auto!" : ""}
+
+										${!column.isSortable ? "hidden" : ""}
 									`}
 								>
 									{sortIcon}

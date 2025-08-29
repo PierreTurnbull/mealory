@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { Title } from "../../../common/Title/Title";
-import { DefaultIngredient } from "../../ingredient/DefaultIngredient";
+import { DefaultRecipeImage } from "../../ingredient/DefaultRecipeImage/DefaultRecipeImage";
 import type { TRecipe } from "../recipe.types";
 
 type TRecipeThumbnailProps = {
@@ -15,7 +15,7 @@ export const RecipeThumbnail = ({
 	imageUrl,
 }: TRecipeThumbnailProps) => {
 	return (
-		<div>
+		<div className="flex flex-col justify-end">
 			<Title
 				title={name}
 				rank="h4"
@@ -34,8 +34,8 @@ export const RecipeThumbnail = ({
 								/>
 							)
 							: (
-								<div className="p-8 h-full w-full flex">
-									<DefaultIngredient />
+								<div className="p-8 aspect-square h-full w-full flex">
+									<DefaultRecipeImage />
 								</div>
 							)
 					}

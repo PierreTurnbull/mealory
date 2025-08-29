@@ -19,8 +19,15 @@ export type TAliasIngredientUnit = (
 
 export type TIngredientUnit = TReferenceIngredientUnit | TAliasIngredientUnit
 
+export type TUnitConversionRates = Partial<Record<
+	TIngredientUnit,
+	number
+>>
+
 export type TIngredient = {
-	id:   number
-	name: string
-	unit: TReferenceIngredientUnit
+	id:                  string
+	name:                string
+	referenceUnit:       TReferenceIngredientUnit
+	availableUnits:      TIngredientUnit[]
+	unitConversionRates: TUnitConversionRates
 }

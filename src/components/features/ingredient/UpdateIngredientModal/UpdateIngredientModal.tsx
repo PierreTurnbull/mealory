@@ -1,50 +1,31 @@
 import { useState } from "react";
 import { Modal } from "../../../common/Modal/Modal";
 import { IngredientForm } from "../IngredientForm/IngredientForm";
-import type { TIngredient, TReferenceIngredientUnit } from "../ingredient.types";
+import { getIngredient, updateIngredient } from "../ingredient.api";
+import type { TIngredient } from "../ingredient.types";
 
 type TUpdateIngredientModalProps = {
-	close:     () => void
-	onSubmit?: () => void
 	id:        TIngredient["id"]
+	close:     () => void
+	onSubmit?: (updatedIngredient: TIngredient) => void
 }
 
 export const UpdateIngredientModal = ({
+	id,
 	close,
 	onSubmit,
-	id,
 }: TUpdateIngredientModalProps) => {
-	const ingredients: TIngredient[] = localStorage.ingredients
-		? JSON.parse(localStorage.ingredients)
-		: [];
-	const ingredient = ingredients.find(ingredient => ingredient.id === id);
+	const initialIngredient = getIngredient(id);
 
-	if (!ingredient) {
+	if (!initialIngredient) {
 		throw new Error(`Missing ingredient with id ${id}.`);
 	}
 
-	const [name, setName] = useState<TIngredient["name"]>(ingredient.name);
-	const [unit, setUnit] = useState<TReferenceIngredientUnit>(ingredient.unit);
+	const [ingredient, setIngredient] = useState(initialIngredient);
 
-	const submit = (
-		name: TIngredient["name"],
-		unit: TIngredient["unit"],
-	) => {
-		const nextIngredients: TIngredient[] = localStorage.ingredients
-			? JSON.parse(localStorage.ingredients)
-			: [];
-		const ingredientToUpdate = nextIngredients.find(ingredient => ingredient.id === id);
-
-		if (!ingredientToUpdate) {
-			throw new Error(`Missing ingredient with id ${id}.`);
-		}
-
-		ingredientToUpdate.name = name;
-		ingredientToUpdate.unit = unit;
-
-		localStorage.ingredients = JSON.stringify(nextIngredients);
-
-		onSubmit?.();
+	const submit = () => {
+		const updatedIngredient = updateIngredient(id, ingredient);
+		onSubmit?.(updatedIngredient);
 	};
 
 	return (
@@ -53,10 +34,8 @@ export const UpdateIngredientModal = ({
 			title="Modifier un ingrédient"
 		>
 			<IngredientForm
-				name={name}
-				unit={unit}
-				setName={setName}
-				setUnit={setUnit}
+				ingredient={ingredient}
+				setIngredient={setIngredient}
 				submit={submit}
 				close={close}
 			/>

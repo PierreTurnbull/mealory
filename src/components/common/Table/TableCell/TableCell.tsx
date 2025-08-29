@@ -1,15 +1,18 @@
 import type { ReactNode } from "react";
+import type { TTableColumn, TTableItem, TTableRow } from "../table.types";
 
 type TTableCellProps = {
-	children:    ReactNode
-	isDisabled?: boolean
-	isDimmed?:   boolean
+	children: ReactNode
+	item:     TTableItem,
+	row:      TTableRow
+	column:   TTableColumn
 }
 
 export const TableCell = ({
 	children,
-	isDisabled,
-	isDimmed,
+	item,
+	row,
+	column,
 }: TTableCellProps) => {
 	return (
 		<td
@@ -21,14 +24,21 @@ export const TableCell = ({
 				relative
 				align-top
 
-				${isDimmed ? "bg-gray-200" : ""}
+				${row.isDimmed ? "bg-slate-200" : ""}
 
-				${isDisabled ? "bg-gray-200" : ""}
-				${isDisabled ? "text-gray-500" : ""}
-				${isDisabled ? "pointer-events-none" : ""}
+				${row.isDisabled ? "bg-slate-200" : ""}
+				${row.isDisabled ? "text-slate-500" : ""}
+				${row.isDisabled ? "pointer-events-none" : ""}
 
-				${(!isDisabled && !isDimmed) ? "bg-violet-200" : ""}
+				${(!row.isDisabled && !row.isDimmed) ? "bg-violet-200" : ""}
+
+				${column.paddingIsDisabled || item.paddingIsDisabled ? "px-0! sm:px-0!" : ""}
+
+				${column.backgroundIsDisabled ? "bg-transparent!" : ""}
 			`}
+			style={{
+				width: column.width,
+			}}
 		>
 			<span className="flex items-center h-full">
 				{children}

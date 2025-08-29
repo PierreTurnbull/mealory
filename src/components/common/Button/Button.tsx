@@ -1,5 +1,5 @@
+import { Tooltip } from "@mui/material";
 import type { ReactNode } from "react";
-import { Tooltip } from "../Tooltip/Tooltip";
 
 export type TButtonType = "primary" | "secondary" | "danger"
 
@@ -54,8 +54,8 @@ export const Button = ({
 				` : ""}
 
 				${isDisabled ? `
-					bg-gray-200
-					text-gray-500
+					bg-slate-200
+					text-slate-500
 					cursor-auto
 				` : `
 					cursor-pointer
@@ -77,7 +77,9 @@ export const Button = ({
 		tooltip
 			? (
 				<Tooltip title={tooltip}>
-					{buttonEl}
+					<div>
+						{buttonEl}
+					</div>
 				</Tooltip>
 			)
 			: buttonEl

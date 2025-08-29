@@ -1,27 +1,15 @@
 import { Input } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../../common/Button/Button";
 import { Page } from "../../common/Page/Page";
 import { CreateRecipeModal } from "../../features/recipe/CreateRecipeModal/CreateRecipeModal";
-import type { TRecipe } from "../../features/recipe/recipe.types";
+import { getRecipes } from "../../features/recipe/recipe.api";
 import { RecipeThumbnail } from "../../features/recipe/RecipeThumbnail/RecipeThumbnail";
 
 export const Recipes = () => {
-	const [recipes, setRecipes] = useState<TRecipe[]>([]);
+	const [recipes, setRecipes] = useState(getRecipes());
 	const [createRecipeModalIsOpen, setCreateRecipeModalIsOpen] = useState(false);
 	const [filter, setFilter] = useState("");
-
-	const fetchRecipes = () => {
-		setRecipes(
-			localStorage.recipes
-				? JSON.parse(localStorage.recipes)
-				: [],
-		);
-	};
-		
-	useEffect(() => {
-		fetchRecipes();
-	}, []);
 
 	const filteredRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(filter.toLowerCase()));
 
@@ -44,7 +32,7 @@ export const Recipes = () => {
 						Créer une recette
 					</Button>
 				</div>
-				<div className="w-full grid grid-cols-[repeat(auto-fill,150px)] grid-flow-row gap-4 justify-center">
+				<div className="w-full grid grid-flow-row gap-4 justify-center grid-cols-2 sm:grid-cols-[repeat(auto-fill,150px)]">
 					{
 						filteredRecipes
 							.map(recipe => {
@@ -65,7 +53,9 @@ export const Recipes = () => {
 					? (
 						<CreateRecipeModal
 							close={() => setCreateRecipeModalIsOpen(false)}
-							onSubmit={fetchRecipes}
+							onSubmit={() => {
+								setRecipes(getRecipes());
+							}}
 						/>
 					)
 					: null

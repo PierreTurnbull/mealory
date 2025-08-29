@@ -12,7 +12,7 @@ export const Paper = ({
 			className={`
 				shadow-lg
 				rounded-md
-				bg-gray-50
+				bg-slate-50
 				overflow-hidden
 			`}
 		>

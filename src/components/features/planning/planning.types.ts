@@ -1,29 +1,19 @@
 import type { TIngredient } from "../ingredient/ingredient.types";
-import type { TRecipeIngredient } from "../recipe/recipe.types";
-import type { TMenu } from "./menu.types";
+import type { TRecipe } from "../recipe/recipe.types";
 
-export type TPlanningDay = {
-	lunch:  TMenu
-	dinner: TMenu
+export type TPlanningRecipe = {
+	id:       TRecipe["id"],
+	portions: number,
 }
 
 export type TIngredientInStock = {
 	id:     TIngredient["id"]
-	amount: number | null
+	amount: number
 }
-
-export type TTotalIngredient = {
-		id:     TIngredient["id"]
-		name:   TIngredient["name"]
-		amount: TRecipeIngredient["amount"]
-		unit:   TIngredient["unit"]
-	}
 
 export type TPlanning = {
 	id:                  string
-	startDate:           Date
-	endDate:             Date
-	planningDays:        TPlanningDay[]
+	recipes:             TPlanningRecipe[]
 	ingredientsInStock:  TIngredientInStock[]
 	ingredientsObtained: TIngredient["id"][]
 }

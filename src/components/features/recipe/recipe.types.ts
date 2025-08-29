@@ -1,17 +1,16 @@
 import type { TIngredient } from "../ingredient/ingredient.types";
-import type { ingredientUnitsModel } from "../ingredient/ingredientUnits.model";
 
 export type TRecipeIngredient = {
-	id:        TIngredient["id"]
-	amount:    number | null
-	aliasUnit: (TIngredient["unit"] | typeof ingredientUnitsModel[TIngredient["unit"]]["expressibleIn"][number]) | null
+	id:     TIngredient["id"]
+	amount: number
+	unit:   TIngredient["availableUnits"][number]
 }
 
 export type TRecipe = {
-	id:           number
+	id:           string
 	name:         string
-	description:  string
+	description:  string | null
 	ingredients:  TRecipeIngredient[]
 	imageUrl:     string | null
-	instructions: string[]
+	instructions: string[] | null
 }

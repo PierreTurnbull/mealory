@@ -1,16 +1,19 @@
 import type { ReactNode } from "react";
 
 export type TTableColumn = {
-	key:        string
-	label:      ReactNode | string
-	isSortable: boolean
-	width?:     string
+	key:                   string
+	label:                 ReactNode | string
+	isSortable:            boolean
+	width?:                string
+	paddingIsDisabled?:    boolean
+	backgroundIsDisabled?: boolean
 }
 
 export type TTableItem = {
-	key:   string
-	value: string | number | boolean | null
-	label: string | ReactNode
+	key:                string
+	value:              string | number | boolean | null
+	label:              string | ReactNode
+	paddingIsDisabled?: boolean
 }
 
 export type TTableRow = {

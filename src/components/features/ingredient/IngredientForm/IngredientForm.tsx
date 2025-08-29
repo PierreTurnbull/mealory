@@ -1,68 +1,75 @@
-import { Input, MenuItem, Select } from "@mui/material";
-import { ingredientUnitAnnotationLabels } from "../../../../utils/labels/ingredientUnits";
+import { Input } from "@mui/material";
 import { Button } from "../../../common/Button/Button";
-import type { TIngredient, TReferenceIngredientUnit } from "../ingredient.types";
+import type { TIngredient } from "../ingredient.types";
+import { AvailableUnitsForm } from "./AvailableUnitsForm/AvailableUnitsForm";
+import { ConversionForm } from "./ConversionForm/ConversionForm";
+import { ReferenceUnitForm } from "./ReferenceUnitForm/ReferenceUnitForm";
+import { useIngredientFormData } from "./useIngredientFormData";
+import { useOnAvailableUnitsChange } from "./useOnAvailableUnitsChange";
+import { useOnNameChange } from "./useOnNameChange";
+import { useOnReferenceUnitChange } from "./useOnReferenceUnitChange";
+import { useOnUnitConversionRatesChange } from "./useOnUnitConversionRatesChange";
+import { useSyncAvailableUnitsAndUnitConversionRates } from "./useSyncAvailableUnitsAndUnitConversionRates";
+import { useSyncIngredientFormDataAndIngredient } from "./useSyncIngredientFormDataAndIngredient";
+import { useSyncReferenceUnitAndAvailableUnits } from "./useSyncReferenceUnitAndAvailableUnits";
 
-type TIngredientFormProps = {
-	name:    TIngredient["name"]
-	unit:    TIngredient["unit"]
-	setName: (name: TIngredient["name"]) => void
-	setUnit: (unit: TIngredient["unit"]) => void
-	submit:  (name: TIngredient["name"], unit: TIngredient["unit"]) => void
-	close:   () => void
+type TIngredientFormProps<T> = {
+	ingredient:    T
+	setIngredient: React.Dispatch<React.SetStateAction<T>>
+	submit:        () => void
+	close:         () => void
 }
 
-export const IngredientForm = ({
-	name,
-	unit,
-	setName,
-	setUnit,
+export const IngredientForm = <T extends TIngredient | Omit<TIngredient, "id">>({
+	ingredient,
+	setIngredient,
 	submit,
 	close,
-}: TIngredientFormProps) => {
-	const ingredientUnits: TReferenceIngredientUnit[] = ["amount", "mass", "volume"];
-	const unitChoices = ingredientUnits
-		.map(value => {
-			const choice = {
-				value:      value,
-				label:      ingredientUnitAnnotationLabels[value],
-				isDisabled: false,
-			};
+}: TIngredientFormProps<T>) => {
+	const [ingredientFormData, setIngredientFormData] = useIngredientFormData(ingredient);
 
-			return choice;
-		});
+	const onNameChange = useOnNameChange(setIngredientFormData);
+	const onReferenceUnitChange = useOnReferenceUnitChange(setIngredientFormData);
+	const onAvailableUnitsChange = useOnAvailableUnitsChange(setIngredientFormData);
+	const onUnitConversionRatesChange = useOnUnitConversionRatesChange(setIngredientFormData);
+
+	useSyncIngredientFormDataAndIngredient(ingredientFormData, setIngredient);
+	useSyncReferenceUnitAndAvailableUnits(ingredientFormData, setIngredientFormData);
+	useSyncAvailableUnitsAndUnitConversionRates(ingredientFormData, setIngredientFormData);
 
 	return (
 		<div className="flex flex-col space-y-4">
 			<p>Nom :</p>
 			<Input
-				value={name}
-				onChange={event => setName(event.target.value)}
+				value={ingredientFormData.name.value}
+				onChange={onNameChange}
 			/>
-			<p>Unité de mesure :</p>
-			<Select
-				value={unit}
-				onChange={event => setUnit(event.target.value)}
-			>
-				{
-					unitChoices.map(choice => {
-						return (
-							<MenuItem
-								value={choice.value}
-								disabled={choice.isDisabled}
-							>
-								{choice.label}
-							</MenuItem>
-						);
-					})
-				}
-			</Select>
+			<ReferenceUnitForm
+				referenceUnit={ingredientFormData.referenceUnit.value}
+				setReferenceUnit={onReferenceUnitChange}
+			/>
+			<AvailableUnitsForm
+				referenceUnit={ingredientFormData.referenceUnit.value}
+				availableUnits={ingredientFormData.availableUnits.value}
+				setAvailableUnits={onAvailableUnitsChange}
+			/>
+			{
+				ingredientFormData.availableUnits.value.length > 1
+					? (
+						<ConversionForm
+							referenceUnit={ingredientFormData.referenceUnit.value}
+							unitConversionRates={ingredientFormData.unitConversionRates.value}
+							setUnitConversionRates={onUnitConversionRatesChange}
+						/>
+					)
+					: null
+			}
 			<div
 				className="flex space-x-2 justify-center"
 			>
 				<Button
 					onClick={() => {
-						submit(name, unit);
+						submit();
 						close();
 					}}
 				>

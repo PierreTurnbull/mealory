@@ -1,4 +1,4 @@
-import { Button, type TButtonType } from "../Button/Button";
+import { Button, type ButtonOwnProps } from "@mui/material";
 import { Modal } from "../Modal/Modal";
 import { Title } from "../Title/Title";
 
@@ -7,7 +7,7 @@ type TConfirmationModalProps = {
 	description: string
 	submit:      () => void
 	cancel:      () => void
-	buttonType?: TButtonType
+	color?:      ButtonOwnProps["color"]
 }
 
 export const ConfirmationModal = ({
@@ -15,7 +15,7 @@ export const ConfirmationModal = ({
 	description,
 	submit,
 	cancel,
-	buttonType = "primary",
+	color,
 }: TConfirmationModalProps) => {
 	return (
 		<Modal
@@ -24,16 +24,16 @@ export const ConfirmationModal = ({
 			<div className="space-y-4">
 				<Title title={title} />
 				<p>{description}</p>
-				<div className="flex space-x-4 justify-center">
+				<div className="flex gap-2 justify-center">
 					<Button
 						onClick={submit}
-						type={buttonType}
+						color={color}
 					>
 						Confirmer
 					</Button>
 					<Button
 						onClick={cancel}
-						type="secondary"
+						color="secondary"
 					>
 						Annuler
 					</Button>

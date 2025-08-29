@@ -1,19 +1,19 @@
-import js from '@eslint/js'
+import js from "@eslint/js"
 import stylisticTs from "@stylistic/eslint-plugin-ts"
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import { globalIgnores } from 'eslint/config'
-import globals from 'globals'
-import tseslint from 'typescript-eslint'
+import reactHooks from "eslint-plugin-react-hooks"
+import reactRefresh from "eslint-plugin-react-refresh"
+import { globalIgnores } from "eslint/config"
+import globals from "globals"
+import tseslint from "typescript-eslint"
 
 export default tseslint.config([
-  globalIgnores(['dist']),
+  globalIgnores(["dist"]),
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ["src/**/*.{ts,tsx}"],
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
-      reactHooks.configs['recommended-latest'],
+      reactHooks.configs["recommended-latest"],
       reactRefresh.configs.vite,
     ],
     languageOptions: {
@@ -23,8 +23,7 @@ export default tseslint.config([
     plugins: {
 			"@stylistic/ts": stylisticTs, 
 		},
-		ignores: ["dist"],
-		files:   ["**/*.ts", "**/*.tsx"],
+		ignores: ["dist", "node_modules", ".vite"],
 		rules:   {
 			"indent":                            ["error", "tab"],
 			"semi":                              ["error", "always"],

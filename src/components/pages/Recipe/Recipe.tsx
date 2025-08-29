@@ -6,15 +6,14 @@ import { ConfirmationModal } from "../../common/ConfirmationModal/ConfirmationMo
 import { Page } from "../../common/Page/Page";
 import { Section } from "../../common/Section/Section";
 import { Title } from "../../common/Title/Title";
-import { DefaultIngredient } from "../../features/ingredient/DefaultIngredient";
-import type { TIngredient } from "../../features/ingredient/ingredient.types";
-import type { TRecipe, TRecipeIngredient } from "../../features/recipe/recipe.types";
+import { getIngredients } from "../../features/ingredient/ingredient.api";
+import { deleteRecipe, getRecipes } from "../../features/recipe/recipe.api";
 import { UpdateRecipeModal } from "../../features/recipe/UpdateRecipeModal/UpdateRecipeModal";
 
 export const Recipe = () => {
 	const navigate = useNavigate();
 	const params = useParams();
-	const recipeId = params.recipeId && Number(params.recipeId);
+	const recipeId = params.recipeId;
 
 	if (!recipeId) {
 		throw new Error("Missing recipeId.");
@@ -23,29 +22,14 @@ export const Recipe = () => {
 	const [updateRecipeModalIsOpen, setUpdateRecipeModalIsOpen] = useState(false);
 	const [deleteRecipeModalIsOpen, setDeleteRecipeModalIsOpen] = useState(false);
 
-	const ingredients: TIngredient[] = localStorage.ingredients
-		? JSON.parse(localStorage.ingredients)
-		: [];
+	const [ingredients] = useState(getIngredients());
+	const [recipes, setRecipes] = useState(getRecipes());
 
-	const recipes: TRecipe[] = localStorage.recipes
-		? JSON.parse(localStorage.recipes)
-		: [];
-	const recipe = recipes.find(recipe => recipe.id === Number(recipeId));
+	const recipe = recipes.find(recipe => recipe.id === recipeId);
 
 	if (!recipe) {
 		throw new Error(`Missing recipe with id ${recipeId}.`);
 	}
-
-	const deleteRecipe = () => {
-		const nextRecipes: TRecipe[] = localStorage.recipes
-			? JSON.parse(localStorage.recipes)
-			: [];
-		const recipeToDeleteIndex = nextRecipes.findIndex(recipe => recipe.id === recipeId);
-
-		nextRecipes.splice(recipeToDeleteIndex, 1);
-
-		localStorage.recipes = JSON.stringify(nextRecipes);
-	};
 
 	return (
 		<Page
@@ -69,17 +53,34 @@ export const Recipe = () => {
 					</Button>
 				</div>
 				<div
-					className="space-x-4 grid grid-cols-2"
+					className="flex flex-col min-[500px]:grid min-[500px]:grid-cols-2 gap-4"
 				>
-					<Section>
-						<div className="space-y-4 flex flex-col justify-between h-full">
-							<div className="space-y-4">
-								<Title rank="h4" title="Description :" />
-								<p>{recipe.description}</p>
-							</div>
-							<div className="space-y-4">
-								<Title rank="h4" title="Liste d'ingrédients :" className="hidden sm:block" />
-								<Title rank="h4" title="Ingrédients :" className="sm:hidden block" />
+					<Section
+						className={`
+							order-1
+							min-[500px]:order-0
+							${recipe.imageUrl ? "" : "col-span-2"}
+						`}
+					>
+						<div className={`
+							space-y-4
+							flex
+							flex-col
+							justify-between
+							h-full
+						`}>
+							{
+								recipe.description
+									? (
+										<div className="space-y-4">
+											<Title rank="h4" title="Description :" />
+											<p>{recipe.description}</p>
+										</div>
+									)
+									: null
+							}
+							<div className="space-y-2">
+								<Title rank="h4" title="Ingrédients :" />
 								{
 									recipe.ingredients
 										.map(recipeIngredient => {
@@ -93,13 +94,9 @@ export const Recipe = () => {
 												);
 											}
 
-											const fullIngredient: TIngredient & TRecipeIngredient = {
-												...ingredient,
-												...recipeIngredient,
-											};
 											return (
 												<p key={recipeIngredient.id}>
-													{fullIngredient.name} : {fullIngredient.amount} {ingredientUnitDirectObjectLabels[fullIngredient.aliasUnit || fullIngredient.unit]}
+													{ingredient.name} : {recipeIngredient.amount} {ingredientUnitDirectObjectLabels[recipeIngredient.unit]}
 												</p>
 											);
 										})
@@ -111,7 +108,7 @@ export const Recipe = () => {
 						recipe.imageUrl
 							? (
 								<Section>
-									<div className="flex justify-center items-center h-full w-full">
+									<div className="flex justify-center items-center h-full w-full order-0">
 										<img
 											className="rounded"
 											src={recipe.imageUrl}
@@ -120,33 +117,33 @@ export const Recipe = () => {
 									</div>
 								</Section>
 							)
-							: (
-								<Section>
-									<div className="p-16 h-full w-full flex">
-										<DefaultIngredient />
-									</div>
-								</Section>
-							)
+							: null
 					}
 				</div>
-				<Section>
-					<Title rank="h4" title="Instructions :" />
-					<ul className="space-y-4">
-						{
-							recipe.instructions.map((instruction, key) => {
-								return (
-									<li
-										key={key}
-										className="space-x-2"
-									>
-										<span>{key + 1}.</span>
-										<span>{instruction}</span>
-									</li>
-								);
-							})
-						}
-					</ul>
-				</Section>
+				{
+					recipe.instructions
+						? (
+							<Section>
+								<Title rank="h4" title="Instructions :" />
+								<ul className="space-y-2">
+									{
+										recipe.instructions.map((instruction, key) => {
+											return (
+												<li
+													key={key}
+													className="space-x-2"
+												>
+													<span>{key + 1}.</span>
+													<span>{instruction}</span>
+												</li>
+											);
+										})
+									}
+								</ul>
+							</Section>
+						)
+						: null
+				}
 			</div>
 			{
 				deleteRecipeModalIsOpen
@@ -156,10 +153,10 @@ export const Recipe = () => {
 							description="Es-tu sûr de vouloir supprimer la recette ?"
 							cancel={() => setDeleteRecipeModalIsOpen(false)}
 							submit={() => {
-								deleteRecipe();
+								deleteRecipe(recipeId);
 								navigate("/recipes");
 							}}
-							buttonType="danger"
+							color="error"
 						/>
 					)
 					: null
@@ -168,7 +165,10 @@ export const Recipe = () => {
 				updateRecipeModalIsOpen
 					? (
 						<UpdateRecipeModal
-							close={() => setUpdateRecipeModalIsOpen(false)}
+							close={() => {
+								setUpdateRecipeModalIsOpen(false);
+								setRecipes(getRecipes());
+							}}
 							id={recipeId}
 						/>
 					)

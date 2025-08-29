@@ -1,9 +1,11 @@
-import { getPlanning } from "../getPlanning/getPlanning";
+import type { TPlanning } from "../../planning.types";
 
 export const getDefaultPlanning = () => {
-	const defaultStartDate = new Date();
-	const defaultEndDate = new Date(defaultStartDate);
-	defaultEndDate.setDate(defaultStartDate.getDate() + 6);
+	const defaultPlanning: Omit<TPlanning, "id"> = {
+		recipes:             [],
+		ingredientsInStock:  [],
+		ingredientsObtained: [],
+	};
 
-	return getPlanning(new Date(), defaultEndDate);
+	return defaultPlanning;
 };
