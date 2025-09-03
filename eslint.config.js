@@ -23,7 +23,7 @@ export default tseslint.config([
     plugins: {
 			"@stylistic/ts": stylisticTs, 
 		},
-		ignores: ["dist", "node_modules", ".vite"],
+		ignores: ["dist/**/*", "node_modules/**/*", ".vite/**/*", "src/generated/**/*"],
 		rules:   {
 			"indent":                            ["error", "tab"],
 			"semi":                              ["error", "always"],

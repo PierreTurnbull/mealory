@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router";
+import { dbClient } from "../../../dbClient/dbClient";
 import { IconButton } from "../IconButton/IconButton";
 import { Title } from "../Title/Title";
 
@@ -15,6 +16,16 @@ export const Page = ({
 	mustDisplayGoBackButton = false,
 }: TPageProps) => {
 	const navigate = useNavigate();
+
+	const checkUser = async () => {
+		const { error } = await dbClient.auth.getUser();
+
+		if (error) {
+			navigate("/sign-in");
+		}
+	};
+
+	checkUser();
 
 	return (
 		<div

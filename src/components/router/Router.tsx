@@ -6,6 +6,8 @@ import { Planning } from "../pages/Planning/Planning";
 import { Recipe } from "../pages/Recipe/Recipe";
 import { Recipes } from "../pages/Recipes/Recipes";
 import { ShoppingList } from "../pages/ShoppingList/ShoppingList";
+import { SignIn } from "../pages/SignIn/SignIn";
+import { SignUp } from "../pages/SignUp/SignUp";
 import { Stock } from "../pages/Stock/Stock";
 
 export const Router = () => {
@@ -20,6 +22,8 @@ export const Router = () => {
 				<Route path="/stock" element={<DefaultPlanningWrapper><Stock /></DefaultPlanningWrapper>} />
 				<Route path="/shopping-list" element={<DefaultPlanningWrapper><ShoppingList /></DefaultPlanningWrapper>} />
 			</Route>
+			<Route path="/sign-up" element={<SignUp />} />
+			<Route path="/sign-in" element={<SignIn />} />
 		</Routes>
 	);
 };

@@ -30,6 +30,7 @@ export const Notification = ({
 				<div
 					className={`
 						${notification.type === "success" ? "border-t-green-400" : ""}
+						${notification.type === "error" ? "border-t-red-400" : ""}
 						flex
 						justify-between
 						items-center

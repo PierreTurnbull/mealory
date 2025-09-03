@@ -1,4 +1,4 @@
-export type TNotificationType = "success"
+export type TNotificationType = "success" | "error"
 
 export type TNotification = {
 	id:   string

@@ -17,6 +17,12 @@ const palette = createTheme({
 			dark:         hex(colors.violet[500]),
 			contrastText: hex(colors.violet[500]),
 		},
+		secondary: {
+			main:         hex(colors.violet[50]),
+			light:        hex(colors.violet[50]),
+			dark:         hex(colors.violet[50]),
+			contrastText: hex(colors.violet[50]),
+		},
 	},
 });
 
