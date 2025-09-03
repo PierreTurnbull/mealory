@@ -30,7 +30,6 @@ export const SignIn = () => {
 		if (data.user) {
 			navigate("/");
 		} else if (error) {
-			console.error(error);
 			notificationContext.addNotification("Les identifiants sont incorrects.", "error");
 		}
 	};

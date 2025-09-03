@@ -31,7 +31,6 @@ export const SignUp = () => {
 			notificationContext.addNotification("Félicitations, vous avez créé votre compte !", "success");
 			navigate("/");
 		} else if (error) {
-			console.error(error);
 			notificationContext.addNotification("Une erreur est survenue lors de la création de votre compte.", "error");
 		}
 	};

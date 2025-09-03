@@ -39,6 +39,7 @@ export const useStockRows = (
 
 		const amountToObtain = ingredientsToObtain[id];
 
+		const unitShortLabel = ingredientUnitDirectObjectShortLabels[ingredient.referenceUnit];
 		const stockRow: TTableRow = {
 			key:   id,
 			items: [
@@ -55,7 +56,14 @@ export const useStockRows = (
 				{
 					key:   "stock",
 					label: (
-						<span className="flex flex-row gap-2 items-center pr-2">
+						<span
+							className={`
+								flex
+								flex-row
+								gap-2
+								items-center
+								${unitShortLabel ? "pr-2" : ""}
+							`}>
 							<Input
 								style={{
 									width: 60,
@@ -64,7 +72,11 @@ export const useStockRows = (
 								onChange={(event) => onStockChange(event, id)}
 								type="number"
 							/>
-							<span>{ingredientUnitDirectObjectShortLabels[ingredient.referenceUnit]}</span>
+							{
+								unitShortLabel
+									? <span>{unitShortLabel}</span>
+									: null
+							}
 						</span>
 					),
 					value:             Number(stockFormDataItem.amount.value),
