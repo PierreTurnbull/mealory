@@ -21,6 +21,7 @@ export const HelperIcon = ({
 		>
 			<HelpIcon
 				className="text-[16px]! cursor-pointer"
+				onClick={() => setIsOpen(true)}
 			/>
 		</Tooltip>
 	);
