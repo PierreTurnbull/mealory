@@ -4,8 +4,8 @@ import type { TRecipeIngredient } from "../../components/features/recipe/recipe.
 /**
  * Returns the amounted converted into the ingredient's reference unit, with a precision of 3
  * decimals.
- * E.g.: let ingredient water have reference unit "volume" and available units: "volume" and
- * "tablespoon". Let the conversion rate of water volume into water tablespoon be 0.015. Let us pass
+ * E.g.: let ingredient water have reference unit "liter" and available units: "liter" and
+ * "tablespoon". Let the conversion rate of water liter into water tablespoon be 0.015. Let us pass
  * an ingredient with amount === 1 and unit === "tablespoon". 1 liter water will be converted into
  * 0.015 tablespoon, so the return value is 0.015.
  */

@@ -18,9 +18,11 @@ export const Router = () => {
 				<Route path="/ingredients" element={<Ingredients />} />
 				<Route path="/recipes" element={<Recipes />} />
 				<Route path="/recipes/:recipeId" element={<Recipe />} />
-				<Route path="/planning" element={<DefaultPlanningWrapper><Planning /></DefaultPlanningWrapper>} />
-				<Route path="/stock" element={<DefaultPlanningWrapper><Stock /></DefaultPlanningWrapper>} />
-				<Route path="/shopping-list" element={<DefaultPlanningWrapper><ShoppingList /></DefaultPlanningWrapper>} />
+				<Route element={<DefaultPlanningWrapper />}>
+					<Route path="/planning" element={<Planning />} />
+					<Route path="/stock" element={<Stock />} />
+					<Route path="/shopping-list" element={<ShoppingList />} />
+				</Route>
 			</Route>
 			<Route path="/sign-up" element={<SignUp />} />
 			<Route path="/sign-in" element={<SignIn />} />

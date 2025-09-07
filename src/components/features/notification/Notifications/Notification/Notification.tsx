@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { IconButton } from "../../../../common/IconButton/IconButton";
 import { Paper } from "../../../../common/Paper/Paper";
-import type { TNotification } from "../../context/notificationContextState.type";
-import { useNotificationContext } from "../../context/useNotificationContext";
+import type { TNotification } from "../../context/notificationsContextState.type";
+import { useNotificationsContext } from "../../context/useNotificationsContext";
 
 
 type TNotificationProps = {
@@ -12,17 +12,17 @@ type TNotificationProps = {
 export const Notification = ({
 	notification,
 }: TNotificationProps) => {
-	const notificationContext = useNotificationContext();
+	const notificationsContext = useNotificationsContext();
 
 	useEffect(() => {
 		const id = setTimeout(() => {
-			notificationContext.removeNotification(notification.id);
+			notificationsContext.removeNotification(notification.id);
 		}, 10000);
 
 		return () => {
 			clearTimeout(id);
 		};
-	}, [notification, notificationContext]);
+	}, [notification, notificationsContext]);
 
 	return (
 		<div className="pointer-events-auto max-w-64">
@@ -44,7 +44,7 @@ export const Notification = ({
 						className="shrink-0">
 						<IconButton
 							icon="🗙"
-							onClick={() => notificationContext.removeNotification(notification.id)}
+							onClick={() => notificationsContext.removeNotification(notification.id)}
 							type="secondary"
 						/>
 					</div>

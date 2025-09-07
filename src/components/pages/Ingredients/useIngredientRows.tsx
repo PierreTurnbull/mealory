@@ -8,8 +8,8 @@ import type { TIngredient } from "../../features/ingredient/ingredient.types";
 
 export const useIngredientRows = (
 	ingredients: TIngredient[],
-	setIngredientToUpdateId: React.Dispatch<React.SetStateAction<string | null>>,
-	setIngredientToDeleteId: React.Dispatch<React.SetStateAction<string | null>>,
+	setIngredientToUpdateId: React.Dispatch<React.SetStateAction<number | null>>,
+	setIngredientToDeleteId: React.Dispatch<React.SetStateAction<number | null>>,
 ) => {
 	const rows: TTableRow[] = ingredients.map(ingredient => {
 		const tableRow: TTableRow = {

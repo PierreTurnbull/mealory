@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { dbClient } from "../../../dbClient/dbClient";
 import { Title } from "../../common/Title/Title";
-import { useNotificationContext } from "../../features/notification/context/useNotificationContext";
+import { useNotificationsContext } from "../../features/notification/context/useNotificationsContext";
 
 export const SignUp = () => {
 	const [email, setEmail] = useState("");
@@ -14,7 +14,7 @@ export const SignUp = () => {
 
 	const [isLoading, setIsLoading] = useState(false);
 
-	const notificationContext = useNotificationContext();
+	const notificationsContext = useNotificationsContext();
 	const navigate = useNavigate();
 
 	const submit = async () => {
@@ -28,10 +28,10 @@ export const SignUp = () => {
 		setIsLoading(false);
 
 		if (data.user) {
-			notificationContext.addNotification("Félicitations, vous avez créé votre compte !", "success");
+			notificationsContext.addNotification("Félicitations, vous avez créé votre compte !", "success");
 			navigate("/");
 		} else if (error) {
-			notificationContext.addNotification("Une erreur est survenue lors de la création de votre compte.", "error");
+			notificationsContext.addNotification("Une erreur est survenue lors de la création de votre compte.", "error");
 		}
 	};
 

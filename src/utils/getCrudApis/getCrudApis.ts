@@ -3,10 +3,10 @@ import { v4 } from "uuid";
 /**
  * Returns generic CRUD APIs for the model name passed as param.
  */
-export const getCrudApis = <T extends { id: string }>(
+export const getCrudApis = <T extends { id: number }>(
 	modelName: string,
 ) => {
-	const getItem = (
+	const getItem = async (
 		id: T["id"],
 	) => {
 		const items = localStorage[modelName]

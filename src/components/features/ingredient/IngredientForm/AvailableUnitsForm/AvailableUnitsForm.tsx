@@ -2,6 +2,7 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 import { ingredientUnitAnnotationLabels } from "../../../../../utils/labels/ingredientUnits";
 import { HelperIcon } from "../../../../common/HelperIcon/HelperIcon";
 import type { TIngredientUnit, TReferenceIngredientUnit } from "../../ingredient.types";
+import { units } from "../../units";
 import type { TIngredientFormData } from "../ingredientFormData.types";
 
 type TUnitsFormProps = {
@@ -15,7 +16,6 @@ export const AvailableUnitsForm = ({
 	availableUnits,
 	setAvailableUnits,
 }: TUnitsFormProps) => {
-	const units: TIngredientUnit[] = ["amount", "mass", "volume", "tablespoon", "teaspoon"];
 
 	return (
 		<div className="flex flex-col space-y-4">

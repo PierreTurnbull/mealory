@@ -6,7 +6,7 @@ export type TNotification = {
 	text: string
 }
 
-export type TNotificationContextState = {
+export type TNotificationsContextState = {
 	notifications:      TNotification[]
 	addNotification:    (text: TNotification["text"], type: TNotification["type"]) => void
 	removeNotification: (notificationId: TNotification["id"]) => void

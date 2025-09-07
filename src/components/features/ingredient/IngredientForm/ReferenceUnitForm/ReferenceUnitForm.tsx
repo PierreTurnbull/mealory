@@ -2,6 +2,7 @@ import { MenuItem, Select } from "@mui/material";
 import { ingredientUnitAnnotationLabels } from "../../../../../utils/labels/ingredientUnits";
 import { HelperIcon } from "../../../../common/HelperIcon/HelperIcon";
 import type { TReferenceIngredientUnit } from "../../ingredient.types";
+import { referenceUnits } from "../../units";
 import type { TIngredientFormData } from "../ingredientFormData.types";
 
 type TReferenceUnitForm = {
@@ -13,7 +14,6 @@ export const ReferenceUnitForm = ({
 	referenceUnit,
 	setReferenceUnit,
 }: TReferenceUnitForm) => {
-	const availableReferenceUnits: TReferenceIngredientUnit[] = ["amount", "mass", "volume"];
 
 	return (
 		<div className="flex flex-col space-y-4">
@@ -23,13 +23,13 @@ export const ReferenceUnitForm = ({
 				onChange={event => setReferenceUnit(event.target.value)}
 			>
 				{
-					availableReferenceUnits.map(availableReferenceUnit => {
+					referenceUnits.map(referenceUnit => {
 						return (
 							<MenuItem
-								key={availableReferenceUnit}
-								value={availableReferenceUnit}
+								key={referenceUnit}
+								value={referenceUnit}
 							>
-								{ingredientUnitAnnotationLabels[availableReferenceUnit]}
+								{ingredientUnitAnnotationLabels[referenceUnit]}
 							</MenuItem>
 						);
 					})

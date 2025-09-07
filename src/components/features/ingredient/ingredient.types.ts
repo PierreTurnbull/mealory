@@ -4,13 +4,13 @@
  */
 export type TReferenceIngredientUnit = (
 	"amount" |
-	"mass" |
-	"volume"
+	"gram" |
+	"liter"
 )
 
 /**
  * A specific ingredient unit that can be represented more generically using a reference unit.
- * For example, "tablespoon" can be expressed in terms of volume.
+ * For example, "tablespoon" can be expressed in terms of liter.
  */
 export type TAliasIngredientUnit = (
 	"tablespoon" |
@@ -19,15 +19,14 @@ export type TAliasIngredientUnit = (
 
 export type TIngredientUnit = TReferenceIngredientUnit | TAliasIngredientUnit
 
-export type TUnitConversionRates = Partial<Record<
-	TIngredientUnit,
-	number
->>
+export type TIngredientAvailableUnit = {
+	unit:           TIngredientUnit
+	conversionRate: number
+}
 
 export type TIngredient = {
-	id:                  string
-	name:                string
-	referenceUnit:       TReferenceIngredientUnit
-	availableUnits:      TIngredientUnit[]
-	unitConversionRates: TUnitConversionRates
+	id:             number
+	name:           string
+	referenceUnit:  TReferenceIngredientUnit
+	availableUnits: TIngredientAvailableUnit[]
 }

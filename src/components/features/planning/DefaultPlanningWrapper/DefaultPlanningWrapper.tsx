@@ -1,15 +1,10 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState } from "react";
+import { Outlet } from "react-router";
 import { createPlanning, getPlannings } from "../planning.api";
 import type { TPlanning } from "../planning.types";
 import { getDefaultPlanning } from "../utils/getDefaultPlanning/getDefaultPlanning";
 
-type TDefaultPlanningWrapperProps = {
-	children: ReactNode
-}
-
-export const DefaultPlanningWrapper = ({
-	children,
-}: TDefaultPlanningWrapperProps) => {
+export const DefaultPlanningWrapper = () => {
 	const plannings = getPlannings();
 	const [planning, setPlanning] = useState<TPlanning | undefined>(plannings[0]);
 
@@ -21,5 +16,5 @@ export const DefaultPlanningWrapper = ({
 		}
 	}, [planning]);
 
-	return planning ? children : null;
+	return planning ? <Outlet /> : null;
 };

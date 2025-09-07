@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { dbClient } from "../../../dbClient/dbClient";
 import { Title } from "../../common/Title/Title";
-import { useNotificationContext } from "../../features/notification/context/useNotificationContext";
+import { useNotificationsContext } from "../../features/notification/context/useNotificationsContext";
 
 export const SignIn = () => {
 	const [email, setEmail] = useState("");
@@ -14,7 +14,7 @@ export const SignIn = () => {
 
 	const [isLoading, setIsLoading] = useState(false);
 
-	const notificationContext = useNotificationContext();
+	const notificationsContext = useNotificationsContext();
 	const navigate = useNavigate();
 
 	const submit = async () => {
@@ -30,7 +30,7 @@ export const SignIn = () => {
 		if (data.user) {
 			navigate("/");
 		} else if (error) {
-			notificationContext.addNotification("Les identifiants sont incorrects.", "error");
+			notificationsContext.addNotification("Les identifiants sont incorrects.", "error");
 		}
 	};
 
