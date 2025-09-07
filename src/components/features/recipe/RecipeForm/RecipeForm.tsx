@@ -134,7 +134,7 @@ export const RecipeForm = <T extends TRecipe | Omit<TRecipe, "id">>({
 								key={key}
 								className="gap-2 grid grid-cols-[auto_1fr_auto_auto] items-center"
 							>
-								{key}.
+								{key + 1}.
 								<div className="relative flex">
 									<Input
 										fullWidth
