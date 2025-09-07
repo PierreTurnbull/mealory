@@ -13,6 +13,7 @@ export type TReferenceIngredientUnit = (
  * For example, "tablespoon" can be expressed in liter.
  */
 export type TAliasIngredientUnit = (
+	"pinch" |
 	"tablespoon" |
 	"teaspoon"
 )
