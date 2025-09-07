@@ -10,12 +10,12 @@ export const useStockColumns = () => {
 		{
 			key:        "totalNeeded",
 			label:      "Total",
-			isSortable: true,
+			isSortable: false,
 		},
 		{
 			key:        "stock",
 			label:      "Stock",
-			isSortable: true,
+			isSortable: false,
 			width:      "0",
 		},
 		{

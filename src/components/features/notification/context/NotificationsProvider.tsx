@@ -3,13 +3,13 @@ import { v4 as uuid } from "uuid";
 import { NotificationsContext } from "./NotificationsContext";
 import type { TNotification, TNotificationsContextState } from "./notificationsContextState.type";
 
-type TNotificationProviderProps = {
+type TNotificationsProviderProps = {
 	children: ReactNode,
 }
 
-export const NotificationProvider = ({
+export const NotificationsProvider = ({
 	children,
-}: TNotificationProviderProps) => {
+}: TNotificationsProviderProps) => {
 	const [notifications, setNotifications] = useState<TNotification[]>([]);
 
 	const addNotification = (
