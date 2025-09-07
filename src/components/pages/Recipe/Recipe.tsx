@@ -22,7 +22,7 @@ export const Recipe = () => {
 	const [updateRecipeModalIsOpen, setUpdateRecipeModalIsOpen] = useState(false);
 	const [deleteRecipeModalIsOpen, setDeleteRecipeModalIsOpen] = useState(false);
 
-	const [ingredients] = useState(getIngredients());
+	const [ingredients, setIngredients] = useState(getIngredients());
 	const [recipes, setRecipes] = useState(getRecipes());
 
 	const recipe = recipes.find(recipe => recipe.id === recipeId);
@@ -170,6 +170,9 @@ export const Recipe = () => {
 								setRecipes(getRecipes());
 							}}
 							id={recipeId}
+							onSubmit={() => {
+								setIngredients(getIngredients());
+							}}
 						/>
 					)
 					: null
