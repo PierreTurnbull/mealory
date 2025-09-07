@@ -1,15 +1,15 @@
-import { useNotificationContext } from "../context/useNotificationContext";
+import { useNotificationsContext } from "../context/useNotificationsContext";
 import { Notification } from "./Notification/Notification";
 
 export const Notifications = () => {
-	const notificationContext = useNotificationContext();
+	const notificationsContext = useNotificationsContext();
 
 	return (
 		<div
 			className="fixed right-0 bottom-0 pointer-events-none space-y-4 p-8"
 		>
 			{
-				notificationContext.notifications.map(notification => {
+				notificationsContext.notifications.map(notification => {
 					return (
 						<Notification
 							key={notification.id}

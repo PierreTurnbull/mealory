@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { v4 as uuid } from "uuid";
-import { NotificationContext } from "./NotificationContext";
-import type { TNotification, TNotificationContextState } from "./notificationContextState.type";
+import { NotificationsContext } from "./NotificationsContext";
+import type { TNotification, TNotificationsContextState } from "./notificationsContextState.type";
 
 type TNotificationProviderProps = {
 	children: ReactNode,
@@ -59,15 +59,15 @@ export const NotificationProvider = ({
 		};
 	}, []);
 
-	const contextValue: TNotificationContextState = {
+	const contextValue: TNotificationsContextState = {
 		notifications:      notifications,
 		addNotification:    addNotification,
 		removeNotification: removeNotification,
 	};
 
 	return (
-		<NotificationContext.Provider value={contextValue}>
+		<NotificationsContext.Provider value={contextValue}>
 			{children}
-		</NotificationContext.Provider>
+		</NotificationsContext.Provider>
 	);
 };
