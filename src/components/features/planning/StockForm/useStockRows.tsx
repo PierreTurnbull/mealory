@@ -1,4 +1,5 @@
-import ArrowForward from "@mui/icons-material/ArrowForward";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import { IconButton, Input } from "@mui/material";
 import { ingredientUnitDirectObjectShortLabels } from "../../../../utils/labels/ingredientUnits";
 import type { TTableRow } from "../../../common/Table/table.types";
@@ -13,6 +14,7 @@ export const useStockRows = (
 	stockFormData: TStockFormData,
 	onStockChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, id: string) => void,
 	setMaxIngredientInStock: (id: string, maxIngredientInStock: number) => void,
+	resetMaxIngredientInStock: (id: string) => void,
 ) => {
 	const ingredients = getIngredients();
 
@@ -42,6 +44,9 @@ export const useStockRows = (
 		const amountToObtain = ingredientsToObtain[id];
 
 		const unitShortLabel = ingredientUnitDirectObjectShortLabels[ingredient.referenceUnit];
+
+		const ingredientInStockIsMax = Number(stockFormDataItem.amount.value) >= totalAmount;
+
 		const stockRow: TTableRow = {
 			key:   id,
 			items: [
@@ -55,12 +60,25 @@ export const useStockRows = (
 					label: (
 						<span className="flex gap-2 justify-between w-full items-center">
 							<span>{`${totalAmount} ${ingredientUnitDirectObjectShortLabels[ingredient.referenceUnit]}`}</span>
-							<IconButton
-								size="small"
-								onClick={() => setMaxIngredientInStock(ingredient.id, totalAmount)}
-							>
-								<ArrowForward />
-							</IconButton>
+							{
+								ingredientInStockIsMax
+									? (
+										<IconButton
+											size="small"
+											onClick={() => resetMaxIngredientInStock(ingredient.id)}
+										>
+											<RefreshIcon />
+										</IconButton>
+									)
+									: (
+										<IconButton
+											size="small"
+											onClick={() => setMaxIngredientInStock(ingredient.id, totalAmount)}
+										>
+											<ArrowForwardIcon />
+										</IconButton>
+									)
+							}
 						</span>
 					),
 					value: totalAmount,
