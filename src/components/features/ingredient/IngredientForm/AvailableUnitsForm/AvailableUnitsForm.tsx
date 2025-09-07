@@ -15,7 +15,7 @@ export const AvailableUnitsForm = ({
 	availableUnits,
 	setAvailableUnits,
 }: TUnitsFormProps) => {
-	const units: TIngredientUnit[] = ["amount", "mass", "volume", "tablespoon", "teaspoon"];
+	const units: TIngredientUnit[] = ["amount", "gram", "liter", "tablespoon", "teaspoon"];
 
 	return (
 		<div className="flex flex-col space-y-4">

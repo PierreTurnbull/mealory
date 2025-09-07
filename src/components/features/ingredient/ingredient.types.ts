@@ -4,13 +4,13 @@
  */
 export type TReferenceIngredientUnit = (
 	"amount" |
-	"mass" |
-	"volume"
+	"gram" |
+	"liter"
 )
 
 /**
  * A specific ingredient unit that can be represented more generically using a reference unit.
- * For example, "tablespoon" can be expressed in terms of volume.
+ * For example, "tablespoon" can be expressed in liter.
  */
 export type TAliasIngredientUnit = (
 	"tablespoon" |

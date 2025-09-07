@@ -13,7 +13,7 @@ export const ReferenceUnitForm = ({
 	referenceUnit,
 	setReferenceUnit,
 }: TReferenceUnitForm) => {
-	const availableReferenceUnits: TReferenceIngredientUnit[] = ["amount", "mass", "volume"];
+	const availableReferenceUnits: TReferenceIngredientUnit[] = ["amount", "gram", "liter"];
 
 	return (
 		<div className="flex flex-col space-y-4">

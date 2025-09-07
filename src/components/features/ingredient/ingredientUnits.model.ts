@@ -8,10 +8,10 @@ export const ingredientUnitsModel: Record<TIngredientUnit, TIngredientUnitDetail
 	amount: {
 		universalRates: {},
 	},
-	mass: {
+	gram: {
 		universalRates: {},
 	},
-	volume: {
+	liter: {
 		universalRates: {
 			teaspoon:   0.005,
 			tablespoon: 0.015,
