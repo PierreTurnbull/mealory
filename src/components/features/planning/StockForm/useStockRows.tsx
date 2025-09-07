@@ -1,4 +1,5 @@
-import { Input } from "@mui/material";
+import ArrowForward from "@mui/icons-material/ArrowForward";
+import { IconButton, Input } from "@mui/material";
 import { ingredientUnitDirectObjectShortLabels } from "../../../../utils/labels/ingredientUnits";
 import type { TTableRow } from "../../../common/Table/table.types";
 import { getIngredients } from "../../ingredient/ingredient.api";
@@ -11,6 +12,7 @@ export const useStockRows = (
 	planningRecipes: TPlanning["recipes"],
 	stockFormData: TStockFormData,
 	onStockChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, id: string) => void,
+	setMaxIngredientInStock: (id: string, maxIngredientInStock: number) => void,
 ) => {
 	const ingredients = getIngredients();
 
@@ -50,14 +52,24 @@ export const useStockRows = (
 				},
 				{
 					key:   "totalNeeded",
-					label: `${totalAmount} ${ingredientUnitDirectObjectShortLabels[ingredient.referenceUnit]}`,
+					label: (
+						<span className="flex gap-2 justify-between w-full items-center">
+							<span>{`${totalAmount} ${ingredientUnitDirectObjectShortLabels[ingredient.referenceUnit]}`}</span>
+							<IconButton
+								size="small"
+								onClick={() => setMaxIngredientInStock(ingredient.id, totalAmount)}
+							>
+								<ArrowForward />
+							</IconButton>
+						</span>
+					),
 					value: totalAmount,
 				},
 				{
 					key:   "stock",
 					label: (
 						<span
-	            className={`
+							className={`
 								flex
 								flex-row
 								gap-2

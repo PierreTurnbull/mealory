@@ -77,8 +77,6 @@ const components = createTheme({
 					color:           hex(colors.violet[50]),
 					borderRadius:    4,
 					padding:         0,
-					height:          32,
-					width:           32,
 
 					"&:hover": {
 						backgroundColor: hex(colors.violet[400]),
@@ -88,6 +86,18 @@ const components = createTheme({
 						backgroundColor: hex(colors.slate[200]),
 						color:           hex(colors.slate[500]),
 					},
+				},
+				sizeSmall: {
+					height: 24,
+					width:  24,
+
+					"& svg": {
+						width: 16,
+					},
+				},
+				sizeMedium: {
+					height: 32,
+					width:  32,
 				},
 				sizeLarge: {
 					height: 48,

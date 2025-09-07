@@ -3,6 +3,7 @@ import { Table } from "../../../common/Table/Table";
 import type { TSortParameters } from "../../../common/Table/table.types";
 import type { TPlanning } from "../planning.types";
 import { useOnStockChange } from "./useOnStockChange";
+import { useSetMaxIngredientInStock } from "./useSetMaxIngredientInStock";
 import { useStockColumns } from "./useStockColumns";
 import { useStockFormData } from "./useStockFormData";
 import { useStockRows } from "./useStockRows";
@@ -20,6 +21,7 @@ export const StockForm = <T extends TPlanning | Omit<TPlanning, "id">>({
 	const [stockFormData, setStockFormData] = useStockFormData(planning);
 
 	const onStockChange = useOnStockChange(setStockFormData);
+	const setMaxIngredientInStock = useSetMaxIngredientInStock(setStockFormData);
 
 	useSyncStockFormDataAndStock(stockFormData, setPlanning);
 
@@ -29,7 +31,7 @@ export const StockForm = <T extends TPlanning | Omit<TPlanning, "id">>({
 	});
 
 	const recipeColumns = useStockColumns();
-	const recipeRows = useStockRows(planning.recipes, stockFormData, onStockChange);
+	const recipeRows = useStockRows(planning.recipes, stockFormData, onStockChange, setMaxIngredientInStock);
 
 	return (
 		<div className="space-y-4">
