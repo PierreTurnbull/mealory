@@ -25,7 +25,6 @@ export default tseslint.config([
 		},
 		ignores: ["dist/**/*", "node_modules/**/*", ".vite/**/*", "src/generated/**/*"],
 		rules:   {
-			"indent":                            ["error", "tab"],
 			"semi":                              ["error", "always"],
 			"quotes":                            ["error", "double"],
 			"comma-dangle":                      ["error", "always-multiline"],
@@ -47,6 +46,7 @@ export default tseslint.config([
 					"align":       "value",
 				},
 			],
+			"@stylistic/ts/indent": ["error", "tab"]
 		},
   },
 ])
