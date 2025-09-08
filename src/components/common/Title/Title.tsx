@@ -16,30 +16,30 @@ export const Title = ({
 	let rankClassNames: string;
 
 	switch (rank) {
-	case "h1":
-		rankClassNames = `
+		case "h1":
+			rankClassNames = `
 				text-4xl
 				mb-8
 			`;
-		break;
-	case "h2":
-		rankClassNames = `
+			break;
+		case "h2":
+			rankClassNames = `
 				text-3xl
 				mb-8
 			`;
-		break;
-	case "h3":
-		rankClassNames = `
+			break;
+		case "h3":
+			rankClassNames = `
 				text-2xl
 				mb-6
 			`;
-		break;
-	case "h4":
-		rankClassNames = `
+			break;
+		case "h4":
+			rankClassNames = `
 				text-xl
 				mb-4
 			`;
-		break;
+			break;
 	}
 
 	return (
@@ -50,7 +50,7 @@ export const Title = ({
 				${className}
 			`}
 		>
-			{title}
+			{title}a
 		</Rank>
 	);
 };
