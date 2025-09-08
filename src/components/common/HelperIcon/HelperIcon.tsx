@@ -15,6 +15,7 @@ export const HelperIcon = ({
 		<Tooltip
 			open={isOpen}
 			onClick={() => setIsOpen(prev => !prev)}
+			onTouchEnd={() => setIsOpen(prev => !prev)}
 			onClose={() => setIsOpen(false)}
 			title={text}
 			leaveTouchDelay={0}
