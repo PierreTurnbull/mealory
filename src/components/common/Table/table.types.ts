@@ -17,10 +17,11 @@ export type TTableItem = {
 }
 
 export type TTableRow = {
-	key:         string | number
-	items:       TTableItem[]
-	isDisabled?: boolean
-	isDimmed?:   boolean
+	key:                   string | number
+	items:                 TTableItem[]
+	isDisabled?:           boolean
+	isDimmed?:             boolean
+	backgroundIsDisabled?: boolean
 }
 
 export type TSortDirection = "asc" | "desc"

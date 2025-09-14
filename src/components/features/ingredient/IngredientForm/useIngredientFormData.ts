@@ -26,6 +26,9 @@ export const useIngredientFormData = <T extends TIngredient | Omit<TIngredient, 
 		unitConversionRates: {
 			value: unitConversionRateInputValues,
 		},
+		category: {
+			value: ingredient.category,
+		},
 	});
 
 	return [ingredientFormData, setIngredientFormData] as const;

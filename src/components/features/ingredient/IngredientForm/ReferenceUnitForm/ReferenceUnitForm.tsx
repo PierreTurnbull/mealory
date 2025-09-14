@@ -5,7 +5,7 @@ import type { TReferenceIngredientUnit } from "../../ingredient.types";
 import type { TIngredientFormData } from "../ingredientFormData.types";
 
 type TReferenceUnitForm = {
-	referenceUnit:    TReferenceIngredientUnit,
+	referenceUnit:    TIngredientFormData["referenceUnit"]["value"],
 	setReferenceUnit: (value: TIngredientFormData["referenceUnit"]["value"]) => void
 }
 

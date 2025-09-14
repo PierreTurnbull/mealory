@@ -35,6 +35,7 @@ export const ShoppingListForm = <T extends TPlanning | Omit<TPlanning, "id">>({
 			sortParameters={sortParameters}
 			onSort={setSortParameters}
 			rows={shoppingListRows}
+			mustShowHeads={false}
 		/>
 	);
 };

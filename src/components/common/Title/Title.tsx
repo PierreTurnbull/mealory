@@ -50,7 +50,7 @@ export const Title = ({
 				${className}
 			`}
 		>
-			{title}a
+			{title}
 		</Rank>
 	);
 };

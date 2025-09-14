@@ -8,6 +8,7 @@ type TTableProps = {
 	sortParameters?: TSortParameters | null
 	onSort?:         (sortParameters: TSortParameters | null) => void
 	fullWidth?:      boolean
+	mustShowHeads?:  boolean
 }
 
 export const Table = ({
@@ -16,6 +17,7 @@ export const Table = ({
 	sortParameters,
 	onSort,
 	fullWidth,
+	mustShowHeads = true,
 }: TTableProps) => {
 	const sortedRows = sortParameters
 		? [...rows].sort((a, b) => {
@@ -55,13 +57,19 @@ export const Table = ({
 				${fullWidth ? "w-full" : ""}
 			`}
 		>
-			<thead>
-				<TableHead
-					columns={columns}
-					sortParameters={sortParameters}
-					onSort={onSort}
-				/>
-			</thead>
+			{
+				mustShowHeads
+					? (
+						<thead>
+							<TableHead
+								columns={columns}
+								sortParameters={sortParameters}
+								onSort={onSort}
+							/>
+						</thead>
+					)
+					: null
+			}
 			<tbody>
 				{
 					sortedRows.map(row => {

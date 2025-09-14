@@ -2,10 +2,12 @@ import { Input } from "@mui/material";
 import { Button } from "../../../common/Button/Button";
 import type { TIngredient } from "../ingredient.types";
 import { AvailableUnitsForm } from "./AvailableUnitsForm/AvailableUnitsForm";
+import { CategoryForm } from "./CategoryForm/CategoryForm";
 import { ConversionForm } from "./ConversionForm/ConversionForm";
 import { ReferenceUnitForm } from "./ReferenceUnitForm/ReferenceUnitForm";
 import { useIngredientFormData } from "./useIngredientFormData";
 import { useOnAvailableUnitsChange } from "./useOnAvailableUnitsChange";
+import { useOnCategoryChange } from "./useOnCategoryChange";
 import { useOnNameChange } from "./useOnNameChange";
 import { useOnReferenceUnitChange } from "./useOnReferenceUnitChange";
 import { useOnUnitConversionRatesChange } from "./useOnUnitConversionRatesChange";
@@ -29,6 +31,7 @@ export const IngredientForm = <T extends TIngredient | Omit<TIngredient, "id">>(
 	const [ingredientFormData, setIngredientFormData] = useIngredientFormData(ingredient);
 
 	const onNameChange = useOnNameChange(setIngredientFormData);
+	const onCategoryChange = useOnCategoryChange(setIngredientFormData);
 	const onReferenceUnitChange = useOnReferenceUnitChange(setIngredientFormData);
 	const onAvailableUnitsChange = useOnAvailableUnitsChange(setIngredientFormData);
 	const onUnitConversionRatesChange = useOnUnitConversionRatesChange(setIngredientFormData);
@@ -43,6 +46,10 @@ export const IngredientForm = <T extends TIngredient | Omit<TIngredient, "id">>(
 			<Input
 				value={ingredientFormData.name.value}
 				onChange={onNameChange}
+			/>
+			<CategoryForm
+				category={ingredientFormData.category.value}
+				setCategory={onCategoryChange}
 			/>
 			<ReferenceUnitForm
 				referenceUnit={ingredientFormData.referenceUnit.value}

@@ -25,6 +25,7 @@ export const useSyncIngredientFormDataAndIngredient = <T extends TIngredient | O
 				referenceUnit:       ingredientFormData.referenceUnit.value,
 				availableUnits:      ingredientFormData.availableUnits.value,
 				unitConversionRates: unitConversionRates,
+				category:            ingredientFormData.category.value,
 			};
 
 			return nextIngredient;

@@ -25,10 +25,27 @@ export type TUnitConversionRates = Partial<Record<
 	number
 >>
 
+export type TIngredientCategory = (
+	"fruits and vegetables" |
+	"meat and poultry" |
+	"seafood and fish" |
+	"dairy and eggs" |
+	"bakery" |
+	"pantry and dry goods" |
+	"frozen" |
+	"beverages" |
+	"snacks and sweets" |
+	"condiments and sauces" |
+	"spices and herbs" |
+	"cereals and breakfast" |
+	"other"
+)
+
 export type TIngredient = {
 	id:                  string
 	name:                string
 	referenceUnit:       TReferenceIngredientUnit
 	availableUnits:      TIngredientUnit[]
 	unitConversionRates: TUnitConversionRates
+	category:            TIngredientCategory
 }

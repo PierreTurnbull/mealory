@@ -50,8 +50,9 @@ const components = createTheme({
 		MuiMenuItem: {
 			styleOverrides: {
 				root: {
-					height:  32,
-					padding: "0 8px",
+					minHeight: 32,
+					height:    32,
+					padding:   "0 8px",
 				},
 			},
 		},

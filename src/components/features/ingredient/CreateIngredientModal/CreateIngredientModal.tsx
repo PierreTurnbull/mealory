@@ -18,6 +18,7 @@ export const CreateIngredientModal = ({
 		referenceUnit:       "amount",
 		availableUnits:      [],
 		unitConversionRates: {},
+		category:            "other",
 	});
 
 	const submit = () => {

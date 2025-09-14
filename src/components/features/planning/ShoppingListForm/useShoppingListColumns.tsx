@@ -5,7 +5,7 @@ export const useShoppingListColumns = () => {
 		{
 			key:        "name",
 			label:      "Nom",
-			isSortable: true,
+			isSortable: false,
 		},
 		{
 			key:        "amount",
@@ -16,7 +16,7 @@ export const useShoppingListColumns = () => {
 			key:                  "isObtained",
 			label:                null,
 			width:                "0",
-			isSortable:           true,
+			isSortable:           false,
 			backgroundIsDisabled: true,
 			paddingIsDisabled:    true,
 		},

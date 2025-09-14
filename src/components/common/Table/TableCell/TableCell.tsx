@@ -24,9 +24,9 @@ export const TableCell = ({
 				relative
 				align-top
 
-				${row.isDimmed ? "bg-slate-200" : ""}
+				${row.isDimmed ? "bg-violet-100" : ""}
 
-				${row.isDisabled ? "bg-slate-200" : ""}
+				${row.isDisabled ? "bg-violet-100" : ""}
 				${row.isDisabled ? "text-slate-500" : ""}
 				${row.isDisabled ? "pointer-events-none" : ""}
 
@@ -34,7 +34,7 @@ export const TableCell = ({
 
 				${column.paddingIsDisabled || item.paddingIsDisabled ? "px-0! sm:px-0!" : ""}
 
-				${column.backgroundIsDisabled ? "bg-transparent!" : ""}
+				${column.backgroundIsDisabled || row.backgroundIsDisabled ? "bg-transparent!" : ""}
 			`}
 			style={{
 				width: column.width,
