@@ -2,8 +2,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
 import { ingredientUnitAnnotationLabels } from "../../../utils/labels/ingredientUnits";
-import { Button } from "../../common/Button/Button";
 import type { TTableRow } from "../../common/Table/table.types";
+import { defaultIngredients } from "../../features/ingredient/defaultIngredients/defaultIngredients";
 import type { TIngredient } from "../../features/ingredient/ingredient.types";
 
 export const useIngredientRows = (
@@ -12,6 +12,8 @@ export const useIngredientRows = (
 	setIngredientToDeleteId: React.Dispatch<React.SetStateAction<string | null>>,
 ) => {
 	const rows: TTableRow[] = ingredients.map(ingredient => {
+		const isDefaultIngredient = Boolean(defaultIngredients.find(defaultIngredient => defaultIngredient.id === ingredient.id));
+
 		const tableRow: TTableRow = {
 			key:   ingredient.id,
 			items: [
@@ -28,47 +30,29 @@ export const useIngredientRows = (
 				{
 					key:   "actions",
 					label: (
-						<div>
-							<div
-								className={`
-									hidden
-									space-x-1
-									sm:flex
-								`}
-							>
-								<Button
-									onClick={() => setIngredientToUpdateId(ingredient.id)}
-									size="sm"
-								>
-									Modifier
-								</Button>
-								<Button
-									onClick={() => setIngredientToDeleteId(ingredient.id)}
-									size="sm"
-									type="danger"
-								>
-									Supprimer
-								</Button>
-							</div>
-							<div
-								className={`
+						<div
+							className={`
 									flex
 									gap-1
-									sm:hidden
 								`}
+						>
+							<IconButton
+								onClick={() => setIngredientToUpdateId(ingredient.id)}
 							>
-								<IconButton
-									onClick={() => setIngredientToUpdateId(ingredient.id)}
-								>
-									<EditIcon />
-								</IconButton>
-								<IconButton
-									onClick={() => setIngredientToDeleteId(ingredient.id)}
-									color="error"
-								>
-									<DeleteIcon />
-								</IconButton>
-							</div>
+								<EditIcon />
+							</IconButton>
+							{
+								isDefaultIngredient
+									? null
+									: (
+										<IconButton
+											onClick={() => setIngredientToDeleteId(ingredient.id)}
+											color="error"
+										>
+											<DeleteIcon />
+										</IconButton>
+									)
+							}
 						</div>
 					),
 					value: null,

@@ -1,4 +1,4 @@
-import { getIngredient } from "../../components/features/ingredient/ingredient.api";
+import { getIngredientWithDefault } from "../../components/features/ingredient/defaultIngredients/getIngredientWithDefault";
 import type { TRecipeIngredient } from "../../components/features/recipe/recipe.types";
 
 /**
@@ -12,7 +12,7 @@ import type { TRecipeIngredient } from "../../components/features/recipe/recipe.
 export const getReferenceAmount = (
 	recipeIngredient: TRecipeIngredient,
 ) => {
-	const ingredient = getIngredient(recipeIngredient.id);
+	const ingredient = getIngredientWithDefault(recipeIngredient.id);
 
 	if (!ingredient) {
 		throw new Error(`Missing ingredient with id ${recipeIngredient.id}`);

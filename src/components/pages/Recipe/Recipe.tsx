@@ -6,7 +6,7 @@ import { ConfirmationModal } from "../../common/ConfirmationModal/ConfirmationMo
 import { Page } from "../../common/Page/Page";
 import { Section } from "../../common/Section/Section";
 import { Title } from "../../common/Title/Title";
-import { getIngredients } from "../../features/ingredient/ingredient.api";
+import { getIngredientsWithDefaults } from "../../features/ingredient/defaultIngredients/getIngredientsWithDefaults";
 import { deleteRecipe, getRecipes } from "../../features/recipe/recipe.api";
 import { UpdateRecipeModal } from "../../features/recipe/UpdateRecipeModal/UpdateRecipeModal";
 
@@ -22,7 +22,7 @@ export const Recipe = () => {
 	const [updateRecipeModalIsOpen, setUpdateRecipeModalIsOpen] = useState(false);
 	const [deleteRecipeModalIsOpen, setDeleteRecipeModalIsOpen] = useState(false);
 
-	const [ingredients, setIngredients] = useState(getIngredients());
+	const [ingredients, setIngredients] = useState(getIngredientsWithDefaults());
 	const [recipes, setRecipes] = useState(getRecipes());
 
 	const recipe = recipes.find(recipe => recipe.id === recipeId);
@@ -171,7 +171,7 @@ export const Recipe = () => {
 							}}
 							id={recipeId}
 							onSubmit={() => {
-								setIngredients(getIngredients());
+								setIngredients(getIngredientsWithDefaults());
 							}}
 						/>
 					)

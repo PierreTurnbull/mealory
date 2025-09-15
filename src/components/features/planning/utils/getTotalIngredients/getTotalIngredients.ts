@@ -1,5 +1,5 @@
 import { getReferenceAmount } from "../../../../../utils/getReferenceAmount/getReferenceAmount";
-import { getIngredients } from "../../../ingredient/ingredient.api";
+import { getIngredientsWithDefaults } from "../../../ingredient/defaultIngredients/getIngredientsWithDefaults";
 import { getRecipes } from "../../../recipe/recipe.api";
 import type { TIngredientInStock, TPlanning } from "../../planning.types";
 
@@ -9,7 +9,7 @@ import type { TIngredientInStock, TPlanning } from "../../planning.types";
 export const getTotalIngredients = (
 	planningRecipes: TPlanning["recipes"],
 ) => {
-	const ingredients = getIngredients();
+	const ingredients = getIngredientsWithDefaults();
 	const recipes = getRecipes();
 
 	const totalIngredients: Record<TIngredientInStock["id"], number> = {};

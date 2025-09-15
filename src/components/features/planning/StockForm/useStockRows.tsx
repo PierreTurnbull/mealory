@@ -3,7 +3,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import { IconButton, Input } from "@mui/material";
 import { ingredientUnitDirectObjectShortLabels } from "../../../../utils/labels/ingredientUnits";
 import type { TTableRow } from "../../../common/Table/table.types";
-import { getIngredients } from "../../ingredient/ingredient.api";
+import { getIngredientsWithDefaults } from "../../ingredient/defaultIngredients/getIngredientsWithDefaults";
 import type { TPlanning } from "../planning.types";
 import { getIngredientsToObtain } from "../utils/getIngredientsToObtain/getIngredientsToObtain";
 import { getTotalIngredients } from "../utils/getTotalIngredients/getTotalIngredients";
@@ -16,7 +16,7 @@ export const useStockRows = (
 	setMaxIngredientInStock: (id: string, maxIngredientInStock: number) => void,
 	resetMaxIngredientInStock: (id: string) => void,
 ) => {
-	const ingredients = getIngredients();
+	const ingredients = getIngredientsWithDefaults();
 
 	const totalIngredients = getTotalIngredients(planningRecipes);
 	const ingredientsInStock = stockFormData.map(stockFormDataItem => {

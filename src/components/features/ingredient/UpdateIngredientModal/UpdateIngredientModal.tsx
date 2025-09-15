@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Modal } from "../../../common/Modal/Modal";
 import { IngredientForm } from "../IngredientForm/IngredientForm";
-import { getIngredient, updateIngredient } from "../ingredient.api";
+import { getIngredientWithDefault } from "../defaultIngredients/getIngredientWithDefault";
+import { updateIngredient } from "../ingredient.api";
 import type { TIngredient } from "../ingredient.types";
 
 type TUpdateIngredientModalProps = {
@@ -15,11 +16,7 @@ export const UpdateIngredientModal = ({
 	close,
 	onSubmit,
 }: TUpdateIngredientModalProps) => {
-	const initialIngredient = getIngredient(id);
-
-	if (!initialIngredient) {
-		throw new Error(`Missing ingredient with id ${id}.`);
-	}
+	const initialIngredient = getIngredientWithDefault(id);
 
 	const [ingredient, setIngredient] = useState(initialIngredient);
 

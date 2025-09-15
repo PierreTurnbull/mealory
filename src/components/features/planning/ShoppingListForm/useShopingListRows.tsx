@@ -1,7 +1,7 @@
 import { Checkbox } from "@mui/material";
 import { ingredientUnitDirectObjectShortLabels } from "../../../../utils/labels/ingredientUnits";
 import type { TTableRow } from "../../../common/Table/table.types";
-import { getIngredients } from "../../ingredient/ingredient.api";
+import { getIngredientsWithDefaults } from "../../ingredient/defaultIngredients/getIngredientsWithDefaults";
 import type { TIngredientCategory } from "../../ingredient/ingredient.types";
 import { ingredientCategories } from "../../ingredient/ingredientCategories";
 import type { TPlanning } from "../planning.types";
@@ -15,7 +15,7 @@ export const useShoppingListRows = <T extends TPlanning | Omit<TPlanning, "id">>
 	shoppingListFormData: TShoppingListFormData,
 	onIsObtainedChange: ReturnType<typeof useOnIsObtainedChange>,
 ) => {
-	const ingredients = getIngredients();
+	const ingredients = getIngredientsWithDefaults();
 	const totalIngredients = getTotalIngredients(planning.recipes);
 	const ingredientsToObtain = getIngredientsToObtain(totalIngredients, planning.ingredientsInStock);
 

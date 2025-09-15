@@ -5,7 +5,8 @@ import { Page } from "../../common/Page/Page";
 import { Table } from "../../common/Table/Table";
 import type { TSortParameters } from "../../common/Table/table.types";
 import { CreateIngredientModal } from "../../features/ingredient/CreateIngredientModal/CreateIngredientModal";
-import { deleteIngredient, getIngredients } from "../../features/ingredient/ingredient.api";
+import { getIngredientsWithDefaults } from "../../features/ingredient/defaultIngredients/getIngredientsWithDefaults";
+import { deleteIngredient } from "../../features/ingredient/ingredient.api";
 import type { TIngredient } from "../../features/ingredient/ingredient.types";
 import { UpdateIngredientModal } from "../../features/ingredient/UpdateIngredientModal/UpdateIngredientModal";
 import { useIngredientColumns } from "./useIngredientColumns";
@@ -23,7 +24,7 @@ export const Ingredients = () => {
 	});
 
 	useEffect(() => {
-		setIngredients(getIngredients());
+		setIngredients(getIngredientsWithDefaults());
 	}, []);
 
 	const columns = useIngredientColumns();
@@ -57,7 +58,7 @@ export const Ingredients = () => {
 					? (
 						<CreateIngredientModal
 							close={() => setCreateIngredientModalIsOpen(false)}
-							onSubmit={() => setIngredients(getIngredients())}
+							onSubmit={() => setIngredients(getIngredientsWithDefaults())}
 						/>
 					)
 					: null
@@ -69,7 +70,7 @@ export const Ingredients = () => {
 						<UpdateIngredientModal
 							id={ingredientToUpdateId}
 							close={() => setIngredientToUpdateId(null)}
-							onSubmit={() => setIngredients(getIngredients())}
+							onSubmit={() => setIngredients(getIngredientsWithDefaults())}
 						/>
 					)
 			}
@@ -83,7 +84,7 @@ export const Ingredients = () => {
 							cancel={() => setIngredientToDeleteId(null)}
 							submit={() => {
 								deleteIngredient(ingredientToDeleteId);
-								setIngredients(getIngredients());
+								setIngredients(getIngredientsWithDefaults());
 								setIngredientToDeleteId(null);
 							}}
 							color="error"

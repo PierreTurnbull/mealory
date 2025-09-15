@@ -6,8 +6,8 @@ import { IconButton, Input, Tooltip } from "@mui/material";
 import { useState } from "react";
 import { Button } from "../../../common/Button/Button";
 import { CreateIngredientModal } from "../../ingredient/CreateIngredientModal/CreateIngredientModal";
+import { getIngredientsWithDefaults } from "../../ingredient/defaultIngredients/getIngredientsWithDefaults";
 import { DefaultRecipeImage } from "../../ingredient/DefaultRecipeImage/DefaultRecipeImage";
-import { getIngredients } from "../../ingredient/ingredient.api";
 import type { TRecipe } from "../recipe.types";
 import { RecipeIngredientsForm } from "./RecipeIngredientsForm/RecipeIngredientsForm";
 import { useOnAddIngredient } from "./useOnAddIngredient";
@@ -35,7 +35,7 @@ export const RecipeForm = <T extends TRecipe | Omit<TRecipe, "id">>({
 	submit,
 	close,
 }: TRecipeFormProps<T>) => {
-	const [ingredients, setIngredients] = useState(getIngredients());
+	const [ingredients, setIngredients] = useState(getIngredientsWithDefaults());
 
 	const [instructionToSwapKey, setInstructionToSwapKey] = useState<number | null>(null);
 
@@ -114,7 +114,7 @@ export const RecipeForm = <T extends TRecipe | Omit<TRecipe, "id">>({
 			</div>
 			<RecipeIngredientsForm
 				ingredients={ingredients}
-				onUpdateIngredient={() => setIngredients(getIngredients())}
+				onUpdateIngredient={() => setIngredients(getIngredientsWithDefaults())}
 				recipeFormData={recipeFormData}
 				setRecipeFormData={setRecipeFormData}
 			/>
@@ -272,7 +272,7 @@ export const RecipeForm = <T extends TRecipe | Omit<TRecipe, "id">>({
 						<CreateIngredientModal
 							close={() => setCreateIngredientModalIsOpen(false)}
 							onSubmit={createdIngredient => {
-								setIngredients(getIngredients());
+								setIngredients(getIngredientsWithDefaults());
 								onAddIngredient(createdIngredient.id);
 							}}
 						/>

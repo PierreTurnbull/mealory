@@ -1,4 +1,4 @@
-import { getIngredient } from "../../../ingredient/ingredient.api";
+import { getIngredientWithDefault } from "../../../ingredient/defaultIngredients/getIngredientWithDefault";
 import type { TRecipeFormData } from "../recipeFormData.types";
 import type { TIngredientChoice } from "./ingredientChoice.types";
 
@@ -13,7 +13,7 @@ export const useOnIngredientChange = (
 			return;
 		}
 
-		const ingredient = getIngredient(value.id);
+		const ingredient = getIngredientWithDefault(value.id);
 
 		setRecipeFormData(prev => {
 			const next = structuredClone(prev);

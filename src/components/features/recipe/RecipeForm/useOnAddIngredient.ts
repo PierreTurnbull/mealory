@@ -1,4 +1,4 @@
-import { getIngredient } from "../../ingredient/ingredient.api";
+import { getIngredientWithDefault } from "../../ingredient/defaultIngredients/getIngredientWithDefault";
 import type { TIngredient } from "../../ingredient/ingredient.types";
 import type { TRecipeFormData, TRecipeIngredientFormData } from "./recipeFormData.types";
 
@@ -8,7 +8,7 @@ export const useOnAddIngredient = (
 	const onAddIngredient = (
 		id?: TIngredient["id"],
 	) => {
-		const ingredient = id ? getIngredient(id) : null;
+		const ingredient = id ? getIngredientWithDefault(id) : null;
 
 		const unitFormData: TRecipeIngredientFormData["unit"] | null = ingredient
 			? {
