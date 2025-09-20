@@ -1,9 +1,9 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { IconButton, Input } from "@mui/material";
-import { ingredientUnitDirectObjectShortLabels } from "../../../../utils/labels/ingredientUnits";
 import type { TTableRow } from "../../../common/Table/table.types";
 import { getIngredientsWithDefaults } from "../../ingredient/defaultIngredients/getIngredientsWithDefaults";
+import { ingredientUnitTypesConfig } from "../../ingredient/ingredientUnits.model";
 import type { TPlanning } from "../planning.types";
 import { getIngredientsToObtain } from "../utils/getIngredientsToObtain/getIngredientsToObtain";
 import { getTotalIngredients } from "../utils/getTotalIngredients/getTotalIngredients";
@@ -43,7 +43,7 @@ export const useStockRows = (
 
 		const amountToObtain = ingredientsToObtain[id];
 
-		const unitShortLabel = ingredientUnitDirectObjectShortLabels[ingredient.referenceUnit];
+		const unitShortLabel = ingredientUnitTypesConfig[ingredient.referenceUnitType].units[ingredientUnitTypesConfig[ingredient.referenceUnitType].referenceUnit]?.labelShort;
 
 		const ingredientInStockIsMax = Number(stockFormDataItem.amount.value) >= totalAmount;
 
@@ -59,7 +59,7 @@ export const useStockRows = (
 					key:   "totalNeeded",
 					label: (
 						<span className="flex gap-2 justify-between w-full items-center">
-							<span>{`${totalAmount} ${ingredientUnitDirectObjectShortLabels[ingredient.referenceUnit]}`}</span>
+							<span className="whitespace-nowrap">{`${totalAmount} ${unitShortLabel}`}</span>
 							{
 								ingredientInStockIsMax
 									? (
@@ -115,7 +115,7 @@ export const useStockRows = (
 				},
 				{
 					key:   "remainingToObtain",
-					label: `${amountToObtain} ${ingredientUnitDirectObjectShortLabels[ingredient.referenceUnit]}`,
+					label: <span className="whitespace-nowrap">{amountToObtain} {unitShortLabel}</span>,
 					value: amountToObtain,
 				},
 			],

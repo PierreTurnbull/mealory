@@ -1,19 +1,19 @@
 import { Input } from "@mui/material";
 import { Button } from "../../../common/Button/Button";
 import type { TIngredient } from "../ingredient.types";
-import { AvailableUnitsForm } from "./AvailableUnitsForm/AvailableUnitsForm";
+import { AvailableUnitTypesForm } from "./AvailableUnitTypesForm/AvailableUnitTypesForm";
 import { CategoryForm } from "./CategoryForm/CategoryForm";
 import { ConversionForm } from "./ConversionForm/ConversionForm";
-import { ReferenceUnitForm } from "./ReferenceUnitForm/ReferenceUnitForm";
+import { ReferenceUnitTypeForm } from "./ReferenceUnitTypeForm/ReferenceUnitTypeForm";
 import { useIngredientFormData } from "./useIngredientFormData";
-import { useOnAvailableUnitsChange } from "./useOnAvailableUnitsChange";
+import { useOnAvailableUnitTypesChange } from "./useOnAvailableUnitTypesChange";
 import { useOnCategoryChange } from "./useOnCategoryChange";
 import { useOnNameChange } from "./useOnNameChange";
-import { useOnReferenceUnitChange } from "./useOnReferenceUnitChange";
-import { useOnUnitConversionRatesChange } from "./useOnUnitConversionRatesChange";
-import { useSyncAvailableUnitsAndUnitConversionRates } from "./useSyncAvailableUnitsAndUnitConversionRates";
+import { useOnReferenceUnitTypeChange } from "./useOnReferenceUnitTypeChange";
+import { useOnUnitTypeConversionRatesChange } from "./useOnUnitTypeConversionRatesChange";
+import { useSyncAvailableUnitTypesAndUnitTypeConversionRates } from "./useSyncAvailableUnitTypesAndUnitTypeConversionRates";
 import { useSyncIngredientFormDataAndIngredient } from "./useSyncIngredientFormDataAndIngredient";
-import { useSyncReferenceUnitAndAvailableUnits } from "./useSyncReferenceUnitAndAvailableUnits";
+import { useSyncReferenceUnitTypeAndAvailableUnitTypes } from "./useSyncReferenceUnitTypeAndAvailableUnitTypes";
 
 type TIngredientFormProps<T> = {
 	ingredient:    T
@@ -32,13 +32,13 @@ export const IngredientForm = <T extends TIngredient | Omit<TIngredient, "id">>(
 
 	const onNameChange = useOnNameChange(setIngredientFormData);
 	const onCategoryChange = useOnCategoryChange(setIngredientFormData);
-	const onReferenceUnitChange = useOnReferenceUnitChange(setIngredientFormData);
-	const onAvailableUnitsChange = useOnAvailableUnitsChange(setIngredientFormData);
-	const onUnitConversionRatesChange = useOnUnitConversionRatesChange(setIngredientFormData);
+	const onReferenceUnitTypeChange = useOnReferenceUnitTypeChange(setIngredientFormData);
+	const onAvailableUnitTypesChange = useOnAvailableUnitTypesChange(setIngredientFormData);
+	const onUnitTypeConversionRatesChange = useOnUnitTypeConversionRatesChange(ingredientFormData, setIngredientFormData);
 
 	useSyncIngredientFormDataAndIngredient(ingredientFormData, setIngredient);
-	useSyncReferenceUnitAndAvailableUnits(ingredientFormData, setIngredientFormData);
-	useSyncAvailableUnitsAndUnitConversionRates(ingredientFormData, setIngredientFormData);
+	useSyncReferenceUnitTypeAndAvailableUnitTypes(ingredientFormData, setIngredientFormData);
+	useSyncAvailableUnitTypesAndUnitTypeConversionRates(ingredientFormData, setIngredientFormData);
 
 	return (
 		<div className="flex flex-col space-y-4">
@@ -51,22 +51,22 @@ export const IngredientForm = <T extends TIngredient | Omit<TIngredient, "id">>(
 				category={ingredientFormData.category.value}
 				setCategory={onCategoryChange}
 			/>
-			<ReferenceUnitForm
-				referenceUnit={ingredientFormData.referenceUnit.value}
-				setReferenceUnit={onReferenceUnitChange}
+			<ReferenceUnitTypeForm
+				referenceUnitType={ingredientFormData.referenceUnitType.value}
+				setReferenceUnitType={onReferenceUnitTypeChange}
 			/>
-			<AvailableUnitsForm
-				referenceUnit={ingredientFormData.referenceUnit.value}
-				availableUnits={ingredientFormData.availableUnits.value}
-				setAvailableUnits={onAvailableUnitsChange}
+			<AvailableUnitTypesForm
+				referenceUnitType={ingredientFormData.referenceUnitType.value}
+				availableUnitTypes={ingredientFormData.availableUnitTypes.value}
+				setAvailableUnitTypes={onAvailableUnitTypesChange}
 			/>
 			{
-				ingredientFormData.availableUnits.value.length > 1
+				ingredientFormData.availableUnitTypes.value.length > 1
 					? (
 						<ConversionForm
-							referenceUnit={ingredientFormData.referenceUnit.value}
-							unitConversionRates={ingredientFormData.unitConversionRates.value}
-							setUnitConversionRates={onUnitConversionRatesChange}
+							referenceUnitType={ingredientFormData.referenceUnitType.value}
+							unitTypeConversionRates={ingredientFormData.unitTypeConversionRates.value}
+							onUnitTypeConversionRatesChange={onUnitTypeConversionRatesChange}
 						/>
 					)
 					: null

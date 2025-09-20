@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Modal } from "../../../common/Modal/Modal";
 import { IngredientForm } from "../IngredientForm/IngredientForm";
 import { getIngredientWithDefault } from "../defaultIngredients/getIngredientWithDefault";
-import { updateIngredient } from "../ingredient.api";
+import { createIngredient, updateIngredient } from "../ingredient.api";
 import type { TIngredient } from "../ingredient.types";
 
 type TUpdateIngredientModalProps = {
@@ -21,7 +21,14 @@ export const UpdateIngredientModal = ({
 	const [ingredient, setIngredient] = useState(initialIngredient);
 
 	const submit = () => {
-		const updatedIngredient = updateIngredient(id, ingredient);
+		let updatedIngredient: TIngredient;
+
+		try {
+			updatedIngredient = updateIngredient(id, ingredient);
+		} catch (_) {
+			updatedIngredient = createIngredient(ingredient);
+		}
+
 		onSubmit?.(updatedIngredient);
 	};
 

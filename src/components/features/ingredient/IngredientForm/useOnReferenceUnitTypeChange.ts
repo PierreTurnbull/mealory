@@ -1,15 +1,15 @@
 import type { TIngredientFormData } from "./ingredientFormData.types";
 
-export const useOnUnitConversionRatesChange = (
+export const useOnReferenceUnitTypeChange = (
 	setIngredientFormData: (value: React.SetStateAction<TIngredientFormData>) => void,
 ) => {
-	const onUnitConversionRatesChange = (
-		value: TIngredientFormData["unitConversionRates"]["value"],
+	const onReferenceUnitTypeChange = (
+		value: TIngredientFormData["referenceUnitType"]["value"],
 	) => {
 		setIngredientFormData(prev => {
 			const next = structuredClone(prev);
-				
-			next.unitConversionRates = {
+
+			next.referenceUnitType = {
 				value: value,
 			};
 
@@ -17,5 +17,5 @@ export const useOnUnitConversionRatesChange = (
 		});
 	};
 
-	return onUnitConversionRatesChange;
+	return onReferenceUnitTypeChange;
 };

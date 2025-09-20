@@ -1,13 +1,11 @@
 import { getIngredientWithDefault } from "../../components/features/ingredient/defaultIngredients/getIngredientWithDefault";
+import type { TIngredientUnitType } from "../../components/features/ingredient/ingredient.types";
+import { ingredientUnitTypesConfig, type TIngredientUnitTypeConfig } from "../../components/features/ingredient/ingredientUnits.model";
+import { roundAmount } from "../../components/features/ingredient/roundAmount";
 import type { TRecipeIngredient } from "../../components/features/recipe/recipe.types";
 
 /**
- * Returns the amounted converted into the ingredient's reference unit, with a precision of 3
- * decimals.
- * E.g.: let ingredient water have reference unit "liter" and available units: "liter" and
- * "tablespoon". Let the conversion rate of water liter into water tablespoon be 0.015. Let us pass
- * an ingredient with amount === 1 and unit === "tablespoon". 1 liter water will be converted into
- * 0.015 tablespoon, so the return value is 0.015.
+ * Returns the amount converted into the ingredient's reference unit.
  */
 export const getReferenceAmount = (
 	recipeIngredient: TRecipeIngredient,
@@ -18,19 +16,46 @@ export const getReferenceAmount = (
 		throw new Error(`Missing ingredient with id ${recipeIngredient.id}`);
 	}
 
-	if (!ingredient.availableUnits.includes(recipeIngredient.unit)) {
+	let ingredientUnitTypeConfig: TIngredientUnitTypeConfig | undefined;
+	let ingredientUnitType: TIngredientUnitType | undefined;
+	
+	Object.entries(ingredientUnitTypesConfig)
+		.find(entry => {
+			const unitMatchesUnitType = Object.keys(entry[1].units).includes(recipeIngredient.unit);
+
+			if (unitMatchesUnitType) {
+				ingredientUnitType = entry[0] as TIngredientUnitType;
+				ingredientUnitTypeConfig = entry[1];
+			}
+
+			return unitMatchesUnitType;
+		});
+
+	if (!ingredientUnitTypeConfig || !ingredientUnitType) {
 		throw new Error(`Unit ${recipeIngredient.unit} in recipe ingredient ${recipeIngredient.id} is not enabled on this ingredient.`);
 	}
 
 	let amount: number;
 
-	if (recipeIngredient.unit === ingredient.referenceUnit) {
+	if (recipeIngredient.unit === ingredientUnitTypesConfig[ingredient.referenceUnitType].referenceUnit) {
 		amount = recipeIngredient.amount;
-	} else {
-		const conversionRate = ingredient.unitConversionRates[recipeIngredient.unit]!;
+	} else if (ingredientUnitType === ingredient.referenceUnitType) {
+		const unitConversionRate = ingredientUnitTypeConfig.units[recipeIngredient.unit]!.conversionRate;
 
-		amount = Math.round(recipeIngredient.amount * conversionRate * 1000) / 1000;
+		amount = recipeIngredient.amount * unitConversionRate;
+	} else {
+		// convert unit in reference unit
+		const unitConversionRate = ingredientUnitTypeConfig.units[recipeIngredient.unit]!.conversionRate;
+
+		amount = recipeIngredient.amount * unitConversionRate;
+
+		// convert reference unit from current unit type to reference unit type
+		const unitTypeConversionRate = ingredient.unitTypeConversionRates[ingredientUnitType]!;
+
+		amount = amount / unitTypeConversionRate;
 	}
+
+	amount = roundAmount(amount);
 
 	return amount;
 };

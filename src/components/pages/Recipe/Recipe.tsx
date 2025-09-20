@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { ingredientUnitDirectObjectLabels } from "../../../utils/labels/ingredientUnits";
 import { Button } from "../../common/Button/Button";
 import { ConfirmationModal } from "../../common/ConfirmationModal/ConfirmationModal";
 import { Page } from "../../common/Page/Page";
 import { Section } from "../../common/Section/Section";
 import { Title } from "../../common/Title/Title";
 import { getIngredientsWithDefaults } from "../../features/ingredient/defaultIngredients/getIngredientsWithDefaults";
+import { ingredientUnitTypesConfig } from "../../features/ingredient/ingredientUnits.model";
 import { deleteRecipe, getRecipes } from "../../features/recipe/recipe.api";
 import { UpdateRecipeModal } from "../../features/recipe/UpdateRecipeModal/UpdateRecipeModal";
 
@@ -94,9 +94,20 @@ export const Recipe = () => {
 												);
 											}
 
+											const matchingUnitType = Object.entries(ingredientUnitTypesConfig)
+												.find(entry => {
+													const unitMatchesUnitType = Object.keys(entry[1].units).includes(recipeIngredient.unit);
+
+													return unitMatchesUnitType;
+												})?.[1];
+											const unitConfig = matchingUnitType && Object.entries(matchingUnitType.units)
+												.find(entry => entry[0] === recipeIngredient.unit)?.[1];
+											const unitLabel = unitConfig?.[recipeIngredient.amount >= 2 ? "labelPlural" : "label"]
+												.toLowerCase();
+
 											return (
 												<p key={recipeIngredient.id}>
-													{ingredient.name} : {recipeIngredient.amount} {ingredientUnitDirectObjectLabels[recipeIngredient.unit]}
+													{ingredient.name} : {recipeIngredient.amount} {unitLabel}
 												</p>
 											);
 										})

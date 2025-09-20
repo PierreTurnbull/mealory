@@ -1,10 +1,10 @@
 import type { TFormData } from "../../../../types/form/formData.types";
-import type { TIngredient } from "../../ingredient/ingredient.types";
+import type { TIngredientUnit } from "../../ingredient/ingredient.types";
 
 export type TRecipeIngredientFormData = {
 	id:     TFormData<string>
 	amount: TFormData<string>
-	unit:   TFormData<TIngredient["availableUnits"][number]> | null
+	unit:   TFormData<TIngredientUnit> | null
 }
 
 export type TRecipeFormData = {

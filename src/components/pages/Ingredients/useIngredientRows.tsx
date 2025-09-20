@@ -1,7 +1,6 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
-import { ingredientUnitAnnotationLabels } from "../../../utils/labels/ingredientUnits";
 import type { TTableRow } from "../../common/Table/table.types";
 import { defaultIngredients } from "../../features/ingredient/defaultIngredients/defaultIngredients";
 import type { TIngredient } from "../../features/ingredient/ingredient.types";
@@ -21,11 +20,6 @@ export const useIngredientRows = (
 					key:   "name",
 					label: ingredient.name,
 					value: ingredient.name,
-				},
-				{
-					key:   "referenceUnit",
-					label: ingredientUnitAnnotationLabels[ingredient.referenceUnit],
-					value: ingredient.referenceUnit,
 				},
 				{
 					key:   "actions",

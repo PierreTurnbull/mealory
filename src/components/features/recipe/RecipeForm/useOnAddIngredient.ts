@@ -1,5 +1,6 @@
 import { getIngredientWithDefault } from "../../ingredient/defaultIngredients/getIngredientWithDefault";
 import type { TIngredient } from "../../ingredient/ingredient.types";
+import { ingredientUnitTypesConfig } from "../../ingredient/ingredientUnits.model";
 import type { TRecipeFormData, TRecipeIngredientFormData } from "./recipeFormData.types";
 
 export const useOnAddIngredient = (
@@ -12,7 +13,7 @@ export const useOnAddIngredient = (
 
 		const unitFormData: TRecipeIngredientFormData["unit"] | null = ingredient
 			? {
-				value: ingredient.referenceUnit,
+				value: ingredientUnitTypesConfig[ingredient.referenceUnitType].referenceUnit,
 			}
 			: null;
 

@@ -8,24 +8,6 @@ export const useIngredientColumns = () => {
 			isSortable: true,
 		},
 		{
-			key:   "referenceUnit",
-			label: (
-				<>
-					<span
-						className="hidden sm:inline"
-					>
-						Unité de référence
-					</span>
-					<span
-						className="sm:hidden inline"
-					>
-						Unité
-					</span>
-				</>
-			),
-			isSortable: true,
-		},
-		{
 			key:   "actions",
 			label: (
 				<span

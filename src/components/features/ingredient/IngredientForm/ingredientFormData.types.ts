@@ -1,14 +1,14 @@
 import type { TFormData } from "../../../../types/form/formData.types";
-import type { TIngredientCategory, TIngredientUnit, TReferenceIngredientUnit, TUnitConversionRates } from "../ingredient.types";
+import type { TIngredientCategory, TIngredientUnitType, TUnitTypeConversionRates } from "../ingredient.types";
 
-export type TUnitConversionRateInputValues = {
-	[K in keyof TUnitConversionRates]: string
+export type TUnitTypeConversionRateInputValues = {
+	[K in keyof TUnitTypeConversionRates]: string
 }
 
 export type TIngredientFormData = {
-	name:                TFormData<string>
-	referenceUnit:       TFormData<TReferenceIngredientUnit>
-	availableUnits:      TFormData<TIngredientUnit[]>
-	unitConversionRates: TFormData<TUnitConversionRateInputValues>
-	category:            TFormData<TIngredientCategory>
+	name:                    TFormData<string>
+	referenceUnitType:       TFormData<TIngredientUnitType>
+	availableUnitTypes:      TFormData<TIngredientUnitType[]>
+	unitTypeConversionRates: TFormData<TUnitTypeConversionRateInputValues>
+	category:                TFormData<TIngredientCategory>
 }
