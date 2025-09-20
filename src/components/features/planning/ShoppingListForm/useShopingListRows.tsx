@@ -1,9 +1,9 @@
 import { Checkbox } from "@mui/material";
-import { ingredientUnitDirectObjectShortLabels } from "../../../../utils/labels/ingredientUnits";
 import type { TTableRow } from "../../../common/Table/table.types";
 import { getIngredientsWithDefaults } from "../../ingredient/defaultIngredients/getIngredientsWithDefaults";
 import type { TIngredientCategory } from "../../ingredient/ingredient.types";
 import { ingredientCategories } from "../../ingredient/ingredientCategories";
+import { ingredientUnitTypesConfig } from "../../ingredient/ingredientUnits.model";
 import type { TPlanning } from "../planning.types";
 import { getIngredientsToObtain } from "../utils/getIngredientsToObtain/getIngredientsToObtain";
 import { getTotalIngredients } from "../utils/getTotalIngredients/getTotalIngredients";
@@ -75,6 +75,9 @@ export const useShoppingListRows = <T extends TPlanning | Omit<TPlanning, "id">>
 
 				const ingredientToObtain = ingredientsToObtain[ingredient.id];
 
+				const referenceUnitTypeConfig = ingredientUnitTypesConfig[ingredient.referenceUnitType];
+				const unitLabel = referenceUnitTypeConfig.units[referenceUnitTypeConfig.referenceUnit]?.labelShort;
+
 				const shoppingListRow: TTableRow = {
 					key:   shoppingListFormDataItem.id,
 					items: [
@@ -85,7 +88,7 @@ export const useShoppingListRows = <T extends TPlanning | Omit<TPlanning, "id">>
 						},
 						{
 							key:   "amount",
-							label: `${ingredientToObtain} ${ingredientUnitDirectObjectShortLabels[ingredient.referenceUnit]}`,
+							label: `${ingredientToObtain} ${unitLabel}`,
 							value: ingredientToObtain,
 						},
 						{

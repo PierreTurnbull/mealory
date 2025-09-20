@@ -14,11 +14,11 @@ export const CreateIngredientModal = ({
 	onSubmit,
 }: TCreateIngredientModalProps) => {
 	const [ingredient, setIngredient] = useState<Omit<TIngredient, "id">>({
-		name:                "",
-		referenceUnit:       "amount",
-		availableUnits:      [],
-		unitConversionRates: {},
-		category:            "other",
+		name:                    "",
+		referenceUnitType:       "count",
+		availableUnitTypes:      [],
+		unitTypeConversionRates: {},
+		category:                "other",
 	});
 
 	const submit = () => {

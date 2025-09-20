@@ -1,15 +1,15 @@
 import type { TIngredientFormData } from "./ingredientFormData.types";
 
-export const useOnAvailableUnitsChange = (
+export const useOnAvailableUnitTypesChange = (
 	setIngredientFormData: (value: React.SetStateAction<TIngredientFormData>) => void,
 ) => {
-	const onAvailableUnitsChange = (
-		value: TIngredientFormData["availableUnits"]["value"],
+	const onAvailableUnitTypesChange = (
+		value: TIngredientFormData["availableUnitTypes"]["value"],
 	) => {
 		setIngredientFormData(prev => {
 			const next = structuredClone(prev);
 				
-			next.availableUnits = {
+			next.availableUnitTypes = {
 				value: value,
 			};
 
@@ -17,5 +17,5 @@ export const useOnAvailableUnitsChange = (
 		});
 	};
 
-	return onAvailableUnitsChange;
+	return onAvailableUnitTypesChange;
 };

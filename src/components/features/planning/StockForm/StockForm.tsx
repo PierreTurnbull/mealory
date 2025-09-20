@@ -27,10 +27,7 @@ export const StockForm = <T extends TPlanning | Omit<TPlanning, "id">>({
 
 	useSyncStockFormDataAndStock(stockFormData, setPlanning);
 
-	const [sortParameters, setSortParameters] = useState<TSortParameters | null>({
-		sortBy:        "name",
-		sortDirection: "asc",
-	});
+	const [sortParameters, setSortParameters] = useState<TSortParameters | null>(null);
 
 	const recipeColumns = useStockColumns();
 	const recipeRows = useStockRows(

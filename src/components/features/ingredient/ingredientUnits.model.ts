@@ -1,30 +1,78 @@
-import type { TIngredientUnit } from "./ingredient.types";
+import type { TIngredientUnit, TIngredientUnitType } from "./ingredient.types";
 
-type TIngredientUnitDetails = {
-	universalRates: Partial<Record<TIngredientUnit, number>>
+export type TIngredientUnitConfig = {
+	[key in TIngredientUnit]?: {
+		conversionRate: number
+		label:          string
+		labelPlural:    string
+		labelShort:     string
+	}
 }
 
-export const ingredientUnitsModel: Record<TIngredientUnit, TIngredientUnitDetails> = {
-	amount: {
-		universalRates: {},
-	},
-	gram: {
-		universalRates: {},
-	},
-	liter: {
-		universalRates: {
-			pinch:      0.000625,
-			teaspoon:   0.005,
-			tablespoon: 0.015,
+export type TIngredientUnitTypeConfig = {
+	label:         string
+	units:         TIngredientUnitConfig
+	referenceUnit: TIngredientUnit
+}
+
+export type TIngredientUnitTypesConfig = Record<TIngredientUnitType, TIngredientUnitTypeConfig>
+
+// Conversion rate is from the unit to the reference unit.
+export const ingredientUnitTypesConfig: TIngredientUnitTypesConfig = {
+	count: {
+		label: "Nombre",
+		units: {
+			count: {
+				label:          "Unité",
+				labelPlural:    "Unités",
+				labelShort:     "",
+				conversionRate: 1,
+			},
 		},
+		referenceUnit: "count",
 	},
-	pinch: {
-		universalRates: {},
+	mass: {
+		label: "Masse",
+		units: {
+			gram: {
+				label:          "Gramme",
+				labelPlural:    "Grammes",
+				labelShort:     "g",
+				conversionRate: 1,
+			},
+		},
+		referenceUnit: "gram",
 	},
-	teaspoon: {
-		universalRates: {},
-	},
-	tablespoon: {
-		universalRates: {},
+	volume: {
+		label: "Volume",
+		units: {
+			liter: {
+				label:          "Litre",
+				labelPlural:    "Litres",
+				labelShort:     "L",
+				conversionRate: 1,
+			},
+			tablespoon: {
+				label:          "Cuillère à soupe",
+				labelPlural:    "Cuillères à soupe",
+				labelShort:     "c. à s.",
+				conversionRate: 0.015,
+			},
+			teaspoon: {
+				label:          "Cuillère à café",
+				labelPlural:    "Cuillères à café",
+				labelShort:     "c. à c.",
+				conversionRate: 0.005,
+			},
+			pinch: {
+				label:          "Pincée",
+				labelPlural:    "Pincées",
+				labelShort:     "p.",
+				conversionRate: 0.0005,
+			},
+		},
+		referenceUnit: "liter",
 	},
 };
+
+export const ingredientUnitRoundingPrecision = 3;

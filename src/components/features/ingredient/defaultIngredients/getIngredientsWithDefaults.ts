@@ -9,9 +9,16 @@ export const getIngredientsWithDefaults = () => {
 	const ingredients = getIngredients();
 
 	const ingredientsWithDefaults = [
-		...defaultIngredients,
 		...ingredients,
 	];
+
+	for (const defaultIngredient of defaultIngredients) {
+		const ingredientWasPersisted = ingredientsWithDefaults.find(ingredient => ingredient.id === defaultIngredient.id);
+
+		if (!ingredientWasPersisted) {
+			ingredientsWithDefaults.push(defaultIngredient);
+		}
+	}
 
 	return ingredientsWithDefaults;
 };

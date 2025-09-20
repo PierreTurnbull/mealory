@@ -31,14 +31,16 @@ export const getCrudApis = <T extends { id: string }>(
 	};
 
 	const createItem = (
-		item: Omit<T, "id">,
+		item: Omit<T, "id"> | T,
 	) => {
 		const items = localStorage[modelName]
 			? JSON.parse(localStorage[modelName]) as T[]
 			: [];
 
+		const id = "id" in item ? item.id : v4();
+
 		const itemWithId = {
-			id: v4(),
+			id: id,
 			...item,
 		} as T;
 

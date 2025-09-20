@@ -1,5 +1,6 @@
 import { getReferenceAmount } from "../../../../../utils/getReferenceAmount/getReferenceAmount";
 import { getIngredientsWithDefaults } from "../../../ingredient/defaultIngredients/getIngredientsWithDefaults";
+import { roundAmount } from "../../../ingredient/roundAmount";
 import { getRecipes } from "../../../recipe/recipe.api";
 import type { TIngredientInStock, TPlanning } from "../../planning.types";
 
@@ -34,8 +35,7 @@ export const getTotalIngredients = (
 			let amount = getReferenceAmount(recipeIngredient);
 			amount = amount * planningRecipe.portions;
 
-			let totalAmount = currentTotal + amount;
-			totalAmount = Math.round(totalAmount * 1000) / 1000;
+			const totalAmount = roundAmount(currentTotal + amount);
 			totalIngredients[recipeIngredient.id] = totalAmount;
 		});
 	});

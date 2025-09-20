@@ -2,8 +2,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Autocomplete, IconButton, Input, MenuItem, Select } from "@mui/material";
 import { useState, type JSX } from "react";
-import { ingredientUnitAnnotationLabels, ingredientUnitDirectObjectLabels } from "../../../../../utils/labels/ingredientUnits";
-import type { TIngredient } from "../../../ingredient/ingredient.types";
+import type { TIngredient, TIngredientUnit, TIngredientUnitType } from "../../../ingredient/ingredient.types";
+import { ingredientUnitTypesConfig } from "../../../ingredient/ingredientUnits.model";
 import { UpdateIngredientModal } from "../../../ingredient/UpdateIngredientModal/UpdateIngredientModal";
 import type { TRecipeFormData } from "../recipeFormData.types";
 import { useRemoveIngredient } from "../useRemoveIngredient";
@@ -11,6 +11,7 @@ import type { TIngredientChoice } from "./ingredientChoice.types";
 import type { TUnitChoice } from "./unitChoice.types";
 import { useOnAmountChange } from "./useOnAmountChange";
 import { useOnIngredientChange } from "./useOnIngredientChange";
+import { useOnIngredientUpdate } from "./useOnIngredientUpdate";
 import { useOnUnitChange } from "./useOnUnitChange";
 
 type TRecipeIngredientFormProps = {
@@ -32,6 +33,7 @@ export const RecipeIngredientsForm = ({
 	const onAmountChange = useOnAmountChange(setRecipeFormData);
 	const onUnitChange = useOnUnitChange(setRecipeFormData);
 	const onIngredientChange = useOnIngredientChange(setRecipeFormData);
+	const onIngredientUpdate = useOnIngredientUpdate(setRecipeFormData, onUpdateIngredient);
 
 	return (
 		<div
@@ -60,12 +62,27 @@ export const RecipeIngredientsForm = ({
 					let selectedUnitChoice: TUnitChoice | null = null;
 
 					if (selectedIngredient) {
-						const availableUnits = selectedIngredient.availableUnits;
+						const availableUnitTypes = selectedIngredient.availableUnitTypes;
+						const availableUnits = Object.entries(ingredientUnitTypesConfig).map(entry => {
+							const unitTypeIsAvailable = availableUnitTypes.includes(entry[0] as TIngredientUnitType);
+
+							if (unitTypeIsAvailable) {
+								return Object.entries(entry[1].units).map(entry => {
+									return {
+										key:        entry[0] as TIngredientUnit,
+										label:      entry[1].label,
+										labelShort: entry[1].labelShort,
+									};
+								});
+							}
+
+							return [];
+						}).flat();
 						unitChoices = availableUnits.map(availableUnit => {
 							const choice = {
-								id:                availableUnit,
-								label:             ingredientUnitAnnotationLabels[availableUnit],
-								directObjectLabel: ingredientUnitDirectObjectLabels[availableUnit],
+								id:                availableUnit.key,
+								label:             availableUnit.label,
+								directObjectLabel: availableUnit.labelShort,
 								isDisabled:        false,
 							};
 
@@ -74,7 +91,7 @@ export const RecipeIngredientsForm = ({
 						selectedUnitChoice = unitChoices.find(unitChoice => unitChoice.id === recipeFormData.ingredients[key].unit!.value) || null;
 
 						if (!selectedUnitChoice) {
-							selectedUnitChoice = unitChoices.find(unitChoice => unitChoice.id === selectedIngredient.referenceUnit) || null;
+							selectedUnitChoice = unitChoices.find(unitChoice => unitChoice.id === selectedIngredient.referenceUnitType) || null;
 						}
 					}
 
@@ -104,7 +121,7 @@ export const RecipeIngredientsForm = ({
 												key={unitChoice.id}
 												value={unitChoice.id}
 											>
-												{ingredientUnitAnnotationLabels[unitChoice.id]}
+												{unitChoice.label}
 											</MenuItem>
 										);
 									})
@@ -180,28 +197,7 @@ export const RecipeIngredientsForm = ({
 										<UpdateIngredientModal
 											id={ingredientFormData.id.value}
 											close={() => setIngredientBeingUpdatedId(null)}
-											onSubmit={updatedIngredient => {
-												const selectedUnitIsntAvailableAnymore = (
-													!updatedIngredient.availableUnits.includes(ingredientFormData.unit!.value)
-												);
-
-												if (selectedUnitIsntAvailableAnymore) {
-													setRecipeFormData(prev => {
-														const next = structuredClone(prev);
-
-														if (next.ingredients[key].unit) {
-															next.ingredients[key].unit.value = updatedIngredient.referenceUnit;
-														} else {
-															next.ingredients[key].unit = {
-																value: updatedIngredient.referenceUnit,
-															};
-														}
-
-														return next;
-													});
-												}
-												onUpdateIngredient();
-											}}
+											onSubmit={updatedIngredient => onIngredientUpdate(updatedIngredient, key, ingredientFormData)}
 										/>
 									)
 									: null

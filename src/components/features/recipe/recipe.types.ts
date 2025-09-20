@@ -1,9 +1,9 @@
-import type { TIngredient } from "../ingredient/ingredient.types";
+import type { TIngredient, TIngredientUnit } from "../ingredient/ingredient.types";
 
 export type TRecipeIngredient = {
 	id:     TIngredient["id"]
 	amount: number
-	unit:   TIngredient["availableUnits"][number]
+	unit:   TIngredientUnit
 }
 
 export type TRecipe = {

@@ -104,19 +104,19 @@ export const PlanningForm = <T extends TPlanning | Omit<TPlanning, "id">>({
 				sortParameters={sortParameters}
 				onSort={setSortParameters}
 			/>
-	 		{
-	 			confirmResetModalIsOpen
-	 				? (
-	 					<ConfirmationModal
-	 						cancel={() => setConfirmResetModalIsOpen(false)}
-	 						description="Es-tu sûr de vouloir réinitialiser le planning ? Cela signifie que plus aucune recette ne sera sélectionnée."
-	 						title="Réinitialiser le planning"
-	 						submit={onResetPlanning}
-	 						color="error"
-	 					/>
-	 				)
-	 				: null
-	 		}
+			{
+				confirmResetModalIsOpen
+					? (
+						<ConfirmationModal
+							cancel={() => setConfirmResetModalIsOpen(false)}
+							description="Es-tu sûr de vouloir réinitialiser le planning ? Cela signifie que plus aucune recette ne sera sélectionnée."
+							title="Réinitialiser le planning"
+							submit={onResetPlanning}
+							color="error"
+						/>
+					)
+					: null
+			}
 			{
 				addRecipeModalIsOpen
 					? (

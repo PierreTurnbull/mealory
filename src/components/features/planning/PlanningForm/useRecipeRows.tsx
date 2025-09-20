@@ -11,9 +11,12 @@ export const useRecipeRows = (
 ) => {
 	const recipes = getRecipes();
 
-
 	const recipeRows = planningFormData.recipes.map((recipeFormData, key) => {
-		const recipe = recipes.find(recipe => recipe.id === recipeFormData.id)!;
+		const recipe = recipes.find(recipe => recipe.id === recipeFormData.id);
+
+		if (!recipe) {
+			throw new Error(`La recette ${recipeFormData.id} n'existe plus.`);
+		}
 
 		const recipeRow: TTableRow = {
 			key:   recipe.id,
