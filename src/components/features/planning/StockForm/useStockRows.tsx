@@ -10,7 +10,7 @@ import { getTotalIngredients } from "../utils/getTotalIngredients/getTotalIngred
 import type { TStockFormData } from "./stockFormData.types";
 
 export const useStockRows = (
-	planningRecipes: TPlanning["recipes"],
+	planning: Omit<TPlanning, "id">,
 	stockFormData: TStockFormData,
 	onStockChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, id: string) => void,
 	setMaxIngredientInStock: (id: string, maxIngredientInStock: number) => void,
@@ -18,7 +18,7 @@ export const useStockRows = (
 ) => {
 	const ingredients = getIngredientsWithDefaults();
 
-	const totalIngredients = getTotalIngredients(planningRecipes);
+	const totalIngredients = getTotalIngredients(planning);
 	const ingredientsInStock = stockFormData.map(stockFormDataItem => {
 		const ingredientInStock: TPlanning["ingredientsInStock"][number] = {
 			id:     stockFormDataItem.id,

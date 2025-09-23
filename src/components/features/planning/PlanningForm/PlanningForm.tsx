@@ -7,14 +7,18 @@ import { HelperIcon } from "../../../common/HelperIcon/HelperIcon";
 import { Table } from "../../../common/Table/Table";
 import type { TSortParameters } from "../../../common/Table/table.types";
 import type { TPlanning } from "../planning.types";
-import { AddRecipeModal } from "./AddRecipeModal/AddRecipeModal";
-import { useOnAddRecipe } from "./useOnAddRecipe";
-import { useOnPortionsChange } from "./useOnPortionsChange";
-import { useOnRemoveRecipe } from "./useOnRemoveRecipe";
+import { AddDishModal } from "./AddDishModal/AddDishModal";
+import { AddMealModal } from "./AddMealModal/AddMealModal";
+import { useOnAddDish } from "./useOnAddDish";
+import { useOnAddMeal } from "./useOnAddMeal";
+import { useOnDishPortionsChange } from "./useOnDishPortionsChange";
+import { useOnMealPortionsChange } from "./useOnMealPortionsChange";
+import { useOnRemoveDish } from "./useOnRemoveDish";
+import { useOnRemoveMeal } from "./useOnRemoveMeal";
 import { useOnResetPlanning } from "./useOnResetPlanning";
+import { usePlanningColumns } from "./usePlanningColumns";
 import { usePlanningFormData } from "./usePlanningFormData";
-import { useRecipeColumns } from "./useRecipeColumns";
-import { useRecipeRows } from "./useRecipeRows";
+import { usePlanningRows } from "./usePlanningRows";
 import { useSyncPlanningFormDataAndPlanning } from "./useSyncPlanningFormDataAndPlanning";
 
 type TPlanningFormProps<T> = {
@@ -38,15 +42,19 @@ export const PlanningForm = <T extends TPlanning | Omit<TPlanning, "id">>({
 		localStorage.setItem("defaultPortions", JSON.stringify(defaultPortions));
 	}, [defaultPortions]);
 
-	const [addRecipeModalIsOpen, setAddRecipeModalIsOpen] = useState(false);
+	const [addDishModalIsOpen, setAddDishModalIsOpen] = useState(false);
+	const [addMealModalIsOpen, setAddMealModalIsOpen] = useState(false);
 	const [confirmResetModalIsOpen, setConfirmResetModalIsOpen] = useState(false);
 
 	const [planningFormData, setPlanningFormData] = usePlanningFormData(planning);
 
 	const onResetPlanning = useOnResetPlanning(setPlanningFormData, setConfirmResetModalIsOpen);
-	const onAddRecipe = useOnAddRecipe(setPlanningFormData, setAddRecipeModalIsOpen, defaultPortions);
-	const onRemoveRecipe = useOnRemoveRecipe(setPlanningFormData);
-	const onPortionsChange = useOnPortionsChange(setPlanningFormData);
+	const onAddDish = useOnAddDish(setPlanningFormData, setAddDishModalIsOpen, defaultPortions);
+	const onAddMeal = useOnAddMeal(setPlanningFormData, setAddDishModalIsOpen, defaultPortions);
+	const onRemoveDish = useOnRemoveDish(setPlanningFormData);
+	const onRemoveMeal = useOnRemoveMeal(setPlanningFormData);
+	const onDishPortionsChange = useOnDishPortionsChange(setPlanningFormData);
+	const onMealPortionsChange = useOnMealPortionsChange(setPlanningFormData);
 
 	useSyncPlanningFormDataAndPlanning(planningFormData, setPlanning);
 
@@ -55,26 +63,17 @@ export const PlanningForm = <T extends TPlanning | Omit<TPlanning, "id">>({
 		sortDirection: "asc",
 	});
 
-	const recipeColumns = useRecipeColumns();
-	const recipeRows = useRecipeRows(planningFormData, onPortionsChange, onRemoveRecipe);
+	const planningColumns = usePlanningColumns();
+	const planningRows = usePlanningRows(
+		planningFormData,
+		onDishPortionsChange,
+		onMealPortionsChange,
+		onRemoveDish,
+		onRemoveMeal,
+	);
 
 	return (
 		<div className="space-y-4">
-			<div className="space-y-4 flex flex-col items-center">
-				<div className="flex gap-2">
-					<Button
-						onClick={() => setAddRecipeModalIsOpen(true)}
-					>
-						Ajouter une recette
-					</Button>
-					<Button
-						color="error"
-						onClick={() => setConfirmResetModalIsOpen(true)}
-					>
-						Réinitialiser
-					</Button>
-				</div>
-			</div>
 			<div className="flex gap-2 items-center">
 				<p>Portions par défaut :</p>
 				<HelperIcon
@@ -89,18 +88,43 @@ export const PlanningForm = <T extends TPlanning | Omit<TPlanning, "id">>({
 					type="number"
 				/>
 			</div>
+			<p>Vous pouvez ajouter à votre planning des plats seuls. Vous pouvez aussi ajouter des plats groupés en repas (ex : entrée + plat).</p>
+			<div className="space-y-4 flex flex-col items-center">
+				<div className="flex gap-2 items-center">
+					<div className="flex flex-col gap-2">
+						<Button
+							onClick={() => setAddMealModalIsOpen(true)}
+						>
+							Ajouter un repas
+						</Button>
+						<Button
+							onClick={() => setAddDishModalIsOpen(true)}
+						>
+							Ajouter une recette seule
+						</Button>
+					</div>
+					<div>
+						<Button
+							color="error"
+							onClick={() => setConfirmResetModalIsOpen(true)}
+						>
+							Réinitialiser
+						</Button>
+					</div>
+				</div>
+			</div>
 			<div className="fixed bottom-16 right-4 shadow">
 				<IconButton
 					size="large"
-					onClick={() => setAddRecipeModalIsOpen(true)}
+					onClick={() => setAddDishModalIsOpen(true)}
 				>
 					<AddIcon />
 				</IconButton>
 			</div>
 			<Table
 				fullWidth
-				columns={recipeColumns}
-				rows={recipeRows}
+				columns={planningColumns}
+				rows={planningRows}
 				sortParameters={sortParameters}
 				onSort={setSortParameters}
 			/>
@@ -118,12 +142,22 @@ export const PlanningForm = <T extends TPlanning | Omit<TPlanning, "id">>({
 					: null
 			}
 			{
-				addRecipeModalIsOpen
+				addDishModalIsOpen
 					? (
-						<AddRecipeModal
-							selectedRecipeIds={planningFormData.recipes}
-							close={() => setAddRecipeModalIsOpen(false)}
-							selectRecipe={onAddRecipe}
+						<AddDishModal
+							selectedDishFormDatas={planningFormData.dishes}
+							close={() => setAddDishModalIsOpen(false)}
+							selectRecipe={onAddDish}
+						/>
+					)
+					: null
+			}
+			{
+				addMealModalIsOpen
+					? (
+						<AddMealModal
+							close={() => setAddMealModalIsOpen(false)}
+							onAddMeal={onAddMeal}
 						/>
 					)
 					: null

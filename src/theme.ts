@@ -1,6 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 import Color from "colorjs.io";
 import colors from "tailwindcss/colors";
+import defaultTailwindTheme from "tailwindcss/defaultTheme";
 
 const hex = (clh: string) => {
 	const color = new Color(clh);
@@ -44,6 +45,35 @@ const components = createTheme({
 					height:     32,
 					display:    "flex",
 					alignItems: "center",
+				},
+			},
+		},
+		MuiList: {
+			styleOverrides: {
+				root: {
+					padding: 0,
+				},
+			},
+		},
+		MuiListItem: {
+			styleOverrides: {
+				root: {
+					"& .MuiButtonBase-root": {
+						height:  32,
+						padding: 0,
+					},
+				},
+			},
+		},
+		MuiListItemIcon: {
+			styleOverrides: {
+				root: {
+					minWidth:    "initial",
+					marginRight: defaultTailwindTheme.spacing["2"],
+
+					" input": {
+						position: "initial",
+					},
 				},
 			},
 		},

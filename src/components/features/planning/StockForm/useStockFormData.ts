@@ -6,7 +6,7 @@ import type { TIngredientInStockFormData, TStockFormData } from "./stockFormData
 export const useStockFormData = <T extends TPlanning | Omit<TPlanning, "id">>(
 	planning: T,
 ) => {
-	const totalIngredients = getTotalIngredients(planning.recipes);
+	const totalIngredients = getTotalIngredients(planning);
 
 	const [stockFormData, setStockFormData] = useState<TStockFormData>(
 		Object.entries(totalIngredients).map(entry => {

@@ -2,13 +2,19 @@ import { getReferenceAmount } from "../../../../../utils/getReferenceAmount/getR
 import { getIngredientsWithDefaults } from "../../../ingredient/defaultIngredients/getIngredientsWithDefaults";
 import { roundAmount } from "../../../ingredient/roundAmount";
 import { getRecipes } from "../../../recipe/recipe.api";
-import type { TIngredientInStock, TPlanning } from "../../planning.types";
+import type { TRecipe } from "../../../recipe/recipe.types";
+import type { TIngredientInStock, TPlanning, TPlanningDish, TPlanningMeal } from "../../planning.types";
+
+type TRecipeData = {
+	id:       TRecipe["id"]
+	portions: TPlanningDish["portions"] | TPlanningMeal["portions"]
+}
 
 /**
  * Returns the total ingredients required for the planning passed as param.
  */
 export const getTotalIngredients = (
-	planningRecipes: TPlanning["recipes"],
+	planning: Omit<TPlanning, "id">,
 ) => {
 	const ingredients = getIngredientsWithDefaults();
 	const recipes = getRecipes();
@@ -18,11 +24,28 @@ export const getTotalIngredients = (
 		totalIngredients[ingredient.id] = 0;
 	});
 
-	planningRecipes.forEach(planningRecipe => {
-		const recipe = recipes.find(recipe => recipe.id === planningRecipe.id);
+	const recipeDatas: TRecipeData[] = [];
+
+	planning.dishes.forEach(dish => {
+		recipeDatas.push({
+			id:       dish.recipeId,
+			portions: dish.portions,
+		});
+	});
+	planning.meals.forEach(meal => {
+		meal.dishes.forEach(dish => {
+			recipeDatas.push({
+				id:       dish.recipeId,
+				portions: meal.portions,
+			});
+		});
+	});
+
+	recipeDatas.forEach(recipeData => {
+		const recipe = recipes.find(recipe => recipe.id === recipeData.id);
 
 		if (!recipe) {
-			throw new Error((`Missing recipe with id ${planningRecipe.id}`));
+			throw new Error((`Missing recipe with id ${recipeData.id}`));
 		}
 
 		recipe.ingredients.forEach(recipeIngredient => {
@@ -33,7 +56,7 @@ export const getTotalIngredients = (
 			}
 
 			let amount = getReferenceAmount(recipeIngredient);
-			amount = amount * planningRecipe.portions;
+			amount = amount * recipeData.portions;
 
 			const totalAmount = roundAmount(currentTotal + amount);
 			totalIngredients[recipeIngredient.id] = totalAmount;

@@ -31,7 +31,7 @@ export const StockForm = <T extends TPlanning | Omit<TPlanning, "id">>({
 
 	const recipeColumns = useStockColumns();
 	const recipeRows = useStockRows(
-		planning.recipes,
+		planning,
 		stockFormData,
 		onStockChange,
 		setMaxIngredientInStock,

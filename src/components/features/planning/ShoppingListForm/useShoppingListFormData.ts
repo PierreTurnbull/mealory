@@ -7,7 +7,7 @@ import type { TIngredientObtainedFormData, TShoppingListFormData } from "./shopp
 export const useShoppingListFormData = <T extends TPlanning | Omit<TPlanning, "id">>(
 	planning: T,
 ) => {
-	const totalIngredients = getTotalIngredients(planning.recipes);
+	const totalIngredients = getTotalIngredients(planning);
 	const ingredientsToObtain = getIngredientsToObtain(totalIngredients, planning.ingredientsInStock);
 
 	const initialShoppingListFormData = Object.entries(ingredientsToObtain)

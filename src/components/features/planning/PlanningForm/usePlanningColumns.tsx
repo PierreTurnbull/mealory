@@ -1,6 +1,6 @@
 import type { TTableColumn } from "../../../common/Table/table.types";
 
-export const useRecipeColumns = () => {
+export const usePlanningColumns = () => {
 	const columns: TTableColumn[] = [
 		{
 			key:        "name",

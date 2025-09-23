@@ -17,6 +17,7 @@ function App() {
 	}, []);
 
 	const [migrationError, setMigrationError] = useState<string | null>(null);
+	const [migrationDone, setMigrationDone] = useState(false);
 
 	useEffect(() => {
 		const error = applyMigrations();
@@ -24,6 +25,8 @@ function App() {
 		if (error) {
 			setMigrationError(error.message);
 		}
+
+		setMigrationDone(true);
 	}, []);
 
 	if (migrationError) {
@@ -32,6 +35,10 @@ function App() {
 				Erreur lors de la mise à jour des données. L'application ne peut pas être utilisée en l'état.
 			</p>
 		);
+	}
+
+	if (!migrationDone) {
+		return null;
 	}
 
 	return (

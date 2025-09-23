@@ -16,7 +16,7 @@ export const useShoppingListRows = <T extends TPlanning | Omit<TPlanning, "id">>
 	onIsObtainedChange: ReturnType<typeof useOnIsObtainedChange>,
 ) => {
 	const ingredients = getIngredientsWithDefaults();
-	const totalIngredients = getTotalIngredients(planning.recipes);
+	const totalIngredients = getTotalIngredients(planning);
 	const ingredientsToObtain = getIngredientsToObtain(totalIngredients, planning.ingredientsInStock);
 
 	type TByCategory = {
