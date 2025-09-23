@@ -8,7 +8,7 @@ import type { TIngredientInStock, TPlanning } from "../../planning.types";
  * Returns the total ingredients required for the planning passed as param.
  */
 export const getTotalIngredients = (
-	planningRecipes: TPlanning["recipes"],
+	planningRecipes: TPlanning["dishes"],
 ) => {
 	const ingredients = getIngredientsWithDefaults();
 	const recipes = getRecipes();
@@ -19,10 +19,10 @@ export const getTotalIngredients = (
 	});
 
 	planningRecipes.forEach(planningRecipe => {
-		const recipe = recipes.find(recipe => recipe.id === planningRecipe.id);
+		const recipe = recipes.find(recipe => recipe.id === planningRecipe.recipeId);
 
 		if (!recipe) {
-			throw new Error((`Missing recipe with id ${planningRecipe.id}`));
+			throw new Error((`Missing recipe with id ${planningRecipe.recipeId}`));
 		}
 
 		recipe.ingredients.forEach(recipeIngredient => {

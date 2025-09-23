@@ -2,7 +2,6 @@ import { applyBackup } from "./applyBackup";
 import { generateBackup } from "./generateBackup";
 import { migrations } from "./migrations";
 
-
 export const applyMigrations = () => {
 	const dbVersion = localStorage.dbVersion === undefined ? 0 : Number(localStorage.dbVersion);
 
@@ -11,9 +10,11 @@ export const applyMigrations = () => {
 	const backup = generateBackup();
 
 	for (const key in migrationsToApply) {
-		const migrationToApply = migrationsToApply[Number(key)];
+		const actualKey = dbVersion + Number(key);
 
-		const groupKey = `Migration v${Number(key)} -> v${Number(key) + 1}`;
+		const migrationToApply = migrationsToApply[key];
+
+		const groupKey = `Migration v${actualKey} -> v${actualKey + 1}`;
 
 		console.group(groupKey);
 
@@ -21,8 +22,8 @@ export const applyMigrations = () => {
 			console.info("Applying db migration.");
 			migrationToApply();
 			console.info("Successfully applied db migration.");
-			localStorage.dbVersion = Number(key) + 1;
-			console.info(`Database is now at version ${Number(key) + 1}`);
+			localStorage.dbVersion = actualKey + 1;
+			console.info(`Database is now at version ${actualKey + 1}`);
 
 			console.groupEnd();
 		} catch (error) {

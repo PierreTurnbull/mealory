@@ -4,26 +4,26 @@ import { Modal } from "../../../../common/Modal/Modal";
 import { DefaultRecipeImage } from "../../../ingredient/DefaultRecipeImage/DefaultRecipeImage";
 import { getRecipes } from "../../../recipe/recipe.api";
 import type { TRecipe } from "../../../recipe/recipe.types";
-import type { TPlanningRecipeFormData } from "../planningFormData.types";
+import type { TPlanningDishFormData } from "../planningFormData.types";
 
-type TAddRecipeModalProps = {
-	selectRecipe:      (id: TRecipe["id"]) => void
-	selectedRecipeIds: TPlanningRecipeFormData[]
-	close:             () => void
+type TAddDishModalProps = {
+	selectRecipe:          (id: TRecipe["id"]) => void
+	selectedDishFormDatas: TPlanningDishFormData[]
+	close:                 () => void
 }
 
-export const AddRecipeModal = ({
+export const AddDishModal = ({
 	selectRecipe,
-	selectedRecipeIds,
+	selectedDishFormDatas,
 	close,
-}: TAddRecipeModalProps) => {
+}: TAddDishModalProps) => {
 	const recipes = getRecipes();
 
 	const [search, setSearch] = useState("");
 
 	const filteredRecipes = recipes
 		.filter(recipe => recipe.name.toLowerCase().includes(search.toLowerCase()))
-		.filter(recipe => !selectedRecipeIds.map(selectedRecipeId => selectedRecipeId.id).includes(recipe.id));
+		.filter(recipe => !selectedDishFormDatas.map(selectedDishFormData => selectedDishFormData.recipeId).includes(recipe.id));
 
 	return (
 		<Modal
