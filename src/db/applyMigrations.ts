@@ -7,6 +7,10 @@ export const applyMigrations = () => {
 
 	const migrationsToApply = migrations.slice(dbVersion);
 
+	if (migrationsToApply.length === 0) {
+		return;
+	}
+
 	const backup = generateBackup();
 
 	for (const key in migrationsToApply) {

@@ -1,5 +1,6 @@
 import BookIcon from "@mui/icons-material/Book";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import ImportExportIcon from "@mui/icons-material/ImportExport";
 import KitchenIcon from "@mui/icons-material/Kitchen";
 import SetMealIcon from "@mui/icons-material/SetMeal";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
@@ -54,6 +55,11 @@ export const Navbar = () => {
 				>
 					Liste de courses
 				</Button>
+				<Button
+					onClick={() => navigate("/import-export")}
+				>
+					Import/Export
+				</Button>
 			</div>
 			<div
 				style={{
@@ -83,6 +89,7 @@ export const Navbar = () => {
 				<NavbarButton url="/planning" icon={<CalendarTodayIcon />} />
 				<NavbarButton url="/stock" icon={<KitchenIcon />} />
 				<NavbarButton url="/shopping-list" icon={<ShoppingBasketIcon />} />
+				<NavbarButton url="/import-export" icon={<ImportExportIcon />} />
 			</div>
 		</div>
 	);

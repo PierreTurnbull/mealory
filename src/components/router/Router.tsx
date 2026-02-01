@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router";
 import { Navbar } from "../features/layout/Navbar/Navbar";
 import { DefaultPlanningWrapper } from "../features/planning/DefaultPlanningWrapper/DefaultPlanningWrapper";
+import { ImportExport } from "../pages/ImportExport/ImportExport";
 import { Ingredients } from "../pages/Ingredients/Ingredients";
 import { Planning } from "../pages/Planning/Planning";
 import { Recipe } from "../pages/Recipe/Recipe";
@@ -21,6 +22,7 @@ export const Router = () => {
 					<Route path="/stock" element={<Stock />} />
 					<Route path="/shopping-list" element={<ShoppingList />} />
 				</Route>
+				<Route path="/import-export" element={<ImportExport />} />
 			</Route>
 		</Routes>
 	);

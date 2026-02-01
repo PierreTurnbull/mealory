@@ -30,7 +30,7 @@ export const PlanningForm = <T extends TPlanning | Omit<TPlanning, "id">>({
 	planning,
 	setPlanning,
 }: TPlanningFormProps<T>) => {
-	const [defaultPortions, setDefaultPortions] = useState<number>(localStorage.defaultPortions || 1);
+	const [defaultPortions, setDefaultPortions] = useState<number>(Number(localStorage.defaultPortions) || 1);
 
 	const [defaultPortionsFormData, setDefaultPortionsFormData] = useState<TFormData<string>>({ value: String(defaultPortions) });
 
