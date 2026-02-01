@@ -1,6 +1,7 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Button, IconButton, Input } from "@mui/material";
 import { useEffect, useState } from "react";
+import { db } from "../../../../db/db.model";
 import type { TFormData } from "../../../../types/form/formData.types";
 import { ConfirmationModal } from "../../../common/ConfirmationModal/ConfirmationModal";
 import { HelperIcon } from "../../../common/HelperIcon/HelperIcon";
@@ -30,7 +31,7 @@ export const PlanningForm = <T extends TPlanning | Omit<TPlanning, "id">>({
 	planning,
 	setPlanning,
 }: TPlanningFormProps<T>) => {
-	const [defaultPortions, setDefaultPortions] = useState<number>(Number(localStorage.defaultPortions) || 1);
+	const [defaultPortions, setDefaultPortions] = useState<number>(Number(db.getItem("defaultPortions")) || 1);
 
 	const [defaultPortionsFormData, setDefaultPortionsFormData] = useState<TFormData<string>>({ value: String(defaultPortions) });
 
@@ -39,7 +40,7 @@ export const PlanningForm = <T extends TPlanning | Omit<TPlanning, "id">>({
 	}, [defaultPortionsFormData]);
 
 	useEffect(() => {
-		localStorage.setItem("defaultPortions", JSON.stringify(defaultPortions));
+		db.setItem("defaultPortions", JSON.stringify(defaultPortions));
 	}, [defaultPortions]);
 
 	const [addDishModalIsOpen, setAddDishModalIsOpen] = useState(false);

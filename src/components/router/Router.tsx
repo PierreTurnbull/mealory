@@ -1,13 +1,13 @@
 import { Navigate, Route, Routes } from "react-router";
 import { Navbar } from "../features/layout/Navbar/Navbar";
 import { DefaultPlanningWrapper } from "../features/planning/DefaultPlanningWrapper/DefaultPlanningWrapper";
-import { ImportExport } from "../pages/ImportExport/ImportExport";
 import { Ingredients } from "../pages/Ingredients/Ingredients";
 import { Planning } from "../pages/Planning/Planning";
 import { Recipe } from "../pages/Recipe/Recipe";
 import { Recipes } from "../pages/Recipes/Recipes";
 import { ShoppingList } from "../pages/ShoppingList/ShoppingList";
 import { Stock } from "../pages/Stock/Stock";
+import { Synchronization } from "../pages/Synchronization/Synchronization";
 
 export const Router = () => {
 	return (
@@ -22,7 +22,7 @@ export const Router = () => {
 					<Route path="/stock" element={<Stock />} />
 					<Route path="/shopping-list" element={<ShoppingList />} />
 				</Route>
-				<Route path="/import-export" element={<ImportExport />} />
+				<Route path="/synchronization" element={<Synchronization />} />
 			</Route>
 		</Routes>
 	);

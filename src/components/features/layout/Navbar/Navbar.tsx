@@ -7,6 +7,7 @@ import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { useEffect, useRef, useState } from "react";
 import { Outlet, useNavigate } from "react-router";
 import { Button } from "../../../common/Button/Button";
+import { BuildVersion } from "../BuildVersion/BuildVersion";
 import { NavbarButton } from "./NavbarButton/NavbarButton";
 
 export const Navbar = () => {
@@ -21,6 +22,7 @@ export const Navbar = () => {
 
 	return (
 		<div>
+			<BuildVersion />
 			<div
 				className={`
 					space-x-2
@@ -56,9 +58,9 @@ export const Navbar = () => {
 					Liste de courses
 				</Button>
 				<Button
-					onClick={() => navigate("/import-export")}
+					onClick={() => navigate("/synchronization")}
 				>
-					Import/Export
+					Synchronisation
 				</Button>
 			</div>
 			<div
@@ -89,7 +91,7 @@ export const Navbar = () => {
 				<NavbarButton url="/planning" icon={<CalendarTodayIcon />} />
 				<NavbarButton url="/stock" icon={<KitchenIcon />} />
 				<NavbarButton url="/shopping-list" icon={<ShoppingBasketIcon />} />
-				<NavbarButton url="/import-export" icon={<ImportExportIcon />} />
+				<NavbarButton url="/synchronization" icon={<ImportExportIcon />} />
 			</div>
 		</div>
 	);

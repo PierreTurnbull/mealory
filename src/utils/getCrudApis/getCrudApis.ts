@@ -1,4 +1,5 @@
 import { v4 } from "uuid";
+import { db } from "../../db/db.model";
 
 /**
  * Returns generic CRUD APIs for the model name passed as param.
@@ -9,8 +10,8 @@ export const getCrudApis = <T extends { id: string }>(
 	const getItem = (
 		id: T["id"],
 	) => {
-		const items = localStorage[modelName]
-			? JSON.parse(localStorage[modelName]) as T[]
+		const items = db.getItem(modelName)
+			? JSON.parse(db.getItem(modelName)!) as T[]
 			: [];
 
 		const item = items.find(item => item.id === id);
@@ -23,8 +24,8 @@ export const getCrudApis = <T extends { id: string }>(
 	};
 
 	const getItems = () => {
-		const items = localStorage[modelName]
-			? JSON.parse(localStorage[modelName]) as T[]
+		const items = db.getItem(modelName)
+			? JSON.parse(db.getItem(modelName)!) as T[]
 			: [];
 
 		return items;
@@ -33,8 +34,8 @@ export const getCrudApis = <T extends { id: string }>(
 	const createItem = (
 		item: Omit<T, "id"> | T,
 	) => {
-		const items = localStorage[modelName]
-			? JSON.parse(localStorage[modelName]) as T[]
+		const items = db.getItem(modelName)
+			? JSON.parse(db.getItem(modelName)!) as T[]
 			: [];
 
 		const id = "id" in item ? item.id : v4();
@@ -46,7 +47,7 @@ export const getCrudApis = <T extends { id: string }>(
 
 		items.push(itemWithId);
 
-		localStorage[modelName] = JSON.stringify(items);
+		db.setItem(modelName, JSON.stringify(items));
 
 		return itemWithId;
 	};
@@ -55,8 +56,8 @@ export const getCrudApis = <T extends { id: string }>(
 		id: T["id"],
 		nextItem: T,
 	) => {
-		const items = localStorage[modelName]
-			? JSON.parse(localStorage[modelName]) as T[]
+		const items = db.getItem(modelName)
+			? JSON.parse(db.getItem(modelName)!) as T[]
 			: [];
 
 		const prevItemIndex = items.findIndex(item => item.id === id);
@@ -74,7 +75,7 @@ export const getCrudApis = <T extends { id: string }>(
 
 		items.splice(prevItemIndex, 1, item);
 
-		localStorage[modelName] = JSON.stringify(items);
+		db.setItem(modelName, JSON.stringify(items));
 
 		return item;
 	};
@@ -82,8 +83,8 @@ export const getCrudApis = <T extends { id: string }>(
 	const deleteItem = (
 		id: T["id"],
 	) => {
-		const items = localStorage[modelName]
-			? JSON.parse(localStorage[modelName]) as T[]
+		const items = db.getItem(modelName)
+			? JSON.parse(db.getItem(modelName)!) as T[]
 			: [];
 
 		const prevItemIndex = items.findIndex(item => item.id === id);
@@ -94,7 +95,7 @@ export const getCrudApis = <T extends { id: string }>(
 
 		items.splice(prevItemIndex, 1);
 
-		localStorage[modelName] = JSON.stringify(items);
+		db.setItem(modelName, JSON.stringify(items));
 	};
 
 	return {

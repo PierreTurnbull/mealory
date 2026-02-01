@@ -29,6 +29,7 @@ export const Notification = ({
 			<Paper>
 				<div
 					className={`
+						${notification.type === "info" ? "border-t-violet-400" : ""}
 						${notification.type === "success" ? "border-t-green-400" : ""}
 						${notification.type === "error" ? "border-t-red-400" : ""}
 						flex

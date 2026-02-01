@@ -1,4 +1,4 @@
-import { Tooltip } from "@mui/material";
+import { CircularProgress, Tooltip } from "@mui/material";
 import type { ReactNode } from "react";
 
 export type TButtonType = "primary" | "secondary" | "danger"
@@ -11,6 +11,7 @@ type TButtonProps = {
 	type?:       TButtonType
 	size?:       TButtonSize
 	isDisabled?: boolean
+	isLoading?:  boolean
 	tooltip?:    string | null
 }
 
@@ -20,6 +21,7 @@ export const Button = ({
 	type = "primary",
 	size = "md",
 	isDisabled = false,
+	isLoading = false,
 	tooltip,
 }: TButtonProps) => {
 	const _onClick = (event: React.MouseEvent) => {
@@ -30,30 +32,31 @@ export const Button = ({
 	const buttonEl = (
 		<button
 			onClick={_onClick}
-			disabled={isDisabled}
+			disabled={isDisabled || isLoading}
 			className={`
+				relative
 				shadow
 				rounded
 				px-2
 				sm:px-4
 
-				${!isDisabled && type === "primary" ? `
+				${!isDisabled && !isLoading && type === "primary" ? `
 					bg-violet-500
 					hover:bg-violet-400
 					text-violet-50
 				` : ""}
-				${!isDisabled && type === "secondary" ? `
+				${!isDisabled && !isLoading && type === "secondary" ? `
 					bg-violet-200
 					hover:bg-violet-100
 					text-violet-950
 				` : ""}
-				${!isDisabled && type === "danger" ? `
+				${!isDisabled && !isLoading && type === "danger" ? `
 					bg-red-500
 					hover:bg-red-400
 					text-red-50
 				` : ""}
 
-				${isDisabled ? `
+				${isDisabled || isLoading ? `
 					bg-slate-200
 					text-slate-500
 					cursor-auto
@@ -69,7 +72,12 @@ export const Button = ({
 				` : ""}
 			`}
 		>
-			{children}
+			<span className={`${isLoading ? "opacity-0" : ""}`}>{children}</span>
+			{
+				isLoading
+					? <CircularProgress size="16px" className="absolute left-1/2 top-1/2 -translate-1/2" />
+					: null
+			}
 		</button>
 	);
 

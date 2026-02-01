@@ -1,9 +1,10 @@
 import { applyBackup } from "./applyBackup";
+import { db } from "./db.model";
 import { generateBackup } from "./generateBackup";
 import { migrations } from "./migrations";
 
 export const applyMigrations = () => {
-	const dbVersion = localStorage.dbVersion === undefined ? 0 : Number(localStorage.dbVersion);
+	const dbVersion = db.getItem("dbVersion") === undefined ? 0 : Number(db.getItem("dbVersion"));
 
 	const migrationsToApply = migrations.slice(dbVersion);
 
@@ -26,7 +27,7 @@ export const applyMigrations = () => {
 			console.info("Applying db migration.");
 			migrationToApply();
 			console.info("Successfully applied db migration.");
-			localStorage.dbVersion = actualKey + 1;
+			db.setItem("dbVersion", String(actualKey + 1));
 			console.info(`Database is now at version ${actualKey + 1}`);
 
 			console.groupEnd();
