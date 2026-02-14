@@ -84,6 +84,7 @@ export const Navbar = () => {
 					px-4
 					bg-slate-50
 					h-16
+					z-10
 				`}
 			>
 				<NavbarButton url="/ingredients" icon={<SetMealIcon />} />

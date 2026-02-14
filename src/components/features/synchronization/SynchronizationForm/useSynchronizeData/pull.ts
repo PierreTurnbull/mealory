@@ -28,7 +28,7 @@ export const pull = async (
 
 	for (const key in upstreamData) {
 		if (key in upstreamData) {
-			db.setItem(key, upstreamData[key] as string);
+			db.setItem(key, upstreamData[key] as string, { mustBypassUpdatedAt: true });
 		}
 	}
 

@@ -15,7 +15,7 @@ class Db {
 		return localStorage.getItem(key);
 	}
 
-	setItem(key: string, value: string) {
+	setItem(key: string, value: string, options?: { mustBypassUpdatedAt: boolean }) {
 		const prevValue = localStorage.getItem(key);
 		const isDifferent = JSON.stringify(prevValue) !== JSON.stringify(value);
 
@@ -25,7 +25,7 @@ class Db {
 
 		localStorage.setItem(key, value);
 
-		if (!["githubToken", "dbVersion", "updatedAt"].includes(key)) {
+		if (!["githubToken", "dbVersion", "updatedAt"].includes(key) && !options?.mustBypassUpdatedAt) {
 			localStorage.updatedAt = new Date().toISOString();
 		}
 	}
