@@ -159,6 +159,7 @@ export const RecipeIngredientsForm = ({
 					const actionsEl = (
 						<div className="flex gap-2">
 							<IconButton
+								disabled={!ingredientFormData.id.value}
 								onClick={() => setIngredientBeingUpdatedId(ingredientFormData.id.value)}
 							>
 								<EditIcon />
