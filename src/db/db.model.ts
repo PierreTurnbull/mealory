@@ -16,6 +16,13 @@ class Db {
 	}
 
 	setItem(key: string, value: string) {
+		const prevValue = localStorage.getItem(key);
+		const isDifferent = JSON.stringify(prevValue) !== JSON.stringify(value);
+
+		if (!isDifferent) {
+			return;
+		}
+
 		localStorage.setItem(key, value);
 
 		if (!["githubToken", "dbVersion", "updatedAt"].includes(key)) {
