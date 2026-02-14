@@ -292,7 +292,7 @@ export default theme;`}function Zv(e){return typeof e=="number"?`${(e*100).toFix
 				${o==="sm"?`
 					min-h-6
 				`:""}
-			`,children:[v.jsx("span",{className:`${u?"opacity-0":""}`,children:n}),u?v.jsx(W0,{size:"16px",className:"absolute left-1/2 top-1/2 -translate-1/2"}):null]});return c?v.jsx(ff,{title:c,children:v.jsx("div",{children:p})}):p},Pj=()=>v.jsxs("p",{className:"p-1 text-xs text-violet-300",children:["Version : ","3"]}),Fi=({icon:e,url:n})=>{const a=xl();return v.jsx($n,{style:{height:"100%",backgroundColor:"transparent",flexGrow:1,color:location.pathname.replace("/mealory","")===n?st.violet[500]:st.violet[950]},onClick:()=>a(n),children:e})},Uj=()=>{const e=xl(),n=b.useRef(null),[a,o]=b.useState(0);return b.useEffect(()=>{o(n.current.clientHeight)},[o]),v.jsxs("div",{children:[v.jsx(Pj,{}),v.jsxs("div",{className:`
+			`,children:[v.jsx("span",{className:`${u?"opacity-0":""}`,children:n}),u?v.jsx(W0,{size:"16px",className:"absolute left-1/2 top-1/2 -translate-1/2"}):null]});return c?v.jsx(ff,{title:c,children:v.jsx("div",{children:p})}):p},Pj=()=>v.jsxs("p",{className:"p-1 text-xs text-violet-300",children:["Version : ","4"]}),Fi=({icon:e,url:n})=>{const a=xl();return v.jsx($n,{style:{height:"100%",backgroundColor:"transparent",flexGrow:1,color:location.pathname.replace("/mealory","")===n?st.violet[500]:st.violet[950]},onClick:()=>a(n),children:e})},Uj=()=>{const e=xl(),n=b.useRef(null),[a,o]=b.useState(0);return b.useEffect(()=>{o(n.current.clientHeight)},[o]),v.jsxs("div",{children:[v.jsx(Pj,{}),v.jsxs("div",{className:`
 					space-x-2
 					justify-center
 					p-4
@@ -310,6 +310,7 @@ export default theme;`}function Zv(e){return typeof e=="number"?`${(e*100).toFix
 					px-4
 					bg-slate-50
 					h-16
+					z-10
 				`,children:[v.jsx(Fi,{url:"/ingredients",icon:v.jsx(Ij,{})}),v.jsx(Fi,{url:"/recipes",icon:v.jsx(Dj,{})}),v.jsx(Fi,{url:"/planning",icon:v.jsx(Lj,{})}),v.jsx(Fi,{url:"/stock",icon:v.jsx(_j,{})}),v.jsx(Fi,{url:"/shopping-list",icon:v.jsx(Bj,{})}),v.jsx(Fi,{url:"/synchronization",icon:v.jsx(zj,{})})]})]})},xm=um("plannings"),Gf=xm.getItems,Hj=xm.createItem,Sm=xm.updateItem,qj=()=>({dishes:[],meals:[],ingredientsInStock:[],ingredientsObtained:[]}),Vj=()=>{const e=Gf(),[n,a]=b.useState(e[0]);return b.useEffect(()=>{if(!n){const o=Hj(qj());a(o)}},[n]),n?v.jsx(o5,{}):null},Ko=({title:e,rank:n="h2",className:a})=>{const o=n;let l;switch(n){case"h1":l=`
 				text-4xl
 				mb-8
